@@ -59,74 +59,73 @@ MainView {
             }
         }
 
-
-
-    ListView {
-        id: notesListView
-       anchors {
-                    top: header.bottom
-                    left: parent.left
-                    right: parent.right
-                    topMargin: units.gu(2)
-                    rightMargin: units.gu(2);
-                    leftMargin: units.gu(2);
-                    
-                }
-        spacing: 1
-        model: ListModel {
-            id: notesModel
-
-            ListElement {
-                title: "First Note"
-                createdAt: "2025-04-28"
+        ListView {
+            id: notesListView
+            anchors {
+                top: header.bottom
+                left: parent.left
+                right: parent.right
+                bottom: parent.bottom // Tip : Its Very important to define the length of the List in the ListView
+                topMargin: units.gu(2)
+                rightMargin: units.gu(2)
+                leftMargin: units.gu(2)
             }
-            ListElement {
-                title: "Second Note"
-                createdAt: "2025-04-27"
-            }
-            ListElement {
-                title: "Meeting Notes"
-                createdAt: "2025-04-26"
-            }
-        }
+            spacing: 10
 
-        delegate: Rectangle {
-            width: parent.width
-            height: 80
-            //color: "white"
-            //border.color: "#cccccc"
-            border.width: 1
-            radius: 8
-            anchors.margins: 8
+            model: notesModel
 
-            Column {
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.leftMargin: 16
+            delegate: Rectangle {
+                width: ListView.view.width
+                height: 80
+                //color: "white"
+                //border.color: "#cccccc"
+                border.width: 1
+                radius: 8
+                anchors.margins: 8
 
-                Text {
-                    text: model.title
-                    font.pixelSize: 20
-                    font.bold: true
-                 //   color: "black"
+                Column {
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+
+                    Text {
+                        text: model.title
+                        font.pixelSize: 20
+                        font.bold: true
+                        //   color: "black"
+                    }
+
+                    Text {
+                        text: model.createdAt
+                        font.pixelSize: 14
+                        //  color: "#888888"
+                    }
                 }
 
-                Text {
-                    text: model.createdAt
-                    font.pixelSize: 14
-                  //  color: "#888888"
-                }
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    console.log("Clicked on note:", model.title)
-                    // TODO: Navigate to Note Detail View
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        console.log("Clicked on note:", model.title);
+                        // TODO: Navigate to Note Detail View
+                    }
                 }
             }
         }
     }
+    ListModel {
+        id: notesModel
 
+        ListElement {
+            title: "First Note"
+            createdAt: "2025-04-28"
+        }
+        ListElement {
+            title: "Second Note"
+            createdAt: "2025-04-27"
+        }
+        ListElement {
+            title: "Meeting Notes"
+            createdAt: "2025-04-26"
+        }
     }
 }

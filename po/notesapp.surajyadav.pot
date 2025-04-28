@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notesapp.surajyadav\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-28 08:59+0000\n"
+"POT-Creation-Date: 2025-04-28 09:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,18 +17,18 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../qml/Main.qml:37 notesapp.desktop.in.h:1
+#: ../qml/Main.qml:54 notesapp.desktop.in.h:1
 msgid "Notes"
 msgstr ""
 
-#: ../qml/Main.qml:38
+#: ../qml/Main.qml:55
 msgid "Keep Your Ideas in One Place."
 msgstr ""
 
-#: ../qml/Main.qml:51
+#: ../qml/Main.qml:68
 msgid "About"
 msgstr ""
 
-#: ../qml/Main.qml:56
+#: ../qml/Main.qml:73
 msgid "Search"
 msgstr ""
