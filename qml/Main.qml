@@ -53,7 +53,7 @@ MainView {
                         text: i18n.tr("Search")
                     },
 
-                    Action { // New Add Button
+                    Action { 
                 iconName: "add"
                 text: i18n.tr("Add Note")
                 onTriggered: {
@@ -101,7 +101,7 @@ MainView {
                     Text {
                         text: model.title
                         font.pixelSize: 20
-                        font.bold: true
+                       // font.bold: true
                         //   color: "black"
                     }
 
