@@ -59,17 +59,74 @@ MainView {
             }
         }
 
-        Label {
-            anchors {
-                top: header.bottom
-                left: parent.left
-                right: parent.right
-                bottom: parent.bottom
-            }
-            text: i18n.tr('Hello World!')
 
-            verticalAlignment: Label.AlignVCenter
-            horizontalAlignment: Label.AlignHCenter
+
+    ListView {
+        id: notesListView
+       anchors {
+                    top: header.bottom
+                    left: parent.left
+                    right: parent.right
+                    topMargin: units.gu(2)
+                    rightMargin: units.gu(2);
+                    leftMargin: units.gu(2);
+                    
+                }
+        spacing: 1
+        model: ListModel {
+            id: notesModel
+
+            ListElement {
+                title: "First Note"
+                createdAt: "2025-04-28"
+            }
+            ListElement {
+                title: "Second Note"
+                createdAt: "2025-04-27"
+            }
+            ListElement {
+                title: "Meeting Notes"
+                createdAt: "2025-04-26"
+            }
         }
+
+        delegate: Rectangle {
+            width: parent.width
+            height: 80
+            //color: "white"
+            //border.color: "#cccccc"
+            border.width: 1
+            radius: 8
+            anchors.margins: 8
+
+            Column {
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+
+                Text {
+                    text: model.title
+                    font.pixelSize: 20
+                    font.bold: true
+                 //   color: "black"
+                }
+
+                Text {
+                    text: model.createdAt
+                    font.pixelSize: 14
+                  //  color: "#888888"
+                }
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    console.log("Clicked on note:", model.title)
+                    // TODO: Navigate to Note Detail View
+                }
+            }
+        }
+    }
+
     }
 }
