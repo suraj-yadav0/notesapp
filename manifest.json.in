@@ -1,0 +1,15 @@
+{
+    "name": "notesapp.surajyadav",
+    "description": "A simple notes taking app.",
+    "architecture": "@CLICK_ARCH@",
+    "title": "Notes",
+    "hooks": {
+        "notesapp": {
+            "apparmor": "notesapp.apparmor",
+            "desktop":  "notesapp.desktop"
+        }
+    },
+    "version": "1.0.0",
+    "maintainer": "Suraj Yadav <surajyadav200701@gmail.com>",
+    "framework" : "@CLICK_FRAMEWORK@"
+}
