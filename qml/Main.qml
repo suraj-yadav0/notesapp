@@ -46,25 +46,23 @@ MainView {
 
                 numberOfSlots: 3
                 actions: [
-                
                     Action {
 
                         iconName: "search"
                         text: i18n.tr("Search")
                     },
-
-                    Action { 
-                iconName: "add"
-                text: i18n.tr("Add Note")
-                onTriggered: {
-                    console.log("Add Note button clicked");
-                    // TODO: Implement logic to add a new note
-                    notesModel.append({
-                        title: "New Note",
-                        createdAt: Qt.formatDateTime(new Date(), "yyyy-MM-dd")
-                    });
-                }
-            }
+                    Action {
+                        iconName: "add"
+                        text: i18n.tr("Add Note")
+                        onTriggered: {
+                            console.log("Add Note button clicked");
+                            // TODO: Implement logic to add a new note
+                            notesModel.append({
+                                title: "New Note",
+                                createdAt: Qt.formatDateTime(new Date(), "yyyy-MM-dd")
+                            });
+                        }
+                    }
                 ]
             }
         }
@@ -101,7 +99,7 @@ MainView {
                     Text {
                         text: model.title
                         font.pixelSize: 20
-                       // font.bold: true
+                        // font.bold: true
                         //   color: "black"
                     }
 
