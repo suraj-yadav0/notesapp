@@ -4,9 +4,9 @@
 
 1. Learn more about app building.
 2. Make a Nice Note keeping App.
-3. Build a Documentation , that will help develop better learning materials for Future developers. 
+3. Build a Documentation , that will help develop better learning materials for Future developers.
+
 - Day 1
-    
     <aside>
     💡
     
@@ -179,11 +179,50 @@
     Now lets add a `ListView` to our page. You can learn more about `ListViews` [here](https://doc.qt.io/qt-5/qml-qtquick-listview.html#delegate-prop) .
     
     ```jsx
-     ListView {            id: notesListView            anchors {                top: header.bottom                left: parent.left                right: parent.right                bottom: parent.bottom // Tip : Its Very important to define the length of the List in the ListView                topMargin: units.gu(2)                rightMargin: units.gu(2)                leftMargin: units.gu(2)            }            spacing: 10
+     ListView {     
+            id: notesListView         
+               anchors {           
+                    top: header.bottom        
+                            left: parent.left    
+                                        right: parent.right      
+                                                  bottom: parent.bottom // Tip : Its Very important to define the length of the List in the ListView         
+                                                         topMargin: units.gu(2)               
+                                                          rightMargin: units.gu(2)              
+                                                            leftMargin: units.gu(2)            }         
+                                                               spacing: 10
+
                 model: notesModel
-                delegate: Rectangle {                width: ListView.view.width                height: 80                //color: "white"                //border.color: "#cccccc"                border.width: 1                radius: 8                anchors.margins: 8
-                    Column {                    anchors.verticalCenter: parent.verticalCenter                    anchors.left: parent.left                    anchors.leftMargin: 16
-                        Text {                        text: model.title                        font.pixelSize: 20                       // font.bold: true                        //   color: "black"                    }
-                        Text {                        text: model.createdAt                        font.pixelSize: 14                        //  color: "#888888"                    }                }
-                    MouseArea {                    anchors.fill: parent                    onClicked: {                        console.log("Clicked on note:", model.title);                        // TODO: Navigate to Note Detail View                    }                }            }        }
+
+                delegate: Rectangle {            
+                    width: ListView.view.width            
+                        height: 80                //color: "white"                //border.color: "#cccccc"          
+                              border.width: 1         
+                                     radius: 8         
+                                            anchors.margins: 8
+
+                    Column {               
+                         anchors.verticalCenter: parent.verticalCenter       
+                                      anchors.left: parent.left       
+                                                   anchors.leftMargin: 16
+
+                        Text {              
+                                  text: model.title            
+                                              font.pixelSize: 20             
+                                                        // font.bold: true                        //   color: "black"      
+                                                                      }
+                        Text {              
+                                  text: model.createdAt            
+                                              font.pixelSize: 14     
+                                                                 //  color: "#888888"          
+                                                                           }                }
+                    MouseArea {              
+                          anchors.fill: parent       
+                                       onClicked: {     
+                                                          console.log("Clicked on note:", model.title);  
+                                                                                // TODO: Navigate to Note Detail 
+                                                                                View             
+                                                                                       }          
+                                                                                             }      
+                                                                                                   }    
+                                                                                                       }
     ```
