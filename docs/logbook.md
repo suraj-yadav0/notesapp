@@ -38,7 +38,7 @@
         clickable desktop 
         ```
         
-        ![taskApp1.1](docs/screenshots/notes1.1.png)
+        ![taskApp1.1](screenshots/notes1.1.png)
         
         taskApp1.1
         
@@ -167,7 +167,7 @@
     
     `}`
     
-    ![notes1.2](Note-Keeping%20App%20Logbook%201e3c61545463806f9703dcb949951dd9/notes1.2.png)
+    ![notes1.2](screenshots/notes1.2.png)
     
     notes1.2
     
