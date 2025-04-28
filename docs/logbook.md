@@ -103,69 +103,34 @@
     
     Let’s Create some UI for our app. We will start with the header which is displayed on the top. Its also called the App bar in some other programming languages. In `qml` , we refer to it as `PageHeader`. So if You change the header in the `Page` section it should look like something like this. 
     
-    `header: PageHeader {`
-    
-    `id: header`
-    
-    `title: i18n.tr('Notes')`
-    
-    `subtitle: i18n.tr('Keep Your Ideas in One Place.')`
-    
-    `ActionBar {`
-    
-    `anchors {`
-    
-    `top: parent.top`
-    
-    `right: parent.right`
-    
-    `topMargin: units.gu(1)`
-    
-    `rightMargin: units.gu(1)`
-    
-    `}`
-    
-    `numberOfSlots: 3`
-    
-    `actions: [`
-    
-    `Action {`
-    
-    `iconName: "search"`
-    
-    `text: i18n.tr("Search")`
-    
-    `},`
-    
-    `Action {`
-    
-    `iconName: "add"`
-    
-    `text: i18n.tr("Add Note")`
-    
-    `onTriggered: {`
-    
-    `console.log("Add Note button clicked");`
-    
-    `// TODO: Implement logic to add a new note`
-    
-    `notesModel.append({`
-    
-    `title: "New Note",`
-    
-    `createdAt: Qt.formatDateTime(new Date(), "yyyy-MM-dd")`
-    
-    `});`
-    
-    `}`
-    
-    `}`
-    
-    `]`
-    
-    `}`
-    
-    `}`
+   ```jsx
+    header: PageHeader {
+            id: header
+            title: i18n.tr('Notes')
+            subtitle: i18n.tr('Keep Your Ideas in One Place.')
+            ActionBar {
+                anchors {
+                    top: parent.top
+                    right: parent.right
+                    topMargin: units.gu(1)
+                    rightMargin: units.gu(1)
+                }
+
+                numberOfSlots: 2
+                actions: [
+                    Action {
+                        iconName: "info"
+                        text: i18n.tr("About")
+                    },
+                    Action {
+
+                        iconName: "search"
+                        text: i18n.tr("Search")
+                    }
+                ]
+            }
+        }
+   ```
     
     ![notes1.2](screenshots/notes1.2.png)
     
@@ -254,6 +219,29 @@
         }
     }
     ```
+
+    > Step 5
+    > 
+
+    Now Let's add , `Add` button with some action to our `PageHeader`. Replace the `info` action with code given below :
+
+    ```jsx
+     Action {
+                        iconName: "add"
+                        text: i18n.tr("Add Note")
+                        onTriggered: {
+                            console.log("Add Note button clicked");
+                            // TODO: Implement logic to add a new note
+                            notesModel.append({
+                                title: "New Note",
+                                createdAt: Qt.formatDateTime(new Date(), "yyyy-MM-dd")
+                            });
+                        }
+                    }
+
+            ```
+
+    
 
     Now our app should look like this: 
 
