@@ -232,3 +232,25 @@
             }
         }
     ```
+
+
+    Add this `ListModel` Code outside the `Page`. 
+    
+    ```jsx
+    ListModel {
+        id: notesModel
+
+        ListElement {
+            title: "First Note"
+            createdAt: "2025-04-28"
+        }
+        ListElement {
+            title: "Second Note"
+            createdAt: "2025-04-27"
+        }
+        ListElement {
+            title: "Meeting Notes"
+            createdAt: "2025-04-26"
+        }
+    }
+    ```
