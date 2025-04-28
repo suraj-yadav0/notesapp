@@ -44,17 +44,27 @@ MainView {
                     rightMargin: units.gu(1)
                 }
 
-                numberOfSlots: 2
+                numberOfSlots: 3
                 actions: [
-                    Action {
-                        iconName: "info"
-                        text: i18n.tr("About")
-                    },
+                
                     Action {
 
                         iconName: "search"
                         text: i18n.tr("Search")
-                    }
+                    },
+
+                    Action { // New Add Button
+                iconName: "add"
+                text: i18n.tr("Add Note")
+                onTriggered: {
+                    console.log("Add Note button clicked");
+                    // TODO: Implement logic to add a new note
+                    notesModel.append({
+                        title: "New Note",
+                        createdAt: Qt.formatDateTime(new Date(), "yyyy-MM-dd")
+                    });
+                }
+            }
                 ]
             }
         }
