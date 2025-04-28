@@ -43,19 +43,17 @@ MainView {
                     topMargin: units.gu(1)
                     rightMargin: units.gu(1)
                 }
-                
-                numberOfSlots:2
+
+                numberOfSlots: 2
                 actions: [
-                   
                     Action {
-                        iconName : "info"
-                        text : i18n.tr("About")
+                        iconName: "info"
+                        text: i18n.tr("About")
+                    },
+                    Action {
 
-                    }, Action {
-
-                        iconName:"search"
-                        text :i18n.tr("Search")
-
+                        iconName: "search"
+                        text: i18n.tr("Search")
                     }
                 ]
             }
