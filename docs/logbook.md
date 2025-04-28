@@ -254,3 +254,9 @@
         }
     }
     ```
+
+    Now our app should look like this: 
+
+     ![notes1.3](screenshots/notes1.3.png)
+    
+    notes1.3
