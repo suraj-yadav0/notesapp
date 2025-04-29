@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notesapp.surajyadav\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-29 09:01+0000\n"
+"POT-Creation-Date: 2025-04-29 09:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,22 +33,22 @@ msgstr ""
 msgid "Add Note"
 msgstr ""
 
-#: ../qml/Main.qml:142
+#: ../qml/Main.qml:151
 msgid "Add New Action"
 msgstr ""
 
-#: ../qml/Main.qml:150
+#: ../qml/Main.qml:159
 msgid "Enter your note:"
 msgstr ""
 
-#: ../qml/Main.qml:157
+#: ../qml/Main.qml:166
 msgid "Type your note here..."
 msgstr ""
 
-#: ../qml/Main.qml:168
+#: ../qml/Main.qml:177
 msgid "Cancel"
 msgstr ""
 
-#: ../qml/Main.qml:176
+#: ../qml/Main.qml:185
 msgid "Save"
 msgstr ""

@@ -78,6 +78,8 @@ MainView {
 
             model: notesModel
 
+            
+
             delegate: Rectangle {
                 width: ListView.view.width
                 height: 80
@@ -134,43 +136,43 @@ MainView {
     }
 
     // Dialog component for adding new notes
-     Component {
+    Component {
         id: noteDialogComponent
-        
+
         Dialog {
             id: noteDialog
             title: i18n.tr("Add New Action")
             modal: true
-            
+
             ColumnLayout {
                 width: parent.width
                 spacing: units.gu(1)
-                
+
                 Label {
                     text: i18n.tr("Enter your note:")
                 }
-                
+
                 TextArea {
                     id: noteTextArea
                     Layout.fillWidth: true
                     Layout.preferredHeight: units.gu(15)
                     placeholderText: i18n.tr("Type your note here...")
-                  // autoSize: false
+                    // autoSize: false
                 }
-                
+
                 RowLayout {
                     Layout.fillWidth: true
                     Layout.topMargin: units.gu(1)
                     spacing: units.gu(1)
-                    
+
                     Button {
                         Layout.fillWidth: true
                         text: i18n.tr("Cancel")
                         onClicked: {
-                            PopupUtils.close(noteDialog)
+                            PopupUtils.close(noteDialog);
                         }
                     }
-                    
+
                     Button {
                         Layout.fillWidth: true
                         text: i18n.tr("Save")
@@ -178,12 +180,12 @@ MainView {
                         onClicked: {
                             if (noteTextArea.text.trim() !== "") {
                                 notesModel.append({
-                            title: noteTextArea.text.trim(),
-                            createdAt: Qt.formatDateTime(new Date(), "yyyy-MM-dd")
-                        });
-                             //  notesModel.append({"title": noteTextArea.text.trim()})
+                                    title: noteTextArea.text.trim(),
+                                    createdAt: Qt.formatDateTime(new Date(), "yyyy-MM-dd")
+                                });
+                                //  notesModel.append({"title": noteTextArea.text.trim()})
 
-                                PopupUtils.close(noteDialog)
+                                PopupUtils.close(noteDialog);
                             }
                         }
                     }
@@ -192,5 +194,3 @@ MainView {
         }
     }
 }
-
-
