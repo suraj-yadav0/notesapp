@@ -20,6 +20,7 @@ import Lomiri.Components 1.3
 import QtQuick.Layouts 1.3
 import Qt.labs.settings 1.0
 import Ubuntu.Components.Popups 1.3
+import Ubuntu.Components 1.3
 
 MainView {
     id: root
@@ -74,45 +75,63 @@ MainView {
                 rightMargin: units.gu(2)
                 leftMargin: units.gu(2)
             }
-            spacing: 10
+            // spacing: 10
 
             model: notesModel
+           
 
-            
+            delegate: ListItem {
+                id: noteItem
+                height: units.gu(10)
 
-            delegate: Rectangle {
-                width: ListView.view.width
-                height: 80
-                //color: "white"
-                //border.color: "#cccccc"
-                border.width: 1
-                radius: 8
-                anchors.margins: 8
-
-                Column {
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-
-                    Text {
-                        text: model.title
-                        font.pixelSize: 20
-                        // font.bold: true
-                        //   color: "black"
-                    }
-
-                    Text {
-                        text: model.createdAt
-                        font.pixelSize: 14
-                        //  color: "#888888"
-                    }
+                leadingActions: ListItemActions {
+                    actions: [
+                        Action {
+                            iconName: "delete"
+                            onTriggered: {
+                                var rowid = notesModel.get(index).rowid;
+                                notesModel.remove(index);
+                            }
+                        }
+                    ]
                 }
 
-                MouseArea {
+                Rectangle {
                     anchors.fill: parent
-                    onClicked: {
-                        console.log("Clicked on note:", model.title);
-                        // TODO: Navigate to Note Detail View
+                    radius: units.gu(1)
+                    border.color: "#cccccc"
+                    border.width: 1
+                    color: "white"
+                    anchors.margins: units.gu(1)
+
+                    Row {
+                        spacing: units.gu(2)
+                        anchors.fill: parent
+                        anchors.margins: units.gu(2)
+
+                        Column {
+                            spacing: units.gu(0.5)
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            Text {
+                                text: model.title
+                                font.pixelSize: units.gu(2.5)
+                                font.bold: true
+                            }
+
+                            Text {
+                                text: model.createdAt
+                                font.pixelSize: units.gu(2)
+                            }
+                        }
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            console.log("Clicked on note:", model.title);
+                            // Navigate to note detail
+                        }
                     }
                 }
             }
