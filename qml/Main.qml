@@ -19,6 +19,7 @@ import Lomiri.Components 1.3
 //import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Qt.labs.settings 1.0
+import Ubuntu.Components.Popups 1.3
 
 MainView {
     id: root
@@ -55,12 +56,7 @@ MainView {
                         iconName: "add"
                         text: i18n.tr("Add Note")
                         onTriggered: {
-                            console.log("Add Note button clicked");
-                            // TODO: Implement logic to add a new note
-                            notesModel.append({
-                                title: "New Note",
-                                createdAt: Qt.formatDateTime(new Date(), "yyyy-MM-dd")
-                            });
+                            PopupUtils.open(noteDialogComponent);
                         }
                     }
                 ]
@@ -136,4 +132,65 @@ MainView {
             createdAt: "2025-04-26"
         }
     }
+
+    // Dialog component for adding new notes
+     Component {
+        id: noteDialogComponent
+        
+        Dialog {
+            id: noteDialog
+            title: i18n.tr("Add New Action")
+            modal: true
+            
+            ColumnLayout {
+                width: parent.width
+                spacing: units.gu(1)
+                
+                Label {
+                    text: i18n.tr("Enter your note:")
+                }
+                
+                TextArea {
+                    id: noteTextArea
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: units.gu(15)
+                    placeholderText: i18n.tr("Type your note here...")
+                  // autoSize: false
+                }
+                
+                RowLayout {
+                    Layout.fillWidth: true
+                    Layout.topMargin: units.gu(1)
+                    spacing: units.gu(1)
+                    
+                    Button {
+                        Layout.fillWidth: true
+                        text: i18n.tr("Cancel")
+                        onClicked: {
+                            PopupUtils.close(noteDialog)
+                        }
+                    }
+                    
+                    Button {
+                        Layout.fillWidth: true
+                        text: i18n.tr("Save")
+                        color: theme.palette.normal.positive
+                        onClicked: {
+                            if (noteTextArea.text.trim() !== "") {
+                                notesModel.append({
+                            title: noteTextArea.text.trim(),
+                            createdAt: Qt.formatDateTime(new Date(), "yyyy-MM-dd")
+                        });
+                             //  notesModel.append({"title": noteTextArea.text.trim()})
+
+                                PopupUtils.close(noteDialog)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
+
+
