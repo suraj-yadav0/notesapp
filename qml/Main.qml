@@ -101,7 +101,7 @@ MainView {
                     radius: units.gu(1)
                     border.color: "#cccccc"
                     border.width: 1
-                    color: "white"
+                  
                     anchors.margins: units.gu(1)
 
                     Row {
@@ -116,7 +116,7 @@ MainView {
                             Text {
                                 text: model.title
                                 font.pixelSize: units.gu(2.5)
-                                font.bold: true
+                              //  font.bold: true
                             }
 
                             Text {
