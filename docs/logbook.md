@@ -241,6 +241,8 @@
 
      ```
 
+     Now whenever you press the `add` button , a new note will be added in the `ListView`.
+
     
 
     Now our app should look like this: 
