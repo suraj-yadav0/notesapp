@@ -7,7 +7,7 @@
 3. Build a Documentation , that will help develop better learning materials for Future developers.
 
 
-
+[Day 1](chapters/chapter_1.md)
 
 
 [Day 2](chapters/chapter_2.md)
