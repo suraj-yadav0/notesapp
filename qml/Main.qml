@@ -78,7 +78,6 @@ MainView {
             // spacing: 10
 
             model: notesModel
-           
 
             delegate: ListItem {
                 id: noteItem
@@ -101,7 +100,7 @@ MainView {
                     radius: units.gu(1)
                     border.color: "#cccccc"
                     border.width: 1
-                  
+
                     anchors.margins: units.gu(1)
 
                     Row {
@@ -116,7 +115,7 @@ MainView {
                             Text {
                                 text: model.title
                                 font.pixelSize: units.gu(2.5)
-                              //  font.bold: true
+                                //  font.bold: true
                             }
 
                             Text {
@@ -160,16 +159,28 @@ MainView {
 
         Dialog {
             id: noteDialog
-            title: i18n.tr("Add New Action")
+
+            title: i18n.tr("Add New Note")
             modal: true
+
+          
 
             ColumnLayout {
                 width: parent.width
                 spacing: units.gu(1)
 
-                Label {
-                    text: i18n.tr("Enter your note:")
-                }
+                // Label {
+                //     text: i18n.tr("Enter your note:")
+                // }
+
+
+            TextArea {
+                id: noteTitleArea
+                Layout.fillWidth: true
+                Layout.preferredHeight: units.gu(5)
+                placeholderText: i18n.tr("Title of your Note...")
+                 autoSize: false
+            }
 
                 TextArea {
                     id: noteTextArea
@@ -199,7 +210,7 @@ MainView {
                         onClicked: {
                             if (noteTextArea.text.trim() !== "") {
                                 notesModel.append({
-                                    title: noteTextArea.text.trim(),
+                                    title: noteTitleArea.text.trim(),
                                     createdAt: Qt.formatDateTime(new Date(), "yyyy-MM-dd")
                                 });
                                 //  notesModel.append({"title": noteTextArea.text.trim()})
