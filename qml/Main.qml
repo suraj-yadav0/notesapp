@@ -16,7 +16,6 @@
 
 import QtQuick 2.7
 import Lomiri.Components 1.3
-//import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Qt.labs.settings 1.0
 import Ubuntu.Components.Popups 1.3
@@ -31,72 +30,79 @@ MainView {
     width: units.gu(45)
     height: units.gu(75)
 
-    Page {
-        anchors.fill: parent
+    // Property to store the content of the note being edited
+    property var currentNote: ({title: "", content: "", createdAt: "", index: -1})
+    
+    // Main page stack
+    PageStack {
+        id: pageStack
+        Component.onCompleted: push(mainPage)
+        
+        // Main notes list page
+        Page {
+            id: mainPage
+            anchors.fill: parent
 
-        header: PageHeader {
-            id: header
-            title: i18n.tr('Notes')
-            subtitle: i18n.tr('Keep Your Ideas in One Place.')
-            ActionBar {
-                anchors {
-                    top: parent.top
-                    right: parent.right
-                    topMargin: units.gu(1)
-                    rightMargin: units.gu(1)
-                }
-
-                numberOfSlots: 3
-                actions: [
-                    Action {
-
-                        iconName: "search"
-                        text: i18n.tr("Search")
-                    },
-                    Action {
-                        iconName: "add"
-                        text: i18n.tr("Add Note")
-                        onTriggered: {
-                            PopupUtils.open(noteDialogComponent);
-                        }
+            header: PageHeader {
+                id: header
+                title: i18n.tr('Notes')
+                subtitle: i18n.tr('Keep Your Ideas in One Place.')
+                ActionBar {
+                    anchors {
+                        top: parent.top
+                        right: parent.right
+                        topMargin: units.gu(1)
+                        rightMargin: units.gu(1)
                     }
-                ]
-            }
-        }
 
-        ListView {
-            id: notesListView
-            anchors {
-                top: header.bottom
-                left: parent.left
-                right: parent.right
-                bottom: parent.bottom // Tip : Its Very important to define the length of the List in the ListView
-                topMargin: units.gu(2)
-                rightMargin: units.gu(2)
-                leftMargin: units.gu(2)
-            }
-            // spacing: 10
-
-            model: notesModel
-
-            delegate: ListItem {
-                id: noteItem
-                height: units.gu(10)
-
-                leadingActions: ListItemActions {
+                    numberOfSlots: 2
                     actions: [
+                        // Action {
+                        //     iconName: "search"
+                        //     text: i18n.tr("Search")
+                        // },
                         Action {
-                            iconName: "delete"
+                            iconName: "add"
+                            text: i18n.tr("Add Note")
                             onTriggered: {
-                                var rowid = notesModel.get(index).rowid;
-                                notesModel.remove(index);
+                                PopupUtils.open(noteDialogComponent);
                             }
                         }
                     ]
                 }
+            }
 
+            ListView {
+                id: notesListView
+                anchors {
+                    top: header.bottom
+                    left: parent.left
+                    right: parent.right
+                    bottom: parent.bottom
+                    topMargin: units.gu(2)
+                    rightMargin: units.gu(2)
+                    leftMargin: units.gu(2)
+                }
 
-                 trailingActions: ListItemActions {
+                model: notesModel
+
+                delegate: ListItem {
+                    id: noteItem
+                    height: units.gu(10)
+
+                    leadingActions: ListItemActions {
+                        actions: [
+                            Action {
+                                iconName: "delete"
+                                onTriggered: {
+                                    notesModel.remove(index);
+                                }
+                            }
+                        ]
+                    }
+                    
+                    // Add trailing actions for edit functionality
+                    trailingActions: ListItemActions {
                         actions: [
                             Action {
                                 iconName: "edit"
@@ -115,72 +121,159 @@ MainView {
                         ]
                     }
 
-                Rectangle {
-                    anchors.fill: parent
-                    radius: units.gu(1)
-                    border.color: "#cccccc"
-                    border.width: 1
-
-                    anchors.margins: units.gu(1)
-
-                    Row {
-                        spacing: units.gu(2)
+                    Rectangle {
                         anchors.fill: parent
-                        anchors.margins: units.gu(2)
+                        radius: units.gu(1)
+                        border.color: "#cccccc"
+                        border.width: 1
 
-                        Column {
-                            spacing: units.gu(0.5)
-                            anchors.verticalCenter: parent.verticalCenter
+                        anchors.margins: units.gu(1)
 
-                            Text {
-                                text: model.title
-                                font.pixelSize: units.gu(2.5)
-                                //  font.bold: true
+                        Row {
+                            spacing: units.gu(2)
+                            anchors.fill: parent
+                            anchors.margins: units.gu(2)
+
+                            Column {
+                                spacing: units.gu(0.5)
+                                anchors.verticalCenter: parent.verticalCenter
+                                width: parent.width - noteIcon.width - parent.spacing
+
+                                Text {
+                                    text: model.title
+                                    font.pixelSize: units.gu(2.5)
+                                    elide: Text.ElideRight
+                                    width: parent.width
+                                }
+
+                                Text {
+                                    text: model.createdAt
+                                    font.pixelSize: units.gu(2)
+                                }
+                                
                             }
 
-                            Text {
-                                text: model.createdAt
-                                font.pixelSize: units.gu(2)
-                            }
-                            
-                        }
-
-                       Image {
+                            Image {
                                 id: noteIcon
                                 source: model.iconName ? "icon://" + model.iconName : ""
                                 width: units.gu(3)
                                 height: units.gu(3)
                                 visible: model.iconName !== undefined
                             }
+                        }
 
-                       
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            console.log("Clicked on note:", model.title);
-                            // Navigate to note detail
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                console.log("Clicked on note:", model.title);
+                                // Set current note data
+                                currentNote = {
+                                    title: model.title,
+                                    content: model.content || "",
+                                    createdAt: model.createdAt,
+                                    index: index
+                                };
+                                // Navigate to note detail page
+                                pageStack.push(noteEditPage);
+                            }
                         }
                     }
                 }
             }
         }
+        
+        // Note edit page component
+        Page {
+            id: noteEditPage
+            visible: false
+            
+            header: PageHeader {
+                id: editHeader
+                title: i18n.tr('Edit Note')
+                
+                leadingActionBar.actions: [
+                    Action {
+                        iconName: "back"
+                        onTriggered: {
+                            pageStack.pop();
+                        }
+                    }
+                ]
+                
+                trailingActionBar.actions: [
+                    Action {
+                                iconName: "delete"
+                                onTriggered: {
+                                    notesModel.remove(currentNote.index);
+                                    pageStack.pop();
+                                }
+                            } , 
+                    Action {
+                        iconName: "ok"
+                        text: i18n.tr("Save")
+                        onTriggered: {
+                            // Update the note in the model
+                            if (currentNote.index >= 0) {
+                                notesModel.set(currentNote.index, {
+                                    title: titleEditField.text,
+                                    content: contentEditArea.text,
+                                    createdAt: currentNote.createdAt,
+                                    iconName: notesModel.get(currentNote.index).iconName
+                                });
+                                pageStack.pop();
+                            }
+                        }
+                    }
+                ]
+            }
+            
+            // Edit form
+            Column {
+                anchors {
+                    top: editHeader.bottom
+                    left: parent.left
+                    right: parent.right
+                    bottom: parent.bottom
+                    margins: units.gu(2)
+                }
+                spacing: units.gu(2)
+                
+                TextField {
+                    id: titleEditField
+                    width: parent.width
+                    placeholderText: i18n.tr("Title")
+                    text: currentNote.title
+                }
+                
+                TextArea {
+                    id: contentEditArea
+                    width: parent.width
+                    height: parent.height - titleEditField.height - parent.spacing
+                    placeholderText: i18n.tr("Note content...")
+                    text: currentNote.content
+                    autoSize: false
+                }
+            }
+        }
     }
+    
     ListModel {
         id: notesModel
 
         ListElement {
             title: "First Note"
+            content: "This is my first note content."
             createdAt: "2025-04-28"
             iconName: "note"
         }
         ListElement {
             title: "Second Note"
+            content: "Some content for the second note."
             createdAt: "2025-04-27"
         }
         ListElement {
             title: "Meeting Notes"
+            content: "Discuss project timeline\n- Feature prioritization\n- Budget allocation"
             createdAt: "2025-04-26"
         }
     }
@@ -195,31 +288,23 @@ MainView {
             title: i18n.tr("Add New Note")
             modal: true
 
-          
-
             ColumnLayout {
                 width: parent.width
                 spacing: units.gu(1)
 
-                // Label {
-                //     text: i18n.tr("Enter your note:")
-                // }
-
-
-            TextArea {
-                id: noteTitleArea
-                Layout.fillWidth: true
-                Layout.preferredHeight: units.gu(5)
-                placeholderText: i18n.tr("Title of your Note...")
-                 autoSize: false
-            }
+                TextArea {
+                    id: noteTitleArea
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: units.gu(5)
+                    placeholderText: i18n.tr("Title of your Note...")
+                    autoSize: false
+                }
 
                 TextArea {
                     id: noteTextArea
                     Layout.fillWidth: true
                     Layout.preferredHeight: units.gu(15)
                     placeholderText: i18n.tr("Type your note here...")
-                    // autoSize: false
                 }
 
                 RowLayout {
@@ -240,12 +325,12 @@ MainView {
                         text: i18n.tr("Save")
                         color: theme.palette.normal.positive
                         onClicked: {
-                            if (noteTextArea.text.trim() !== "") {
+                            if (noteTitleArea.text.trim() !== "") {
                                 notesModel.append({
                                     title: noteTitleArea.text.trim(),
+                                    content: noteTextArea.text.trim(),
                                     createdAt: Qt.formatDateTime(new Date(), "yyyy-MM-dd")
                                 });
-                                //  notesModel.append({"title": noteTextArea.text.trim()})
 
                                 PopupUtils.close(noteDialog);
                             }
