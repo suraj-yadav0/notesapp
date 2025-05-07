@@ -260,7 +260,7 @@ MainView {
             title: "First Note"
             content: "This is my first note content."
             createdAt: "2025-04-28"
-            iconName: "note"
+            
         }
         ListElement {
             title: "Second Note"
