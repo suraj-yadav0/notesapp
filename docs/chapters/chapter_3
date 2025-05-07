@@ -13,16 +13,67 @@ Lets Add another `TextArea` for the for the `Title` of Our Notes. Lets also remo
 Replace the Component For the Adding new Notes with this Code :
 
 ```jsx
-Component {        id: noteDialogComponent
-        Dialog {            id: noteDialog
-            title: i18n.tr("Add New Note")            modal: true
-            ColumnLayout {                width: parent.width                spacing: units.gu(1)
-                TextArea {                    id: noteTitleArea                    Layout.fillWidth: true                    Layout.preferredHeight: units.gu(5)                    placeholderText: i18n.tr("Title of your Note...")                    autoSize: false                }
-                TextArea {                    id: noteTextArea                    Layout.fillWidth: true                    Layout.preferredHeight: units.gu(15)                    placeholderText: i18n.tr("Type your note here...")                }
-                RowLayout {                    Layout.fillWidth: true                    Layout.topMargin: units.gu(1)                    spacing: units.gu(1)
-                    Button {                        Layout.fillWidth: true                        text: i18n.tr("Cancel")                        onClicked: {                            PopupUtils.close(noteDialog);                        }                    }
-                    Button {                        Layout.fillWidth: true                        text: i18n.tr("Save")                        color: theme.palette.normal.positive                        onClicked: {                            if (noteTitleArea.text.trim() !== "") {                                notesModel.append({                                    title: noteTitleArea.text.trim(),                                    content: noteTextArea.text.trim(),                                    createdAt: Qt.formatDateTime(new Date(), "yyyy-MM-dd")                                });
-                                PopupUtils.close(noteDialog);                            }                        }                    }                }            }        }    }
+  Component {
+        id: noteDialogComponent
+
+        Dialog {
+            id: noteDialog
+
+            title: i18n.tr("Add New Note")
+            modal: true
+
+            ColumnLayout {
+                width: parent.width
+                spacing: units.gu(1)
+
+                TextArea {
+                    id: noteTitleArea
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: units.gu(5)
+                    placeholderText: i18n.tr("Title of your Note...")
+                    autoSize: false
+                }
+
+                TextArea {
+                    id: noteTextArea
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: units.gu(15)
+                    placeholderText: i18n.tr("Type your note here...")
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    Layout.topMargin: units.gu(1)
+                    spacing: units.gu(1)
+
+                    Button {
+                        Layout.fillWidth: true
+                        text: i18n.tr("Cancel")
+                        onClicked: {
+                            PopupUtils.close(noteDialog);
+                        }
+                    }
+
+                    Button {
+                        Layout.fillWidth: true
+                        text: i18n.tr("Save")
+                        color: theme.palette.normal.positive
+                        onClicked: {
+                            if (noteTitleArea.text.trim() !== "") {
+                                notesModel.append({
+                                    title: noteTitleArea.text.trim(),
+                                    content: noteTextArea.text.trim(),
+                                    createdAt: Qt.formatDateTime(new Date(), "yyyy-MM-dd")
+                                });
+
+                                PopupUtils.close(noteDialog);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 ```
 
 <aside>
@@ -32,7 +83,11 @@ The `modal: true` property ensures that the dialog captures all user input and p
 
 </aside>
 
+
+                   
+
 Image 3.1
+ ![notes3.1](screenshots/notes3.1.png)
 
 > Task 2
 > 
@@ -55,29 +110,30 @@ property var currentNote: ({title: "", content: "", createdAt: "", index: -1})
 Now Add this Code just below the `leadingActions` Button :
 
 ```jsx
-trailingActions: ListItemActions {
-actions: [
-Action {
-iconName: "edit"
-onTriggered: {
-// Set current note data
-currentNote = {
-title: model.title,
-content: model.content || "",
-createdAt: model.createdAt,
-index: index
-};
-// Open the edit page
-pageStack.push(noteEditPage);
-}
-}
-]
-}
+ trailingActions: ListItemActions {
+                        actions: [
+                            Action {
+                                iconName: "edit"
+                                onTriggered: {
+                                    // Set current note data
+                                    currentNote = {
+                                        title: model.title,
+                                        content: model.content || "",
+                                        createdAt: model.createdAt,
+                                        index: index
+                                    };
+                                    // Open the edit page
+                                    pageStack.push(noteEditPage);
+                                }
+                            }
+                        ]
+                    }
 ```
 
 Here when clicked or triggered `currentNote` is set to current `listitem’`s data be it `title,` `content` or `createdAt` or the `index` . 
 
 Image 3.2
+ ![notes3.2](screenshots/notes3.2.png)
 
 > Task 3
 > 
@@ -89,21 +145,21 @@ To implement this first of all wrap the `Page` with `PageStack` and give it a id
 Replace the `MouseArea` Code with this :
 
 ```jsx
-MouseArea {
-anchors.fill: parent
-onClicked: {
-console.log("Clicked on note:", model.title);
-// Set current note data
-currentNote = {
-title: model.title,
-content: model.content || "",
-createdAt: model.createdAt,
-index: index
-};
-// Navigate to note detail page
-pageStack.push(noteEditPage);
-}
-}
+   MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                console.log("Clicked on note:", model.title);
+                                // Set current note data
+                                currentNote = {
+                                    title: model.title,
+                                    content: model.content || "",
+                                    createdAt: model.createdAt,
+                                    index: index
+                                };
+                                // Navigate to note detail page
+                                pageStack.push(noteEditPage);
+                            }
+                        }
 ```
 
 So now When Clicked on the `ListItem` a new Page will be Pushed onto the `pageStack` and we will be able to view the `noteEditPage` (To be implemented).
@@ -201,5 +257,7 @@ In the Edit Form , there are two text forms. One for the title of the Note and o
 > 
 
 Now Your edit page should look something like this.
+
+ ![notes3.3](screenshots/notes3.3.png)
 
 Image 3.3

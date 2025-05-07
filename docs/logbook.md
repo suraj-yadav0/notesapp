@@ -247,7 +247,7 @@
 
     Now our app should look like this: 
 
-     ![notes1.3](screenshots/notes1.3.png)
+     
     
     notes1.3
 
@@ -417,7 +417,7 @@ Replace the `delegate` section with given code:
             }
 ```
 
-   ![notes2.2](screenshots/notes2.2.png)
+  
 
 This Feature adds a `delete` button when you slide the `ListView` Item from left to right
 
