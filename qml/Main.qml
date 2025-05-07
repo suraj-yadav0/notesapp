@@ -95,6 +95,26 @@ MainView {
                     ]
                 }
 
+
+                 trailingActions: ListItemActions {
+                        actions: [
+                            Action {
+                                iconName: "edit"
+                                onTriggered: {
+                                    // Set current note data
+                                    currentNote = {
+                                        title: model.title,
+                                        content: model.content || "",
+                                        createdAt: model.createdAt,
+                                        index: index
+                                    };
+                                    // Open the edit page
+                                    pageStack.push(noteEditPage);
+                                }
+                            }
+                        ]
+                    }
+
                 Rectangle {
                     anchors.fill: parent
                     radius: units.gu(1)
@@ -122,7 +142,18 @@ MainView {
                                 text: model.createdAt
                                 font.pixelSize: units.gu(2)
                             }
+                            
                         }
+
+                       Image {
+                                id: noteIcon
+                                source: model.iconName ? "icon://" + model.iconName : ""
+                                width: units.gu(3)
+                                height: units.gu(3)
+                                visible: model.iconName !== undefined
+                            }
+
+                       
                     }
 
                     MouseArea {
@@ -142,6 +173,7 @@ MainView {
         ListElement {
             title: "First Note"
             createdAt: "2025-04-28"
+            iconName: "note"
         }
         ListElement {
             title: "Second Note"
