@@ -178,7 +178,7 @@ MainView {
             }
         }
         
-        // Note edit page component
+       // Edit Note Page
         Page {
             id: noteEditPage
             visible: false
@@ -214,7 +214,7 @@ MainView {
                                     title: titleEditField.text,
                                     content: contentEditArea.text,
                                     createdAt: currentNote.createdAt,
-                                    iconName: notesModel.get(currentNote.index).iconName
+                                   
                                 });
                                 pageStack.pop();
                             }
