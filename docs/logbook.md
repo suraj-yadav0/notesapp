@@ -435,4 +435,4 @@ Next Features i should add :
 
 
 
-[Day 3](docs/chapters/chapter_3.md)
+[Day 3](chapters/chapter_3.md)
