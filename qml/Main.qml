@@ -30,15 +30,15 @@ MainView {
     width: units.gu(45)
     height: units.gu(75)
 
-    // Property to store the content of the note being edited
+    // This keeps the track of the current note being edited..
     property var currentNote: ({title: "", content: "", createdAt: "", index: -1})
     
-    // Main page stack
+    
     PageStack {
         id: pageStack
         Component.onCompleted: push(mainPage)
         
-        // Main notes list page
+        
         Page {
             id: mainPage
             anchors.fill: parent
@@ -90,6 +90,8 @@ MainView {
                     id: noteItem
                     height: units.gu(10)
 
+                    //leading action for delete functionality..
+
                     leadingActions: ListItemActions {
                         actions: [
                             Action {
@@ -101,7 +103,7 @@ MainView {
                         ]
                     }
                     
-                    // Add trailing actions for edit functionality
+                    // trailing actions for edit functionality..
                     trailingActions: ListItemActions {
                         actions: [
                             Action {
@@ -137,7 +139,7 @@ MainView {
                             Column {
                                 spacing: units.gu(0.5)
                                 anchors.verticalCenter: parent.verticalCenter
-                                width: parent.width - noteIcon.width - parent.spacing
+                                width: parent.width - parent.spacing
 
                                 Text {
                                     text: model.title
@@ -153,13 +155,7 @@ MainView {
                                 
                             }
 
-                            Image {
-                                id: noteIcon
-                                source: model.iconName ? "icon://" + model.iconName : ""
-                                width: units.gu(3)
-                                height: units.gu(3)
-                                visible: model.iconName !== undefined
-                            }
+                          
                         }
 
                         MouseArea {
