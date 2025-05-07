@@ -171,9 +171,9 @@ Then Also Resolved some Inconsistency in the UI. Learning `QML` through document
 Next Features i should add :
 
 - [ ]  Adding sqlite3
-- [ ]  Adding a Edit Button
-- [ ]  Improve Model Of Notes , Add a Content Section
-- [ ]  Improve the Notes Add Section
+- [x]  Adding a Edit Button
+- [x]  Improve Model Of Notes , Add a Content Section
+- [x]  Improve the Notes Add Section
 - [ ]  Test For Convergence
 - [ ]  Test For Dark-Mode Compatibility
 - [ ]  Refactor code for Modularity
