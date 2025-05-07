@@ -85,7 +85,7 @@ The `modal: true` property ensures that the dialog captures all user input and p
 
 
                    
-![notes3.1](docs/screenshots/notes3.3.png)
+![notes3.1](/docs/screenshots/notes3.3.png)
 Image 3.1
 
 
@@ -133,7 +133,7 @@ Now Add this Code just below the `leadingActions` Button :
 Here when clicked or triggered `currentNote` is set to current `listitem’`s data be it `title,` `content` or `createdAt` or the `index` . 
 
 Image 3.2
- ![notes3.2](screenshots/notes3.2.png)
+ ![notes3.2](/docs/screenshots/notes3.2.png)
 
 > Task 3
 > 
@@ -258,6 +258,6 @@ In the Edit Form , there are two text forms. One for the title of the Note and o
 
 Now Your edit page should look something like this.
 
- ![notes3.3](screenshots/notes3.3.png)
+ ![notes3.3](/docs/screenshots/notes3.3.png)
 
 Image 3.3
