@@ -85,9 +85,9 @@ The `modal: true` property ensures that the dialog captures all user input and p
 
 
                    
-
+![notes3.1](docs/screenshots/notes3.3.png)
 Image 3.1
- ![notes3.1](screenshots/notes3.1.png)
+
 
 > Task 2
 > 

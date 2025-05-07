@@ -432,3 +432,7 @@ Next Features i should add :
 - [ ]  Test For Convergence
 - [ ]  Test For Dark-Mode Compatibility
 - [ ]  Refactor code for Modularity
+
+
+
+[Day 3](docs/chapters/chapter_3.md)
