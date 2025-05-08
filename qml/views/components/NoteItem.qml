@@ -12,6 +12,7 @@ ListItem {
     property string content
     property string createdAt
     property int noteIndex
+    property var dateHelper
     
     // Signals
     signal noteSelected(int index)
@@ -68,7 +69,7 @@ ListItem {
                 }
                 
                 Text {
-                    text: noteItem.createdAt
+                    text: dateHelper ? dateHelper.timeAgo(noteItem.createdAt) : noteItem.createdAt
                     font.pixelSize: units.gu(2)
                 }
             }

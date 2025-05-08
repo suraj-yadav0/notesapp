@@ -11,7 +11,7 @@ Item {
     property var currentNote: ({ title: "", content: "", createdAt: "", index: -1 })
     
     // Signal when the current note changes
-    signal currentNoteChanged()
+    //signal currentNoteChanged()
     
     // Create a new note
     function createNote(title, content) {
