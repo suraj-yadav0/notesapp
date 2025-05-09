@@ -390,5 +390,11 @@ We get the context about which note to edit , from the controller which we acces
 At last we have a connections element , which we are using to handle a signal which is out of scope for our current `qml` file. Here we have defined the target as `controller` and `signal` as `onCurrentNoteChanged` and defines what to do when it is invoked, basically just changing the title and content of the note. 
 
 ```jsx
-      Connections {        target: controller        onCurrentNoteChanged: {            titleEditField.text = controller.currentNote.title;            contentEditArea.text = controller.currentNote.content;        }    }
+       Connections {
+        target: controller
+        onCurrentNoteChanged: {
+            titleEditField.text = controller.currentNote.title;
+            contentEditArea.text = controller.currentNote.content;
+        }
+    }
 ```
