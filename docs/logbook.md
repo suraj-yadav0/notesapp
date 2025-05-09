@@ -16,3 +16,5 @@
 [- Day 3 (Chapter 3)](chapters/chapter_3.md)
 
 [- Day 4 (Chapter 4)](chapters/chapter_4.md)
+
+[- Day 5 (Chapter 5)](chapters/chapter_5.md)
