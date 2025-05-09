@@ -7,11 +7,6 @@ import Ubuntu.Components.Popups 1.3
 Dialog {
     id: noteDialog
     
-    // // Properties - determine if we're adding or editing
-    // property bool isEditing: false
-    // property string initialTitle: ""
-    // property string initialContent: ""
-    
     // Signals
     signal saveRequested(string title, string content)
     signal cancelRequested()

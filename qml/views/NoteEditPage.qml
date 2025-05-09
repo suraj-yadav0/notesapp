@@ -74,7 +74,7 @@ Page {
         }
     }
     
-    // Update fields when current note changes
+    
     Connections {
         target: controller
         onCurrentNoteChanged: {
