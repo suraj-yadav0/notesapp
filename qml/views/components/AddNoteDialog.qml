@@ -7,16 +7,16 @@ import Ubuntu.Components.Popups 1.3
 Dialog {
     id: noteDialog
     
-    // Properties - determine if we're adding or editing
-    property bool isEditing: false
-    property string initialTitle: ""
-    property string initialContent: ""
+    // // Properties - determine if we're adding or editing
+    // property bool isEditing: false
+    // property string initialTitle: ""
+    // property string initialContent: ""
     
     // Signals
     signal saveRequested(string title, string content)
     signal cancelRequested()
     
-    title: isEditing ? i18n.tr("Edit Note") : i18n.tr("Add New Note")
+    title: i18n.tr("Add New Note")
     modal: true
     
     ColumnLayout {
@@ -29,7 +29,7 @@ Dialog {
             Layout.preferredHeight: units.gu(5)
             placeholderText: i18n.tr("Title of your Note...")
             autoSize: false
-            text: initialTitle
+            text: ""
         }
         
         TextArea {
@@ -37,7 +37,7 @@ Dialog {
             Layout.fillWidth: true
             Layout.preferredHeight: units.gu(15)
             placeholderText: i18n.tr("Type your note here...")
-            text: initialContent
+            text: ""
         }
         
         RowLayout {
