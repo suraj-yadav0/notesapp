@@ -2,6 +2,7 @@ import QtQuick 2.7
 import Lomiri.Components 1.3
 import Ubuntu.Components.Popups 1.3
 import "components"
+import "practice"
 
 // Main page displaying the list of notes
 Page {
@@ -39,6 +40,15 @@ Page {
                         dialog.saveRequested.connect(function(title, content) {
                             controller.createNote(title, content);
                         });
+                    }
+                },
+
+                Action {
+                    iconName: "search"
+                    text: i18n.tr("Add Note")
+                    onTriggered: {
+                        var dialog = PopupUtils.open(Qt.resolvedUrl("practice/first.qml"));
+                        
                     }
                 }
             ]
