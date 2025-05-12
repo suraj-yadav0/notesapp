@@ -1,14 +1,15 @@
 import QtQuick 2.7
+import QtQuick.Controls 2.2 as QQC2
 import Lomiri.Components 1.3
 
 // Page for editing a note
 Page {
     id: noteEditPage
     
-    // Properties to be set from outside
+    
     property var controller
     
-    // Signal when navigation back is requested
+    
     signal backRequested()
     
     visible: false
@@ -62,6 +63,7 @@ Page {
             width: parent.width
             placeholderText: i18n.tr("Title")
             text: controller.currentNote.title
+          //  textFormat: Text.RichText
         }
         
         TextArea {
@@ -70,9 +72,61 @@ Page {
             height: parent.height - titleEditField.height - parent.spacing
             placeholderText: i18n.tr("Note content...")
             text: controller.currentNote.content
+            textFormat: Text.RichText
             autoSize: false
         }
     }
+
+
+    Rectangle {
+                    id: formatToolbar
+                    width: parent.width
+                    height: units.gu(5)
+                    color: "#f5f5f5"
+                    
+                    Row {
+                        anchors.centerIn: parent
+                        spacing: units.gu(1)
+                        
+                        Button {
+                            width: units.gu(4)
+                            height: units.gu(4)
+                            text: "B"
+                            font.bold: true
+                            onClicked: richTextEditor.runJavaScript("formatText('bold', true);")
+                        }
+                        
+                        Button {
+                            width: units.gu(4)
+                            height: units.gu(4)
+                            text: "I"
+                            font.italic: true
+                            onClicked: richTextEditor.runJavaScript("formatText('italic', true);")
+                        }
+                        
+                        Button {
+                            width: units.gu(4)
+                            height: units.gu(4)
+                            text: "U"
+                            font.underline: true
+                            onClicked: richTextEditor.runJavaScript("formatText('underline', true);")
+                        }
+                        
+                        Button {
+                            width: units.gu(5)
+                            height: units.gu(4)
+                            text: "List"
+                            onClicked: richTextEditor.runJavaScript("formatText('list', 'bullet');")
+                        }
+                        
+                        Button {
+                            width: units.gu(5)
+                            height: units.gu(4)
+                            text: "H1"
+                            onClicked: richTextEditor.runJavaScript("formatText('header', 1);")
+                        }
+                    }
+                }
     
     
     Connections {

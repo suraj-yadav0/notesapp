@@ -2,12 +2,13 @@ import QtQuick 2.7
 import Lomiri.Components 1.3
 import QtQuick.Layouts 1.3
 import Ubuntu.Components.Popups 1.3
+import QtQuick.Controls 2.2 as QQC2
 
 // Dialog for adding or editing notes
 Dialog {
     id: noteDialog
     
-    // Signals
+    
     signal saveRequested(string title, string content)
     signal cancelRequested()
     
