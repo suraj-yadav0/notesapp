@@ -1,6 +1,6 @@
 import QtQuick 2.7
 
-// Controller to handle business logic for notes operations
+// Controller to handle business logic 
 Item {
     id: notesController
     
@@ -8,7 +8,7 @@ Item {
     property var model
     
     // Property to keep track of the currently selected note
-    property var currentNote: ({ title: "", content: "", createdAt: "", index: -1 })
+    property var currentNote: ({ title: "", content: "", htmlContent:"" ,createdAt: "", index: -1 })
     
     // Signal when the current note changes
     //signal currentNoteChanged()

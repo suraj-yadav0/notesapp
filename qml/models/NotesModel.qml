@@ -46,6 +46,7 @@ Item {
         notes.append({
             title: title,
             content: content,
+           
             createdAt: Qt.formatDateTime(new Date(), "yyyy-MM-dd")
         });
         saveNotes();
@@ -75,6 +76,7 @@ Item {
             return {
                 title: note.title,
                 content: note.content,
+                htmlContent: note.htmlContent || "",
                 createdAt: note.createdAt,
                 index: index
             };
