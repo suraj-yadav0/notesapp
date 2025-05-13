@@ -1,30 +1,30 @@
 import QtQuick 2.7
 
-// Controller to handle business logic 
+
 Item {
     id: notesController
     
     // Reference to the model (will be set externally)
     property var model
     
-    // Property to keep track of the currently selected note
-    property var currentNote: ({ title: "", content: "", htmlContent:"" ,createdAt: "", index: -1 })
+   
+    property var currentNote: ({ title: "", content: "",createdAt: "", index: -1 })
     
-    // Signal when the current note changes
+    // Signal when the current note changes, it causes error , will fix later
     //signal currentNoteChanged()
     
     // Create a new note
     function createNote(title, content) {
         if (title.trim() === "") return false;
         
-        var index = model.addNote(title.trim(), content.trim());
+        var index = model.addNote(title.trim(), content, isRichText);
         return index;
     }
     
     // Update an existing note
     function updateCurrentNote(title, content) {
         if (currentNote.index >= 0 && title.trim() !== "") {
-            model.updateNote(currentNote.index, title.trim(), content.trim());
+            model.updateNote(currentNote.index, title.trim(), content, isRichText);
             return true;
         }
         return false;
