@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notesapp.surajyadav\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-13 06:57+0000\n"
+"POT-Creation-Date: 2025-05-13 07:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,20 +29,25 @@ msgstr ""
 msgid "Add Note"
 msgstr ""
 
-#: ../qml/views/NoteEditPage.qml:19
+#: ../qml/views/NoteEditPage.qml:20
 msgid "Edit Note"
 msgstr ""
 
-#: ../qml/views/NoteEditPage.qml:40
+#: ../qml/views/NoteEditPage.qml:41
 #: ../qml/views/components/AddNoteDialog.qml:106
 msgid "Save"
 msgstr ""
 
-#: ../qml/views/NoteEditPage.qml:64
+#: ../qml/views/NoteEditPage.qml:70
 msgid "Title"
 msgstr ""
 
-#: ../qml/views/NoteEditPage.qml:73
+#: ../qml/views/NoteEditPage.qml:80
+#: ../qml/views/components/AddNoteDialog.qml:42
+msgid "Rich Text:"
+msgstr ""
+
+#: ../qml/views/NoteEditPage.qml:100
 msgid "Note content..."
 msgstr ""
 
@@ -52,10 +57,6 @@ msgstr ""
 
 #: ../qml/views/components/AddNoteDialog.qml:32
 msgid "Title of your Note..."
-msgstr ""
-
-#: ../qml/views/components/AddNoteDialog.qml:42
-msgid "Rich Text:"
 msgstr ""
 
 #: ../qml/views/components/AddNoteDialog.qml:62

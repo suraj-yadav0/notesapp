@@ -14,7 +14,7 @@ Item {
     property int fontSize: units.gu(2)
     
     // Signals
-    signal textChanged(string text)
+    //signal textChanged(string text)
     
     // Exposed functions
     function selectAll() {
