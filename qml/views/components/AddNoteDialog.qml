@@ -7,9 +7,15 @@ import QtQuick.Controls 2.2 as QQC2
 // Dialog for adding or editing notes
 Dialog {
     id: noteDialog
+
+
+    property bool isEditing: false
+    property string initialTitle: ""
+    property string initialContent: ""
+    property bool isRichText: false
     
     
-    signal saveRequested(string title, string content)
+    signal saveRequested(string title, string content, bool isRichText)
     signal cancelRequested()
     
     title: i18n.tr("Add New Note")
@@ -27,6 +33,27 @@ Dialog {
             autoSize: false
             text: ""
         }
+
+        Row {
+            Layout.fillWidth: true
+            spacing: units.gu(1)
+            
+            Label {
+                text: i18n.tr("Rich Text:")
+                anchors.verticalCenter: parent.verticalCenter
+            }
+            
+            Switch {
+                id: richTextSwitch
+                checked: isRichText
+                anchors.verticalCenter: parent.verticalCenter
+            }
+        }
+
+         Item {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.preferredHeight: units.gu(20)
         
         TextArea {
             id: noteTextArea
@@ -34,7 +61,31 @@ Dialog {
             Layout.preferredHeight: units.gu(15)
             placeholderText: i18n.tr("Type your note here...")
             text: ""
+            visible: !richTextSwitch.checked
         }
+
+          Loader {
+                id: richTextLoader
+                anchors.fill: parent
+                active: richTextSwitch.checked
+                visible: richTextSwitch.checked
+                
+                sourceComponent: Component {
+                    RichTextEditor {
+                        text: initialContent
+                        editMode: true
+                    }
+                }
+                
+                onLoaded: {
+                    if (initialContent && richTextSwitch.checked) {
+                        item.text = initialContent;
+                    }
+                }
+            }
+        }
+        
+
         
         RowLayout {
             Layout.fillWidth: true

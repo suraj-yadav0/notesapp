@@ -8,11 +8,11 @@ import "practice"
 Page {
     id: mainPage
     
-    // Properties to be set from outside
+    
     property var controller
     property var notesModel
     
-    // Signal when note editing is requested
+    
     signal editNoteRequested(int index)
     
     anchors.fill: parent
@@ -76,6 +76,7 @@ Page {
             content: model.content || ""
             createdAt: model.createdAt
             noteIndex: index
+            isRichText: model.isRichText || false
             
             onNoteSelected: {
                 controller.setCurrentNote(index);
