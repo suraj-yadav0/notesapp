@@ -69,8 +69,32 @@ ListItem {
                 }
                 
                 Text {
-                    text: dateHelper ? dateHelper.timeAgo(noteItem.createdAt) : noteItem.createdAt
-                    font.pixelSize: units.gu(2)
+                    text: noteItem.createdAt
+                    font.pixelSize: units.gu(1)
+                    color: "#666666"
+                }
+                
+                // Preview of content - handles rich text
+                Text {
+                    width: parent.width
+                    maximumLineCount: 2
+                    elide: Text.ElideRight
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: units.gu(1.8)
+                    
+                    // Display either as rich text or plain text
+                    text: noteItem.isRichText ? 
+                          noteItem.content : 
+                          noteItem.content.length > 100 ? 
+                          noteItem.content.substring(0, 100) + "..." : 
+                          noteItem.content
+                    
+                    textFormat: noteItem.isRichText ? Text.RichText : Text.PlainText
+                    
+                    // Strip HTML tags for display when needed
+                    function stripHtml(html) {
+                        return html.replace(/<[^>]*>/g, '');
+                    }
                 }
             }
         }
