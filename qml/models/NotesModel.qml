@@ -44,24 +44,31 @@ Item {
         }
     }
 
-    // Function to add a new note
-    function addNote(title, content) {
+    // Function to add 
+    function addNote(title, content, isRichText = false) {
         notes.append({
             title: title,
             content: content,
            
-            createdAt: Qt.formatDateTime(new Date(), "yyyy-MM-dd")
+            createdAt: Qt.formatDateTime(new Date(), "yyyy-MM-dd"),
+
+            isRichText: isRichText
         });
         saveNotes();
         return notes.count - 1;
     }
 
-    // Function to update an existing note
-    function updateNote(index, title, content) {
+    // Function to update 
+    function updateNote(index, title, content,isRichText = null) {
+        var note = notes.get(index);
+        //if richtext is not null, Kepp the Value
+        var updatedIsRichText = isRichText === null ? note.isRichText : isRichText;
+
         notes.set(index, {
             title: title,
             content: content,
-            createdAt: notes.get(index).createdAt
+            createdAt: notes.get(index).createdAt,
+            isRichText: updatedIsRichText
         });
         saveNotes();
     }
@@ -79,7 +86,7 @@ Item {
             return {
                 title: note.title,
                 content: note.content,
-                htmlContent: note.htmlContent || "",
+                isRichText: note.isRichText || false,
                 createdAt: note.createdAt,
                 index: index
             };
@@ -95,7 +102,8 @@ Item {
             notesArray.push({
                 title: note.title,
                 content: note.content,
-                createdAt: note.createdAt
+                createdAt: note.createdAt, 
+                isRichText: note.isRichText || false
             });
         }
         notesSettings.savedNotes = notesArray;
@@ -108,6 +116,10 @@ Item {
             notes.clear();
             for (var i = 0; i < savedNotesArray.length; i++) {
                 var note = savedNotesArray[i];
+                
+                 if (typeof note.isRichText === 'undefined') {
+                    note.isRichText = false;
+                }
                 notes.append(note);
             }
         }
