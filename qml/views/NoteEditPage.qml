@@ -1,15 +1,16 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.2 as QQC2
 import Lomiri.Components 1.3
+import QtQuick.Layouts 1.3
+import "components"
 
 // Page for editing a note
 Page {
     id: noteEditPage
     
-    
+    // Properties to be set from outside
     property var controller
     
-    
+    // Signal when navigation back is requested
     signal backRequested()
     
     visible: false
@@ -39,7 +40,11 @@ Page {
                 iconName: "ok"
                 text: i18n.tr("Save")
                 onTriggered: {
-                    if (controller.updateCurrentNote(titleEditField.text, contentEditArea.text)) {
+                    var content = isRichTextSwitch.checked ? 
+                                  richTextLoader.item.text : 
+                                  plainTextArea.text;
+                    
+                    if (controller.updateCurrentNote(titleEditField.text, content, isRichTextSwitch.checked)) {
                         backRequested();
                     }
                 }
@@ -49,6 +54,7 @@ Page {
     
     // Edit form
     Column {
+        id: editForm
         anchors {
             top: editHeader.bottom
             left: parent.left
@@ -63,77 +69,76 @@ Page {
             width: parent.width
             placeholderText: i18n.tr("Title")
             text: controller.currentNote.title
-          //  textFormat: Text.RichText
         }
         
-        TextArea {
-            id: contentEditArea
+        // Toggle for rich text format
+        Row {
             width: parent.width
-            height: parent.height - titleEditField.height - parent.spacing
-            placeholderText: i18n.tr("Note content...")
-            text: controller.currentNote.content
-            textFormat: Text.RichText
-            autoSize: false
+            spacing: units.gu(1)
+            
+            Label {
+                text: i18n.tr("Rich Text:")
+                anchors.verticalCenter: parent.verticalCenter
+            }
+            
+            Switch {
+                id: isRichTextSwitch
+                checked: controller.currentNote.isRichText || false
+                anchors.verticalCenter: parent.verticalCenter
+            }
         }
-    }
-
-
-    Rectangle {
-                    id: formatToolbar
-                    width: parent.width
-                    height: units.gu(5)
-                    color: "#f5f5f5"
-                    
-                    Row {
-                        anchors.centerIn: parent
-                        spacing: units.gu(1)
-                        
-                        Button {
-                            width: units.gu(4)
-                            height: units.gu(4)
-                            text: "B"
-                            font.bold: true
-                            onClicked: richTextEditor.runJavaScript("formatText('bold', true);")
-                        }
-                        
-                        Button {
-                            width: units.gu(4)
-                            height: units.gu(4)
-                            text: "I"
-                            font.italic: true
-                            onClicked: richTextEditor.runJavaScript("formatText('italic', true);")
-                        }
-                        
-                        Button {
-                            width: units.gu(4)
-                            height: units.gu(4)
-                            text: "U"
-                            font.underline: true
-                            onClicked: richTextEditor.runJavaScript("formatText('underline', true);")
-                        }
-                        
-                        Button {
-                            width: units.gu(5)
-                            height: units.gu(4)
-                            text: "List"
-                            onClicked: richTextEditor.runJavaScript("formatText('list', 'bullet');")
-                        }
-                        
-                        Button {
-                            width: units.gu(5)
-                            height: units.gu(4)
-                            text: "H1"
-                            onClicked: richTextEditor.runJavaScript("formatText('header', 1);")
-                        }
+        
+        // Content area with rich/plain text switch
+        Item {
+            width: parent.width
+            height: parent.height - titleEditField.height - parent.spacing*2 - isRichTextSwitch.height
+            
+            // Standard text area for plain text
+            TextArea {
+                id: plainTextArea
+                anchors.fill: parent
+                placeholderText: i18n.tr("Note content...")
+                text: controller.currentNote.content
+                autoSize: false
+                visible: !isRichTextSwitch.checked
+            }
+            
+            // Rich text editor
+            Loader {
+                id: richTextLoader
+                anchors.fill: parent
+                active: isRichTextSwitch.checked
+                visible: isRichTextSwitch.checked
+                
+                sourceComponent: Component {
+                    RichTextEditor {
+                        editMode: true
                     }
                 }
+                
+                onLoaded: {
+                    if (controller.currentNote.content) {
+                        item.text = controller.currentNote.content;
+                    }
+                }
+            }
+        }
+    }
     
-    
+    // Update fields when current note changes
     Connections {
         target: controller
         onCurrentNoteChanged: {
             titleEditField.text = controller.currentNote.title;
-            contentEditArea.text = controller.currentNote.content;
+            
+            // Update appropriate editor based on content type
+            isRichTextSwitch.checked = controller.currentNote.isRichText || false;
+            
+            if (isRichTextSwitch.checked && richTextLoader.item) {
+                richTextLoader.item.text = controller.currentNote.content;
+            } else {
+                plainTextArea.text = controller.currentNote.content;
+            }
         }
     }
 }
