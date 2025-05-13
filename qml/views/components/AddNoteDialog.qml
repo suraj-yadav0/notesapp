@@ -2,23 +2,23 @@ import QtQuick 2.7
 import Lomiri.Components 1.3
 import QtQuick.Layouts 1.3
 import Ubuntu.Components.Popups 1.3
-import QtQuick.Controls 2.2 as QQC2
+import "."
 
 // Dialog for adding or editing notes
 Dialog {
     id: noteDialog
-
-
+    
+    // Properties - determine if we're adding or editing
     property bool isEditing: false
     property string initialTitle: ""
     property string initialContent: ""
     property bool isRichText: false
     
-    
+    // Signals
     signal saveRequested(string title, string content, bool isRichText)
     signal cancelRequested()
     
-    title: i18n.tr("Add New Note")
+    title: isEditing ? i18n.tr("Edit Note") : i18n.tr("Add New Note")
     modal: true
     
     ColumnLayout {
@@ -31,9 +31,10 @@ Dialog {
             Layout.preferredHeight: units.gu(5)
             placeholderText: i18n.tr("Title of your Note...")
             autoSize: false
-            text: ""
+            text: initialTitle
         }
-
+        
+        // Toggle for rich text format
         Row {
             Layout.fillWidth: true
             spacing: units.gu(1)
@@ -49,22 +50,24 @@ Dialog {
                 anchors.verticalCenter: parent.verticalCenter
             }
         }
-
-         Item {
+        
+        // Different editor components depending on whether rich text is enabled
+        Item {
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.preferredHeight: units.gu(20)
-        
-        TextArea {
-            id: noteTextArea
-            Layout.fillWidth: true
-            Layout.preferredHeight: units.gu(15)
-            placeholderText: i18n.tr("Type your note here...")
-            text: ""
-            visible: !richTextSwitch.checked
-        }
-
-          Loader {
+            
+            // Standard TextArea for plain text
+            TextArea {
+                id: plainTextArea
+                anchors.fill: parent
+                placeholderText: i18n.tr("Type your note here...")
+                text: initialContent
+                visible: !richTextSwitch.checked
+            }
+            
+            // Rich text editor component
+            Loader {
                 id: richTextLoader
                 anchors.fill: parent
                 active: richTextSwitch.checked
@@ -84,8 +87,6 @@ Dialog {
                 }
             }
         }
-        
-
         
         RowLayout {
             Layout.fillWidth: true
@@ -107,7 +108,12 @@ Dialog {
                 color: theme.palette.normal.positive
                 onClicked: {
                     if (noteTitleArea.text.trim() !== "") {
-                        saveRequested(noteTitleArea.text, noteTextArea.text);
+                        // Get content from either rich or plain text editor
+                        var content = richTextSwitch.checked ? 
+                                      richTextLoader.item.text : 
+                                      plainTextArea.text;
+                        
+                        saveRequested(noteTitleArea.text, content, richTextSwitch.checked);
                         PopupUtils.close(noteDialog);
                     }
                 }
