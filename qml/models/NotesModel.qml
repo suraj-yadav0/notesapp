@@ -5,7 +5,7 @@ import Qt.labs.settings 1.0
 Item {
     id: notesModel
 
-    // Property to store notes as a ListModel
+   
     property ListModel notes: ListModel {
         id: notesListModel
 
@@ -15,17 +15,20 @@ Item {
                 append({
                     title: "First Note",
                     content: "This is my first note content.",
-                    createdAt: "2025-04-28"
+                    createdAt: "2025-04-28",
+                    isRichText: false
                 });
                 append({
                     title: "Second Note",
                     content: "Some content for the second note.",
-                    createdAt: "2025-04-27"
+                    createdAt: "2025-04-27",
+                    isRichText: false
                 });
                 append({
                     title: "Meeting Notes",
                     content: "Discuss project timeline\n- Feature prioritization\n- Budget allocation",
-                    createdAt: "2025-04-26"
+                    createdAt: "2025-04-26",
+                    isRichText: false
                 });
             }
         }
