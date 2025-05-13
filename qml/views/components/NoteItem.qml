@@ -12,7 +12,7 @@ ListItem {
     property string content
     property string createdAt
     property int noteIndex
-    property var dateHelper
+    property bool isRichText: false
     
     // Signals
     signal noteSelected(int index)
