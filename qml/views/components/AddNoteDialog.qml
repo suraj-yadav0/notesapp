@@ -65,7 +65,17 @@ Dialog {
                 text: initialContent
                 visible: !richTextSwitch.checked
             }
-            
+
+            // Rectangle border for rich text editor
+            Rectangle {
+                anchors.fill: parent
+                
+                visible: richTextSwitch.checked
+                border.width: 1
+                border.color: "#CCCCCC"
+                radius: units.gu(0.5)
+                height: parent.height - units.gu(5)
+            }
             // Rich text editor component
             Loader {
                 id: richTextLoader

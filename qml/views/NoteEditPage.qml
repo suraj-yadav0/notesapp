@@ -111,6 +111,7 @@ Page {
                 anchors.fill: parent
                 active: isRichTextSwitch.checked
                 visible: isRichTextSwitch.checked
+               
                 
                 sourceComponent: Component {
                     RichTextEditor {
