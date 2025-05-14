@@ -23,7 +23,7 @@ Dialog {
     
     ColumnLayout {
         width: parent.width
-        spacing: units.gu(1)
+        spacing: units.gu(1.5)
         
         TextArea {
             id: noteTitleArea
@@ -67,6 +67,8 @@ Dialog {
             }
 
             // Rectangle border for rich text editor
+        
+            
             Rectangle {
                 anchors.fill: parent
                 
@@ -75,6 +77,9 @@ Dialog {
                 border.color: "#CCCCCC"
                 radius: units.gu(0.5)
                 height: parent.height - units.gu(5)
+                
+                // Use this instead of padding which is not available
+                anchors.margins: units.gu(-1)
             }
             // Rich text editor component
             Loader {
