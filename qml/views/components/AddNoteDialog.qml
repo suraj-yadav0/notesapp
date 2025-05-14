@@ -75,14 +75,25 @@ Dialog {
                 
                 sourceComponent: Component {
                     RichTextEditor {
-                        text: initialContent
+                        id: richTextEditor
                         editMode: true
                     }
                 }
                 
                 onLoaded: {
-                    if (initialContent && richTextSwitch.checked) {
+                    // Set text content after the component is loaded
+                    if (richTextSwitch.checked) {
                         item.text = initialContent;
+                    }
+                }
+            }
+            
+            // Update rich text when switching modes
+            Connections {
+                target: richTextSwitch
+                onCheckedChanged: {
+                    if (richTextSwitch.checked && richTextLoader.status === Loader.Ready) {
+                        richTextLoader.item.text = initialContent || plainTextArea.text;
                     }
                 }
             }

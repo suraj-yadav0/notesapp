@@ -8,7 +8,7 @@ Item {
     property var model
     
    
-    property var currentNote: ({ title: "", content: "",createdAt: "", index: -1 ,isRichText: false })
+    property var currentNote: ({ title: "", content: "",createdAt: "", index: -1 })
     
     // Signal when the current note changes, it causes error , will fix later
     //signal currentNoteChanged()
