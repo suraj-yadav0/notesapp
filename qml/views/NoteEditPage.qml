@@ -104,6 +104,18 @@ Page {
             }
             
             // Rich text editor
+             Rectangle {
+                anchors.fill: parent
+                
+                visible: isRichTextSwitch.checked
+                border.width: 1
+                border.color: "#CCCCCC"
+                radius: units.gu(0.5)
+                height: parent.height - units.gu(5)
+                
+                // Use this instead of padding which is not available
+                anchors.margins: units.gu(-1)
+            }
 
             
             Loader {
