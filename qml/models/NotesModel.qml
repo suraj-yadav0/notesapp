@@ -86,8 +86,8 @@ Item {
             return {
                 title: note.title,
                 content: note.content,
-                isRichText: note.isRichText || false,
                 createdAt: note.createdAt,
+                isRichText: note.isRichText || false,
                 index: index
             };
         }

@@ -8,7 +8,7 @@ Item {
     property var model
     
    
-    property var currentNote: ({ title: "", content: "",createdAt: "", index: -1 })
+    property var currentNote: ({ title: "", content: "",createdAt: "", index: -1 ,isRichText: false })
     
     // Signal when the current note changes, it causes error , will fix later
     //signal currentNoteChanged()
@@ -22,7 +22,7 @@ Item {
     }
     
     // Update an existing note
-    function updateCurrentNote(title, content) {
+    function updateCurrentNote(title, content, isRichText = null) {
         if (currentNote.index >= 0 && title.trim() !== "") {
             model.updateNote(currentNote.index, title.trim(), content, isRichText);
             return true;

@@ -109,10 +109,14 @@ Dialog {
                 onClicked: {
                     if (noteTitleArea.text.trim() !== "") {
                         // Get content from either rich or plain text editor
-                        var content = richTextSwitch.checked ? 
-                                      richTextLoader.item.text : 
-                                      plainTextArea.text;
+                        var content;
+                        if (richTextSwitch.checked && richTextLoader.status === Loader.Ready) {
+                            content = richTextLoader.item.text;
+                        } else {
+                            content = plainTextArea.text;
+                        }
                         
+                        console.log("Saving note - Title: " + noteTitleArea.text + ", Content length: " + content.length);
                         saveRequested(noteTitleArea.text, content, richTextSwitch.checked);
                         PopupUtils.close(noteDialog);
                     }

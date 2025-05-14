@@ -83,15 +83,15 @@ Item {
                     }
                 }
                 
-                // List button
-                // Button {
-                //     width: units.gu(4)
-                //     height: units.gu(4)
-                //     text: "• List"
-                //     onClicked: {
-                //         insertList();
-                //     }
-                // }
+               // List button
+                Button {
+                    width: units.gu(4)
+                    height: units.gu(4)
+                    text: "• List"
+                    onClicked: {
+                        insertList();
+                    }
+                }
                 
                 // Clear formatting
                 Button {
