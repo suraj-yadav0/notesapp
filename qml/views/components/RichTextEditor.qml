@@ -14,7 +14,7 @@ Item {
     property int fontSize: units.gu(2)
     
     // Signals
-    //signal textChanged(string text)
+    signal contentChanged(string text)
     
     // Exposed functions
     function selectAll() {
@@ -136,7 +136,7 @@ Item {
                 font.pixelSize: richTextEditor.fontSize
                 
                 onCursorRectangleChanged: textFlick.ensureVisible(cursorRectangle)
-                onTextChanged: richTextEditor.textChanged(text)
+                onTextChanged: richTextEditor.contentChanged(text)
             }
         }
     }
