@@ -14,7 +14,7 @@ Item {
     //signal currentNoteChanged()
     
     // Create a new note
-    function createNote(title, content) {
+    function createNote(title, content, isRichText ) {
         if (title.trim() === "") return false;
         
         var index = model.addNote(title.trim(), content, isRichText);
