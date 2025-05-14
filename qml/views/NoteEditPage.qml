@@ -41,7 +41,7 @@ Page {
                 text: i18n.tr("Save")
                 onTriggered: {
                     var content = isRichTextSwitch.checked ? 
-                                  richTextLoader.item.text : 
+                                  richTextLoader.item.children[1].children[0].text : 
                                   plainTextArea.text;
                     
                     if (controller.updateCurrentNote(titleEditField.text, content, isRichTextSwitch.checked)) {
@@ -111,14 +111,37 @@ Page {
                 visible: isRichTextSwitch.checked
                 
                 sourceComponent: Component {
-                    RichTextEditor {
-                        editMode: true
+                    Column {
+                        spacing: units.gu(1)
+                        width: parent.width
+                        height: parent.height
+                        
+                      
+                        
+                        // Editor with border
+                        Rectangle {
+                            width: parent.width
+                            height: parent.height - units.gu(5)
+                            border.width: 1
+                            border.color: "#CCCCCC"
+                            radius: units.gu(0.5)
+                            
+                            RichTextEditor {
+                                id: richTextEditor
+                                anchors {
+                                    fill: parent
+                                    margins: units.gu(1)
+                                }
+                                editMode: true
+                                property string text: ""
+                            }
+                        }
                     }
                 }
                 
                 onLoaded: {
                     if (controller.currentNote.content) {
-                        item.text = controller.currentNote.content;
+                        item.children[1].children[0].text = controller.currentNote.content;
                     }
                 }
             }
