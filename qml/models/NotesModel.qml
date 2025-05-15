@@ -45,22 +45,21 @@ Item {
     }
 
     // Function to add 
-    function addNote(title, content, isRichText = false,selected) {
+    function addNote(title, content, isRichText = false) {
         notes.append({
             title: title,
             content: content,
            
             createdAt: Qt.formatDateTime(new Date(), "yyyy-MM-dd"),
 
-            isRichText: isRichText,
-            selected : selected
+            isRichText: isRichText
         });
         saveNotes();
         return notes.count - 1;
     }
 
     // Function to update 
-    function updateNote(index, title, content,isRichText = null,selected = false) {
+    function updateNote(index, title, content,isRichText = null) {
         var note = notes.get(index);
         //if richtext is not null, Kepp the Value
         var updatedIsRichText = isRichText === null ? note.isRichText : isRichText;
@@ -69,8 +68,7 @@ Item {
             title: title,
             content: content,
             createdAt: notes.get(index).createdAt,
-            isRichText: updatedIsRichText,
-            selected: selected
+            isRichText: updatedIsRichText
         });
         saveNotes();
     }
@@ -105,8 +103,7 @@ Item {
                 title: note.title,
                 content: note.content,
                 createdAt: note.createdAt, 
-                isRichText: note.isRichText || false,
-                selected: note.selected || false
+                isRichText: note.isRichText || false
             });
         }
         notesSettings.savedNotes = notesArray;
