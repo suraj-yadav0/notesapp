@@ -6,21 +6,19 @@ import Ubuntu.Components 1.3
 ListItem {
     id: noteItem
     height: units.gu(10)
-
+    
     // Properties to be set from outside
     property string title
     property string content
     property string createdAt
     property int noteIndex
     property bool isRichText: false
-    property bool selectionMode: false
-    property var palette // <-- Add this line
-
+    
     // Signals
     signal noteSelected(int index)
     signal noteEditRequested(int index)
     signal noteDeleteRequested(int index)
-
+    
     // Leading actions (delete)
     leadingActions: ListItemActions {
         actions: [
@@ -32,7 +30,7 @@ ListItem {
             }
         ]
     }
-
+    
     // Trailing actions (edit)
     trailingActions: ListItemActions {
         actions: [
@@ -44,42 +42,38 @@ ListItem {
             }
         ]
     }
-
+    
     // Note visual representation
     Rectangle {
         anchors.fill: parent
         radius: units.gu(1)
-        border.color: palette ? palette.normal.base : "#cccccc"
+        border.color: "#cccccc"
         border.width: 1
         anchors.margins: units.gu(1)
-        color: palette ? palette.normal.background : "#ffffff"
-
+        
         Row {
             spacing: units.gu(2)
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.verticalCenter: parent.verticalCenter
-            height: parent.height - 2 * units.gu(2)
-
+            anchors.fill: parent
+            anchors.margins: units.gu(2)
+            
             Column {
                 spacing: units.gu(0.5)
                 anchors.verticalCenter: parent.verticalCenter
                 width: parent.width - parent.spacing
-
+                
                 Text {
                     text: noteItem.title
                     font.pixelSize: units.gu(2.5)
                     elide: Text.ElideRight
                     width: parent.width
-                    color: palette ? palette.normal.text : "#000000"
                 }
-
+                
                 Text {
                     text: noteItem.createdAt
                     font.pixelSize: units.gu(2)
-                    color: palette ? palette.normal.secondaryText : "#666666"
+                    color: "#666666"
                 }
-
+                
                 // Preview of content - handles rich text
                 // Text {
                 //     width: parent.width
@@ -87,35 +81,24 @@ ListItem {
                 //     elide: Text.ElideRight
                 //     wrapMode: Text.WordWrap
                 //     font.pixelSize: units.gu(1.8)
-
+                    
                 //     // Display either as rich text or plain text
-                //     text: noteItem.isRichText ?
-                //           noteItem.content :
-                //           noteItem.content.length > 100 ?
-                //           noteItem.content.substring(0, 100) + "..." :
+                //     text: noteItem.isRichText ? 
+                //           noteItem.content : 
+                //           noteItem.content.length > 100 ? 
+                //           noteItem.content.substring(0, 100) + "..." : 
                 //           noteItem.content
-
+                    
                 //     textFormat: noteItem.isRichText ? Text.RichText : Text.PlainText
-
+                    
                 //     // Strip HTML tags for display when needed
                 //     function stripHtml(html) {
                 //         return html.replace(/<[^>]*>/g, '');
                 //     }
                 // }
             }
-
-            CheckBox {
-                id: itemCheckBox
-                visible: root.selectionMode
-                anchors {
-                    right: parent.right
-                    rightMargin: units.gu(2)
-                    verticalCenter: parent.verticalCenter
-                }
-                checked: noteItem.get(index).selected
-            }
         }
-
+        
         MouseArea {
             anchors.fill: parent
             onClicked: {
