@@ -13,9 +13,7 @@ ListItem {
     property string createdAt
     property int noteIndex
     property bool isRichText: false
-    property bool selectionMode: false
-
-
+    
     // Signals
     signal noteSelected(int index)
     signal noteEditRequested(int index)
@@ -55,11 +53,9 @@ ListItem {
         
         Row {
             spacing: units.gu(2)
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.verticalCenter: parent.verticalCenter
-            height: parent.height - 2 * units.gu(2)
-
+            anchors.fill: parent
+            anchors.margins: units.gu(2)
+            
             Column {
                 spacing: units.gu(0.5)
                 anchors.verticalCenter: parent.verticalCenter
@@ -101,30 +97,13 @@ ListItem {
                 //     }
                 // }
             }
-
-            CheckBox {
-                id: itemCheckBox
-                visible: root.selectionMode
-                anchors {
-                    right: parent.right
-                    rightMargin: units.gu(2)
-                    verticalCenter: parent.verticalCenter
-                }
-                checked: noteItem.get(index).selected
-            }
         }
         
         MouseArea {
             anchors.fill: parent
-            onPressAndHold: root.selectionMode = true
             onClicked: {
-                if (root.selectionMode) {
-                    itemCheckBox.checked = !itemCheckBox.checked;
-                    noteItem.get(noteIndex).selected = itemCheckBox.checked;
-                } else {
-                    
                 noteSelected(noteIndex);
             }
-        }}
+        }
     }
 }
