@@ -4,19 +4,16 @@ import Ubuntu.Components.Popups 1.3
 import "components"
 import "practice"
 
-// Main page displaying the list of notes
 Page {
     id: mainPage
-    
-    
+
     property var controller
     property var notesModel
-    
-    
+
     signal editNoteRequested(int index)
-    
+
     anchors.fill: parent
-    
+
     header: PageHeader {
         id: header
         title: i18n.tr('Notes')
@@ -29,7 +26,6 @@ Page {
                 topMargin: units.gu(1)
                 rightMargin: units.gu(1)
             }
-            
             numberOfSlots: 2
             actions: [
                 Action {
@@ -45,51 +41,51 @@ Page {
 
                 Action {
                     iconName: "search"
-                    text: i18n.tr("Add Note")
+                    text: i18n.tr("Search")
                     onTriggered: {
                         var dialog = PopupUtils.open(Qt.resolvedUrl("practice/first.qml"));
-                        
                     }
                 }
             ]
         }
     }
-    
-    ListView {
-        id: notesListView
-        
+
+    Rectangle {
         anchors {
             top: header.bottom
             left: parent.left
             right: parent.right
             bottom: parent.bottom
-            topMargin: units.gu(2)
-            rightMargin: units.gu(2)
-            leftMargin: units.gu(2)
         }
-        
-        model: notesModel.notes
-        
-        delegate: NoteItem {
-            width: parent.width
-            title: model.title
-            content: model.content || ""
-            createdAt: model.createdAt
-            noteIndex: index
-            isRichText: model.isRichText || false
-            
-            onNoteSelected: {
-                controller.setCurrentNote(index);
-                editNoteRequested(index);
-            }
-            
-            onNoteEditRequested: {
-                controller.setCurrentNote(index);
-                editNoteRequested(index);
-            }
-            
-            onNoteDeleteRequested: {
-                controller.deleteNote(index);
+        color: Theme.palette.normal.background
+
+        ListView {
+            id: notesListView
+            anchors.fill: parent
+            anchors.margins: units.gu(2)
+            model: notesModel.notes
+            delegate: NoteItem {
+                width: parent.width
+                title: model.title
+                content: model.content || ""
+                createdAt: model.createdAt
+                noteIndex: index
+                isRichText: model.isRichText || false
+                palette: Theme.palette
+
+                onNoteSelected: {
+                    controller.setCurrentNote(index);
+                    editNoteRequested(index);
+                }
+
+                onNoteEditRequested: {
+                    controller.setCurrentNote(index);
+                    editNoteRequested(index);
+                }
+
+                onNoteDeleteRequested: {
+                    controller.deleteNote(index);
+                }
             }
         }
     }
