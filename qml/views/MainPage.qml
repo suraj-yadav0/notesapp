@@ -77,6 +77,7 @@ Page {
             createdAt: model.createdAt
             noteIndex: index
             isRichText: model.isRichText || false
+            selectionMode: false
             
             onNoteSelected: {
                 controller.setCurrentNote(index);
