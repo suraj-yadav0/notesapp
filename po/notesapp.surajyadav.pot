@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notesapp.surajyadav\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-15 09:48+0000\n"
+"POT-Creation-Date: 2025-05-15 08:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,28 +17,16 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../qml/views/MainPage.qml:23 notesapp.desktop.in.h:1
+#: ../qml/views/MainPage.qml:22 notesapp.desktop.in.h:1
 msgid "Notes"
 msgstr ""
 
-#: ../qml/views/MainPage.qml:24
+#: ../qml/views/MainPage.qml:23
 msgid "Keep Your Ideas in One Place."
 msgstr ""
 
-#: ../qml/views/MainPage.qml:38
+#: ../qml/views/MainPage.qml:37 ../qml/views/MainPage.qml:48
 msgid "Add Note"
-msgstr ""
-
-#: ../qml/views/MainPage.qml:48
-msgid "Search"
-msgstr ""
-
-#: ../qml/views/MainPage.qml:55
-msgid "Delete Selected"
-msgstr ""
-
-#: ../qml/views/MainPage.qml:64
-msgid "Delete All"
 msgstr ""
 
 #: ../qml/views/NoteEditPage.qml:20
@@ -77,10 +65,5 @@ msgid "Type your note here..."
 msgstr ""
 
 #: ../qml/views/components/AddNoteDialog.qml:124
-#: ../qml/views/components/OKCancelDialog.qml:19
 msgid "Cancel"
-msgstr ""
-
-#: ../qml/views/components/OKCancelDialog.qml:10
-msgid "OK"
 msgstr ""
