@@ -47,54 +47,41 @@ Item {
                         width: units.gu(4)
                         height: units.gu(4)
                         text: "<b>B</b>"
-                        onClicked: {
-                            formatWithTag("b");
-                        }
+                        onClicked: { formatText("b");
+                        console.log("Bold button clicked"); }
                     }
-                    
                     Button {
                         width: units.gu(4)
                         height: units.gu(4)
                         text: "<i>I</i>"
-                        onClicked: {
-                            formatWithTag("i");
-                        }
+                        onClicked: { formatText("i");
+                        console.log("Italic button clicked"); }
                     }
-                    
                     Button {
                         width: units.gu(4)
                         height: units.gu(4)
                         text: "<u>U</u>"
-                        onClicked: {
-                            formatWithTag("u");
-                        }
+                        onClicked: { formatText("u");
+                        console.log("Underline button clicked"); }
                     }
-                    
                     Button {
                         width: units.gu(4)
                         height: units.gu(4)
                         text: "H"
-                        onClicked: {
-                            formatWithTag("h3");
-                        }
+                        onClicked: { formatText("h3"); 
+                        console.log("Heading button clicked"); }
                     }
-                    
                     Button {
                         width: units.gu(4)
                         height: units.gu(4)
                         text: "• List"
-                        onClicked: {
-                            insertBulletList();
-                        }
+                        onClicked: { insertList(); }
                     }
-                    
                     Button {
                         width: units.gu(7)
                         height: units.gu(4)
                         text: "Clear Format"
-                        onClicked: {
-                            clearFormat();
-                        }
+                        onClicked: { clearFormatting(); }
                     }
                 }
             }
@@ -130,109 +117,60 @@ Item {
                 textFormat: TextEdit.RichText
                 font.pixelSize: richTextEditor.fontSize
                 readOnly: !editMode
-                
-                Rectangle {
-                    z: -1
-                    anchors.fill: parent
-                    color: "transparent"
-                    border.color: "#dddddd"
-                    border.width: 1
-                    radius: units.gu(0.5)
-                }
 
                 onCursorRectangleChanged: textFlick.ensureVisible(cursorRectangle)
                 onTextChanged: richTextEditor.contentChanged(text)
-                
-                // Initial setup
-                Component.onCompleted: {
-                    forceActiveFocus();
-                }
             }
-        }
-    }
-    
-    // --- Improved formatting functions ---
-    
-    // Bold, italic, underline, headings
-    function formatWithTag(tag) {
-        textEdit.forceActiveFocus();
-        var start = textEdit.selectionStart;
-        var end = textEdit.selectionEnd;
-        var selectedText = textEdit.selectedText;
-        
-        if (start !== end) {
-            // Format selected text
-            var html = "<" + tag + ">" + selectedText + "</" + tag + ">";
-            textEdit.remove(start, end);
-            textEdit.insert(start, html);
-        } else {
-            // Insert empty tags and position cursor between them
-            var openTag = "<" + tag + ">";
-            var closeTag = "</" + tag + ">";
-            var cursorPos = textEdit.cursorPosition;
-            textEdit.insert(cursorPos, openTag + closeTag);
-            textEdit.cursorPosition = cursorPos + openTag.length;
-        }
-    }
-    
-    // Insert a bullet list
-    function insertBulletList() {
-        textEdit.forceActiveFocus();
-        var cursorPos = textEdit.cursorPosition;
-        var selectedText = textEdit.selectedText;
-        
-        var htmlList;
-        if (textEdit.selectedText) {
-            var lines = selectedText.split("\n");
-            var listItems = "";
-            
-            for (var i = 0; i < lines.length; i++) {
-                if (lines[i].trim()) {
-                    listItems += "<li>" + lines[i].trim() + "</li>";
-                }
-            }
-            
-            htmlList = "<ul>" + listItems + "</ul>";
-            
-            textEdit.remove(textEdit.selectionStart, textEdit.selectionEnd);
-            textEdit.insert(textEdit.selectionStart, htmlList);
-        } else {
-            htmlList = "<ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul>";
-            textEdit.insert(cursorPos, htmlList);
-        }
-    }
-    
-    // Clear formatting from selected text
-    function clearFormat() {
-        textEdit.forceActiveFocus();
-        
-        if (textEdit.selectedText) {
-            var plainText = textEdit.selectedText.replace(/<[^>]*>/g, '');
-            var start = textEdit.selectionStart;
-            var end = textEdit.selectionEnd;
-            
-            textEdit.remove(start, end);
-            textEdit.insert(start, plainText);
-        } else {
-            // If nothing selected, clear entire document formatting
-            var fullText = textEdit.text;
-            // Keep simple line breaks by replacing <br> and <p> tags
-            fullText = fullText.replace(/<br\s*\/?>/gi, '\n');
-            fullText = fullText.replace(/<\/p>\s*<p>/gi, '\n\n');
-            fullText = fullText.replace(/<[^>]*>/g, ''); // Remove all other tags
-            textEdit.text = fullText;
         }
     }
 
-    // Ensure we catch external text changes (e.g., from bindings)
-    onTextChanged: {
-        // Ensure it's a real rich text document
-        if (text && !text.startsWith("<!DOCTYPE") && !text.startsWith("<html>")) {
-            // Simple text needs to be wrapped for proper rich text handling
-            if (!text.match(/<[a-z][\s\S]*>/i)) {
-                // It's plain text, add minimal HTML structure
-                textEdit.text = "<html><body>" + text + "</body></html>";
+    // --- Formatting functions ---
+    function formatText(tag) {
+        var selStart = textEdit.selectionStart;
+        var selEnd = textEdit.selectionEnd;
+        if (selStart === selEnd) {
+            var pos = textEdit.cursorPosition;
+            var openTag = "<" + tag + ">";
+            var closeTag = "</" + tag + ">";
+            textEdit.insert(pos, openTag + closeTag);
+            textEdit.cursorPosition = pos + openTag.length;
+        } else {
+            var selectedText = textEdit.selectedText;
+            textEdit.remove(selStart, selEnd);
+            textEdit.insert(selStart, "<" + tag + ">" + selectedText + "</" + tag + ">");
+        }
+    }
+
+    function insertList() {
+        var selStart = textEdit.selectionStart;
+        var selEnd = textEdit.selectionEnd;
+        if (selStart === selEnd) {
+            var pos = textEdit.cursorPosition;
+            var listTemplate = "<ul>\n  <li>Item 1</li>\n  <li>Item 2</li>\n  <li>Item 3</li>\n</ul>";
+            textEdit.insert(pos, listTemplate);
+        } else {
+            var selectedText = textEdit.selectedText;
+            var lines = selectedText.split("\n");
+            var listItems = "";
+            for (var i = 0; i < lines.length; i++) {
+                if (lines[i].trim() !== "") {
+                    listItems += "  <li>" + lines[i] + "</li>\n";
+                }
             }
+            var listText = "<ul>\n" + listItems + "</ul>";
+            textEdit.remove(selStart, selEnd);
+            textEdit.insert(selStart, listText);
+        }
+    }
+
+    function clearFormatting() {
+        if (textEdit.selectionStart !== textEdit.selectionEnd) {
+            var plainText = textEdit.selectedText.replace(/<[^>]*>/g, '');
+            textEdit.remove(textEdit.selectionStart, textEdit.selectionEnd);
+            textEdit.insert(textEdit.selectionStart, plainText);
+        } else {
+            var fullPlainText = textEdit.text.replace(/<[^>]*>/g, '');
+            textEdit.text = fullPlainText;
         }
     }
 }
