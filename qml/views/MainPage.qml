@@ -45,10 +45,18 @@ Page {
 
                 Action {
                     iconName: "search"
-                    text: i18n.tr("Add Note")
+                    text: i18n.tr("Search")
                     onTriggered: {
                         var dialog = PopupUtils.open(Qt.resolvedUrl("practice/first.qml"));
                         
+                    }
+                },
+
+                 Action {
+                    iconName: mainPage.themeName === "dark" ? "weather-clear" : "weather-clear-night"
+                    text: mainPage.themeName === "dark" ? i18n.tr("Light Mode") : i18n.tr("Dark Mode")
+                    onTriggered: {
+                        mainPage.themeName = mainPage.themeName === "dark" ? "light" : "dark";
                     }
                 }
             ]
