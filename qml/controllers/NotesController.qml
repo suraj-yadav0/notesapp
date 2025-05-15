@@ -14,17 +14,17 @@ Item {
     //signal currentNoteChanged()
     
     // Create a new note
-    function createNote(title, content, isRichText ) {
+    function createNote(title, content, isRichText ,selected = false) {
         if (title.trim() === "") return false;
         
-        var index = model.addNote(title.trim(), content, isRichText);
+        var index = model.addNote(title.trim(), content, isRichText,selected);
         return index;
     }
     
     // Update an existing note
-    function updateCurrentNote(title, content, isRichText = null) {
+    function updateCurrentNote(title, content, isRichText = null,selected = false) {
         if (currentNote.index >= 0 && title.trim() !== "") {
-            model.updateNote(currentNote.index, title.trim(), content, isRichText);
+            model.updateNote(currentNote.index, title.trim(), content, isRichText,selected);
             return true;
         }
         return false;
