@@ -21,7 +21,7 @@ Page {
         id: header
         title: i18n.tr('Notes')
         subtitle: i18n.tr('Keep Your Ideas in One Place.')
-        
+
         ActionBar {
             anchors {
                 top: parent.top
