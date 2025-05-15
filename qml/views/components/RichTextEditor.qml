@@ -47,25 +47,29 @@ Item {
                         width: units.gu(4)
                         height: units.gu(4)
                         text: "<b>B</b>"
-                        onClicked: { formatText("b"); }
+                        onClicked: { formatText("b");
+                        console.log("Bold button clicked"); }
                     }
                     Button {
                         width: units.gu(4)
                         height: units.gu(4)
                         text: "<i>I</i>"
-                        onClicked: { formatText("i"); }
+                        onClicked: { formatText("i");
+                        console.log("Italic button clicked"); }
                     }
                     Button {
                         width: units.gu(4)
                         height: units.gu(4)
                         text: "<u>U</u>"
-                        onClicked: { formatText("u"); }
+                        onClicked: { formatText("u");
+                        console.log("Underline button clicked"); }
                     }
                     Button {
                         width: units.gu(4)
                         height: units.gu(4)
                         text: "H"
-                        onClicked: { formatText("h3"); }
+                        onClicked: { formatText("h3"); 
+                        console.log("Heading button clicked"); }
                     }
                     Button {
                         width: units.gu(4)

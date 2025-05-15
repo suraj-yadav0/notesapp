@@ -118,42 +118,41 @@ Page {
             }
 
             
-            Loader {
-                id: richTextLoader
-                anchors.fill: parent
-                active: isRichTextSwitch.checked
-                visible: isRichTextSwitch.checked
-               
-                
-                sourceComponent: Component {
-                    RichTextEditor {
-                        editMode: true
-                    }
-                }
-                
-                onLoaded: {
-                    if (controller.currentNote.content) {
-                        item.text = controller.currentNote.content;
-                    }
-                }
-            }
+         Loader {
+    id: richTextLoader
+    anchors.fill: parent
+    active: isRichTextSwitch.checked
+    visible: isRichTextSwitch.checked
+
+    sourceComponent: Component {
+        RichTextEditor {
+            editMode: true
+        }
+    }
+
+    onLoaded: {
+        if (controller.currentNote.content) {
+            item.text = controller.currentNote.content;
+        }
+        item.forceActiveFocus();
+    }
+}
         }
     }
     
     // Update fields when current note changes
-    Connections {
-        target: controller
-        onCurrentNoteChanged: {
-            titleEditField.text = controller.currentNote.title;
-            
-            // Update appropriate editor based on content type
-            isRichTextSwitch.checked = controller.currentNote.isRichText || false;
-            
-            if (isRichTextSwitch.checked && richTextLoader.item) {
-                richTextLoader.item.text = controller.currentNote.content;
-            } else {
-                plainTextArea.text = controller.currentNote.content;
-            }
+   Connections {
+    target: controller
+    onCurrentNoteChanged: {
+        titleEditField.text = controller.currentNote.title;
+        isRichTextSwitch.checked = controller.currentNote.isRichText || false;
+
+        if (isRichTextSwitch.checked && richTextLoader.status === Loader.Ready && richTextLoader.item) {
+            richTextLoader.item.text = controller.currentNote.content;
+            richTextLoader.item.forceActiveFocus();
+        } else {
+            plainTextArea.text = controller.currentNote.content;
         }
     }
+}
 }
