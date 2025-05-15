@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notesapp.surajyadav\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-15 05:01+0000\n"
+"POT-Creation-Date: 2025-05-15 06:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,7 +35,7 @@ msgid "Edit Note"
 msgstr ""
 
 #: ../qml/views/NoteEditPage.qml:41
-#: ../qml/views/components/AddNoteDialog.qml:133
+#: ../qml/views/components/AddNoteDialog.qml:143
 msgid "Save"
 msgstr ""
 
@@ -48,7 +48,7 @@ msgstr ""
 msgid "Rich Text:"
 msgstr ""
 
-#: ../qml/views/NoteEditPage.qml:100
+#: ../qml/views/NoteEditPage.qml:122
 msgid "Note content..."
 msgstr ""
 
@@ -64,6 +64,6 @@ msgstr ""
 msgid "Type your note here..."
 msgstr ""
 
-#: ../qml/views/components/AddNoteDialog.qml:124
+#: ../qml/views/components/AddNoteDialog.qml:134
 msgid "Cancel"
 msgstr ""

@@ -92,23 +92,33 @@ Dialog {
                     RichTextEditor {
                         id: richTextEditor
                         editMode: true
+                        // Don't initialize text here, do it in onLoaded
                     }
                 }
                 
                 onLoaded: {
-                    // Set text content after the component is loaded
-                    if (richTextSwitch.checked) {
+                    // Need to make sure we set the text after the component is fully loaded
+                    if (initialContent) {
                         item.text = initialContent;
                     }
+                    // Focus the editor
+                    item.forceActiveFocus();
                 }
             }
             
-            // Update rich text when switching modes
+            // Update when switching modes
             Connections {
                 target: richTextSwitch
                 onCheckedChanged: {
                     if (richTextSwitch.checked && richTextLoader.status === Loader.Ready) {
-                        richTextLoader.item.text = initialContent || plainTextArea.text;
+                        // Going from plain to rich
+                        richTextLoader.item.text = plainTextArea.text;
+                        richTextLoader.item.forceActiveFocus();
+                    } else if (!richTextSwitch.checked) {
+                        // Going from rich to plain
+                        if (richTextLoader.item) {
+                            plainTextArea.text = richTextLoader.item.text.replace(/<[^>]*>/g, '');
+                        }
                     }
                 }
             }

@@ -7,11 +7,9 @@ Item {
     // Reference to the model (will be set externally)
     property var model
     
-   
-    property var currentNote: ({ title: "", content: "",createdAt: "", index: -1 })
+    property var currentNote: ({ title: "", content: "", createdAt: "", index: -1 })
     
-    // Signal when the current note changes, it causes error , will fix later
-    //signal currentNoteChanged()
+    // REMOVE the explicit signal declaration - it's automatically created from the property
     
     // Create a new note
     function createNote(title, content, isRichText ) {
@@ -58,7 +56,7 @@ Item {
         var note = model.getNote(index);
         if (note) {
             currentNote = note;
-            currentNoteChanged();
+            //currentNoteChanged();
             return true;
         }
         return false;
@@ -67,6 +65,6 @@ Item {
     // Reset the current note
     function resetCurrentNote() {
         currentNote = { title: "", content: "", createdAt: "", index: -1 };
-        currentNoteChanged();
+        //currentNoteChanged();
     }
 }

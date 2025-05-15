@@ -1,7 +1,7 @@
 import QtQuick 2.7
 import Lomiri.Components 1.3
 import QtQuick.Layouts 1.3
-import "components"
+import "components" // This import is crucial for finding SimpleRichTextEditor
 
 // Page for editing a note
 Page {
@@ -85,6 +85,28 @@ Page {
                 id: isRichTextSwitch
                 checked: controller.currentNote.isRichText || false
                 anchors.verticalCenter: parent.verticalCenter
+                
+                // Handle mode switching explicitly to ensure content transfer
+                onCheckedChanged: {
+                    if (checked && richTextLoader.status === Loader.Ready) {
+                        richTextLoader.item.text = plainTextArea.text;
+                        // Ensure focus after a small delay to let the UI update
+                        focusTimer.start();
+                    } else if (!checked) {
+                        plainTextArea.text = richTextLoader.item ? richTextLoader.item.text : controller.currentNote.content;
+                    }
+                }
+            }
+            
+            // Timer to set focus after mode switch
+            Timer {
+                id: focusTimer
+                interval: 100
+                onTriggered: {
+                    if (richTextLoader.item) {
+                        richTextLoader.item.forceActiveFocus();
+                    }
+                }
             }
         }
         
@@ -103,56 +125,68 @@ Page {
                 visible: !isRichTextSwitch.checked
             }
             
-            // Rich text editor
-             Rectangle {
+            // Use our new SimpleRichTextEditor instead of the RichTextEditor
+            Loader {
+                id: richTextLoader
                 anchors.fill: parent
-                
+                active: isRichTextSwitch.checked
                 visible: isRichTextSwitch.checked
-                border.width: 1
-                border.color: "#CCCCCC"
-                radius: units.gu(0.5)
-                height: parent.height - units.gu(5)
                 
-                // Use this instead of padding which is not available
-                anchors.margins: units.gu(-1)
+                sourceComponent: Component {
+                    SimpleRichTextEditor {
+                        id: simpleRichEditor
+                        // Initialize with content
+                        text: controller.currentNote.content || ""
+                        
+                        // Debug any content changes
+                        onContentChanged: {
+                            console.log("Rich text content changed in editor, length:", newText.length);
+                        }
+                        
+                        // Make sure we initialize the component
+                        Component.onCompleted: {
+                            console.log("SimpleRichTextEditor component completed in NoteEditPage");
+                            forceActiveFocus();
+                        }
+                    }
+                }
+                
+                onLoaded: {
+                    console.log("SimpleRichTextEditor loaded in NoteEditPage");
+                    if (controller.currentNote.content) {
+                        item.text = controller.currentNote.content;
+                        console.log("Set text from controller, length:", controller.currentNote.content.length);
+                    }
+                    // Force focus after loading
+                    focusTimer.restart();
+                }
+                
+                // Handle status changes
+                onStatusChanged: {
+                    if (status === Loader.Ready) {
+                        console.log("Loader is now ready");
+                    }
+                }
             }
-
-            
-         Loader {
-    id: richTextLoader
-    anchors.fill: parent
-    active: isRichTextSwitch.checked
-    visible: isRichTextSwitch.checked
-
-    sourceComponent: Component {
-        RichTextEditor {
-            editMode: true
-        }
-    }
-
-    onLoaded: {
-        if (controller.currentNote.content) {
-            item.text = controller.currentNote.content;
-        }
-        item.forceActiveFocus();
-    }
-}
         }
     }
     
     // Update fields when current note changes
-   Connections {
-    target: controller
-    onCurrentNoteChanged: {
-        titleEditField.text = controller.currentNote.title;
-        isRichTextSwitch.checked = controller.currentNote.isRichText || false;
-
-        if (isRichTextSwitch.checked && richTextLoader.status === Loader.Ready && richTextLoader.item) {
-            richTextLoader.item.text = controller.currentNote.content;
-            richTextLoader.item.forceActiveFocus();
-        } else {
-            plainTextArea.text = controller.currentNote.content;
+    Connections {
+        target: controller
+        onCurrentNoteChanged: {
+            titleEditField.text = controller.currentNote.title;
+            isRichTextSwitch.checked = controller.currentNote.isRichText || false;
+            
+            // Handle content updating with a slight delay to ensure the loader is ready
+            Qt.callLater(function() {
+                if (isRichTextSwitch.checked && richTextLoader.status === Loader.Ready && richTextLoader.item) {
+                    richTextLoader.item.text = controller.currentNote.content || "";
+                    focusTimer.restart();
+                } else {
+                    plainTextArea.text = controller.currentNote.content || "";
+                }
+            });
         }
     }
-}
 }
