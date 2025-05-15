@@ -37,8 +37,8 @@ Page {
                     text: i18n.tr("Add Note")
                     onTriggered: {
                         var dialog = PopupUtils.open(Qt.resolvedUrl("components/AddNoteDialog.qml"));
-                        dialog.saveRequested.connect(function(title, content) {
-                            controller.createNote(title, content);
+                        dialog.saveRequested.connect(function(title, content,isRichText) {
+                            controller.createNote(title, content,isRichText);
                         });
                     }
                 },

@@ -55,7 +55,7 @@ Dialog {
         Item {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.preferredHeight: units.gu(20)
+            Layout.preferredHeight: units.gu(40)
             
             // Standard TextArea for plain text
             TextArea {
