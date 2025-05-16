@@ -3,14 +3,13 @@ import Lomiri.Components 1.3
 import QtQuick.Layouts 1.3
 import "components"
 
-// Page for editing a note
 Page {
     id: noteEditPage
 
-    // Properties to be set from outside
+    // to be set from outside
     property var controller
 
-    // Signal when navigation back is requested
+    // when navigation back is requested
     signal backRequested
 
     visible: false
@@ -69,7 +68,7 @@ Page {
             text: controller.currentNote.title
         }
 
-        // Toggle for rich text format
+        // Toggle for rich text 
         Row {
             width: parent.width
             spacing: units.gu(1)
@@ -86,12 +85,12 @@ Page {
             }
         }
 
-        // Content area with rich/plain text switch
+        //rich/plain text switch
         Item {
             width: parent.width
             height: parent.height - titleEditField.height - parent.spacing * 2 - isRichTextSwitch.height
 
-            // Standard text area for plain text
+            //  for plain text
             TextArea {
                 id: plainTextArea
                 anchors.fill: parent
@@ -112,7 +111,7 @@ Page {
                 radius: units.gu(0.5)
                 height: parent.height - units.gu(5)
 
-                // Use this instead of padding which is not available
+                
                 anchors.margins: units.gu(-1)
             }
 

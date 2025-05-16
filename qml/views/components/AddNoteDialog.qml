@@ -4,11 +4,26 @@ import QtQuick.Layouts 1.3
 import Ubuntu.Components.Popups 1.3
 import "."
 
-// Dialog for adding or editing notes
+// Dialog ..for adding notes.
 Dialog {
     id: noteDialog
+   
+    // width: Math.min(parent.width * 0.9, units.gu(90))
+    // height: Math.min(parent.height * 0.7, units.gu(80))
+    anchors.centerIn: parent
+    contentHeight: parent.height * 0.75
+    contentWidth: parent.width * 0.8
     
-    // Properties - determine if we're adding or editing
+
+    
+    Component.onCompleted: {
+       
+        Qt.callLater(function() {
+            x = (parent.width - width) / 2
+            y = (parent.height - height) / 2
+        })
+    }
+    
     property bool isEditing: false
     property string initialTitle: ""
     property string initialContent: ""
@@ -22,6 +37,7 @@ Dialog {
     modal: true
     
     ColumnLayout {
+        id: contentColumn
         width: parent.width
         spacing: units.gu(1.5)
         
@@ -55,7 +71,7 @@ Dialog {
         Item {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.preferredHeight: units.gu(40)
+            Layout.preferredHeight: units.gu(25)
             
             // Standard TextArea for plain text
             TextArea {
@@ -79,10 +95,10 @@ Dialog {
                 radius: units.gu(0.5)
                 height: parent.height - units.gu(5)
                 
-                // Use this instead of padding which is not available
+                
                 anchors.margins: units.gu(-1)
             }
-            // Rich text editor component
+            
             Loader {
                 id: richTextLoader
                 anchors.fill: parent
@@ -97,7 +113,7 @@ Dialog {
                 }
                 
                 onLoaded: {
-                    // Set text content after the component is loaded
+                    
                     if (richTextSwitch.checked) {
                         item.text = initialContent;
                     }

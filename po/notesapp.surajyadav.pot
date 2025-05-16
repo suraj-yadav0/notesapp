@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notesapp.surajyadav\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-16 04:24+0000\n"
+"POT-Creation-Date: 2025-05-16 04:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,41 +41,41 @@ msgstr ""
 msgid "Light Mode"
 msgstr ""
 
-#: ../qml/views/NoteEditPage.qml:20
-#: ../qml/views/components/AddNoteDialog.qml:21
+#: ../qml/views/NoteEditPage.qml:19
+#: ../qml/views/components/AddNoteDialog.qml:36
 msgid "Edit Note"
 msgstr ""
 
-#: ../qml/views/NoteEditPage.qml:41
-#: ../qml/views/components/AddNoteDialog.qml:134
+#: ../qml/views/NoteEditPage.qml:40
+#: ../qml/views/components/AddNoteDialog.qml:150
 msgid "Save"
 msgstr ""
 
-#: ../qml/views/NoteEditPage.qml:68
+#: ../qml/views/NoteEditPage.qml:67
 msgid "Title"
 msgstr ""
 
-#: ../qml/views/NoteEditPage.qml:78
-#: ../qml/views/components/AddNoteDialog.qml:43
+#: ../qml/views/NoteEditPage.qml:77
+#: ../qml/views/components/AddNoteDialog.qml:59
 msgid "Rich Text:"
 msgstr ""
 
-#: ../qml/views/NoteEditPage.qml:98
+#: ../qml/views/NoteEditPage.qml:97
 msgid "Note content..."
 msgstr ""
 
-#: ../qml/views/components/AddNoteDialog.qml:21
+#: ../qml/views/components/AddNoteDialog.qml:36
 msgid "Add New Note"
 msgstr ""
 
-#: ../qml/views/components/AddNoteDialog.qml:32
+#: ../qml/views/components/AddNoteDialog.qml:48
 msgid "Title of your Note..."
 msgstr ""
 
-#: ../qml/views/components/AddNoteDialog.qml:64
+#: ../qml/views/components/AddNoteDialog.qml:80
 msgid "Type your note here..."
 msgstr ""
 
-#: ../qml/views/components/AddNoteDialog.qml:125
+#: ../qml/views/components/AddNoteDialog.qml:141
 msgid "Cancel"
 msgstr ""
