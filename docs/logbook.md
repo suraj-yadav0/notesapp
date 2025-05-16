@@ -18,3 +18,6 @@
 [- Chapter 4](chapters/chapter_4.md)
 
 [- Chapter 5](chapters/chapter_5.md)
+
+[- Dark Mode Feature](chapters/darkmode.md)
+
