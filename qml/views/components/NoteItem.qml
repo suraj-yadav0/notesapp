@@ -47,7 +47,7 @@ ListItem {
     Rectangle {
         anchors.fill: parent
         radius: units.gu(1)
-        border.color: "#cccccc"
+        border.color: theme.palette.normal.baseText
         border.width: 1
         anchors.margins: units.gu(1)
         
@@ -66,12 +66,13 @@ ListItem {
                     font.pixelSize: units.gu(2.5)
                     elide: Text.ElideRight
                     width: parent.width
+                    color: theme.palette.normal.baseText
                 }
                 
                 Text {
                     text: noteItem.createdAt
                     font.pixelSize: units.gu(2)
-                    color: "#666666"
+                    color: theme.palette.normal.baseText
                 }
                 
                 // Preview of content - handles rich text
@@ -96,6 +97,17 @@ ListItem {
                 //         return html.replace(/<[^>]*>/g, '');
                 //     }
                 // }
+            }
+
+            // Right arrow icon
+            Icon {
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                width: units.gu(2)
+                height: units.gu(2)
+                name: "go-next"
+                color: theme.palette.normal.baseText
+                
             }
         }
         
