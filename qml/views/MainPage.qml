@@ -24,41 +24,43 @@ Page {
 
         ActionBar {
             anchors {
-                top: parent.top
-                right: parent.right
-                topMargin: units.gu(1)
-                rightMargin: units.gu(1)
+            top: parent.top
+            right: parent.right
+            topMargin: units.gu(1)
+            rightMargin: units.gu(1)
             }
             
             numberOfSlots: 2
             actions: [
-                Action {
-                    iconName: "add"
-                    text: i18n.tr("Add Note")
-                    onTriggered: {
-                        var dialog = PopupUtils.open(Qt.resolvedUrl("components/AddNoteDialog.qml"));
-                        dialog.saveRequested.connect(function(title, content,isRichText) {
-                            controller.createNote(title, content,isRichText);
-                        });
-                    }
-                },
-
-                Action {
-                    iconName: "search"
-                    text: i18n.tr("Search")
-                    onTriggered: {
-                        var dialog = PopupUtils.open(Qt.resolvedUrl("practice/first.qml"));
-                        
-                    }
-                },
-
-                 Action {
-                    iconName: mainPage.themeName === "dark" ? "weather-clear" : "weather-clear-night"
-                    text: mainPage.themeName === "dark" ? i18n.tr("Light Mode") : i18n.tr("Dark Mode")
-                    onTriggered: {
-                        mainPage.themeName = mainPage.themeName === "dark" ? "light" : "dark";
-                    }
+            Action {
+                iconName: "add"
+                text: i18n.tr("Add Note")
+                onTriggered: {
+                var dialog = PopupUtils.open(Qt.resolvedUrl("components/AddNoteDialog.qml"));
+                dialog.saveRequested.connect(function(title, content,isRichText) {
+                    controller.createNote(title, content,isRichText);
+                });
                 }
+            },
+
+            Action {
+                iconName: "search"
+                text: i18n.tr("Search")
+                onTriggered: {
+                var dialog = PopupUtils.open(Qt.resolvedUrl("practice/first.qml"));
+                
+                }
+            },
+
+            Action {
+                iconName: theme.name === "Ubuntu.Components.Themes.SuruDark" ? "weather-clear" : "weather-clear-night"
+                text: theme.name === "Ubuntu.Components.Themes.SuruDark" ? i18n.tr("Light Mode") : i18n.tr("Dark Mode")
+                onTriggered: {
+                Theme.name = theme.name === "Ubuntu.Components.Themes.SuruDark" ? 
+                        "Ubuntu.Components.Themes.Ambiance" : 
+                        "Ubuntu.Components.Themes.SuruDark";
+                }
+            }
             ]
         }
     }
