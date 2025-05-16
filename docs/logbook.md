@@ -7,14 +7,14 @@
 3. Build a Documentation , that will help develop better learning materials for Future developers.
 
 
-[- Day 1 (Chapter 1)](chapters/chapter_1.md)
+[- Chapter 1](chapters/chapter_1.md)
 
 
-[- Day 2 (Chapter 2)](chapters/chapter_2.md)
+[- Chapter 2](chapters/chapter_2.md)
 
 
-[- Day 3 (Chapter 3)](chapters/chapter_3.md)
+[- Chapter 3](chapters/chapter_3.md)
 
-[- Day 4 (Chapter 4)](chapters/chapter_4.md)
+[- Chapter 4](chapters/chapter_4.md)
 
-[- Day 5 (Chapter 5)](chapters/chapter_5.md)
+[- Chapter 5](chapters/chapter_5.md)

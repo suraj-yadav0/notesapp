@@ -47,7 +47,7 @@ ListItem {
     Rectangle {
         anchors.fill: parent
         radius: units.gu(1)
-        border.color: theme.palette.normal.border
+       // border.color: theme.palette.normal.border
         border.width: 1
         anchors.margins: units.gu(1)
         color : theme.palette.normal.background
