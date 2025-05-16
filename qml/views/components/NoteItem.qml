@@ -50,6 +50,7 @@ ListItem {
         border.color: theme.palette.normal.baseText
         border.width: 1
         anchors.margins: units.gu(1)
+        color : theme.palette.normal.background
         
         Row {
             spacing: units.gu(2)

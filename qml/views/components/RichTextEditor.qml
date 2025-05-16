@@ -27,7 +27,7 @@ Item {
             visible: editMode
             Layout.fillWidth: true
             height: formatToolbar.height + units.gu(2)
-            color: "#f0f0f0"
+            color: theme.palette.normal.background
             radius: units.gu(0.5)
             clip: true
 
@@ -117,6 +117,7 @@ Item {
                 textFormat: TextEdit.RichText
                 font.pixelSize: richTextEditor.fontSize
                 readOnly: !editMode
+                color: theme.palette.normal.baseText
 
                 onCursorRectangleChanged: textFlick.ensureVisible(cursorRectangle)
                 onTextChanged: richTextEditor.contentChanged(text)

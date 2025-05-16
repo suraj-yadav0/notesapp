@@ -74,7 +74,8 @@ Dialog {
                 
                 visible: richTextSwitch.checked
                 border.width: 1
-                border.color: "#CCCCCC"
+                border.color: theme.palette.normal.baseText
+                color: theme.palette.normal.background
                 radius: units.gu(0.5)
                 height: parent.height - units.gu(5)
                 
