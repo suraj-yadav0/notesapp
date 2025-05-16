@@ -35,12 +35,12 @@ MainView {
     width: units.gu(45)
     height: units.gu(75)
 
-    // Initialize model
+    
     NotesModel {
         id: notesModel
     }
     
-    // Initialize controller
+   
     NotesController {
         id: notesController
         model: notesModel
