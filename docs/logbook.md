@@ -19,5 +19,8 @@
 
 [- Chapter 5](chapters/chapter_5.md)
 
+[- Rich Text Feature](chapters/richtext.md)
+
+
 [- Dark Mode Feature](chapters/darkmode.md)
 
