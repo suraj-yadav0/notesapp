@@ -1,7 +1,8 @@
 import QtQuick 2.7
 import Lomiri.Components 1.3
 import QtQuick.Layouts 1.3
-import "components"
+
+import "../views/components/"
 
 Page {
     id: noteEditPage
@@ -11,8 +12,6 @@ Page {
 
     // when navigation back is requested
     signal backRequested
-
-    visible: false
 
     header: PageHeader {
         id: editHeader
