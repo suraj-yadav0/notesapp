@@ -21,6 +21,5 @@
 
 [- Rich Text Feature](chapters/richtext.md)
 
-
 [- Dark Mode Feature](chapters/darkmode.md)
 
