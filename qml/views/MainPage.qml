@@ -2,7 +2,7 @@ import QtQuick 2.7
 import Lomiri.Components 1.3
 import Ubuntu.Components.Popups 1.3
 import "components"
-import "practice"
+
 
 // Main page displaying the list of notes
 Page {

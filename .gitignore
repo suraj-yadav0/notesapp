@@ -1,4 +1,6 @@
 /build/
 /.clickable/
 *.pot
+po/notesapp.surajyadav.pot
 
+docs/archi.drawio
