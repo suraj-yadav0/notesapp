@@ -4,6 +4,8 @@ import Ubuntu.Components.Popups 1.3
 import "components"
 
 
+
+
 // Main page displaying the list of notes
 Page {
     id: mainPage
@@ -59,6 +61,8 @@ Page {
         }
     }
 
+  
+
     ListView {
         id: notesListView
         anchors {
@@ -92,5 +96,13 @@ Page {
                 controller.deleteNote(index);
             }
         }
+    }
+
+    BottomNavigtor {
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+
+       
     }
 }

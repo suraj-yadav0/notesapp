@@ -48,6 +48,9 @@ MainView {
         id: pageLayout
         anchors.fill: parent
         primaryPage: mainPage
+         property Page thirdPage: todoPage
+        
+        property bool isMultiColumn: true
 
         layouts: [
             PageColumnsLayout {
