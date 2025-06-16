@@ -43,7 +43,7 @@ Page {
                     iconName: "search"
                     text: i18n.tr("Search")
                     onTriggered: {
-                        var dialog = PopupUtils.open(Qt.resolvedUrl("practice/first.qml"));
+                      console.log("Search action triggered");
                     }
                 },
                 Action {
