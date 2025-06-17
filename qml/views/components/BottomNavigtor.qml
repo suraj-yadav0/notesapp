@@ -52,8 +52,13 @@ import Ubuntu.Components.Popups 1.3
                 }
                 
                 onClicked: {
-                    // Set the secondary page to todoPage in desktop (multi-column) mode
-                   apLayout.addPageToNextColumn(mainPage, todoPage)
+                    // Show ToDo page using the app's navigation logic
+                    if (typeof mainPage.todoViewRequested === "function") {
+                        mainPage.todoViewRequested();
+                    }
+                    if (typeof mainPage.onTodoViewRequested === "function") {
+                        mainPage.onTodoViewRequested();
+                    }
                 }
             }
             

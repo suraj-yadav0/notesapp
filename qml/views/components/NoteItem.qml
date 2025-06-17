@@ -19,7 +19,7 @@ ListItem {
     signal noteEditRequested(int index)
     signal noteDeleteRequested(int index)
     
-    
+    clip : true
     // Leading actions (delete)
     leadingActions: ListItemActions {
         actions: [

@@ -12,6 +12,7 @@ Page {
 
     // when navigation back is requested
     signal backRequested
+    signal saveRequested(var content)
 
     header: PageHeader {
         id: editHeader
@@ -41,6 +42,7 @@ Page {
                     var content = isRichTextSwitch.checked ? richTextLoader.item.text : plainTextArea.text;
 
                     if (controller.updateCurrentNote(titleEditField.text, content, isRichTextSwitch.checked)) {
+                        saveRequested(content)
                         backRequested();
                     }
                 }

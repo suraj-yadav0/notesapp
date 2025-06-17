@@ -23,7 +23,6 @@ import "models"
 import "controllers"
 import "views"
 
-
 MainView {
     id: root
     objectName: 'mainView'
@@ -35,10 +34,17 @@ MainView {
 
     theme.palette: Palette {}
 
+    // Models
     NotesModel {
         id: notesModel
     }
 
+    // Add this block to instantiate ToDoView with id 'todoPage'
+    // ToDoView {
+    //     id: todoPage
+    // }
+
+    // Controllers
     NotesController {
         id: notesController
         model: notesModel
@@ -48,40 +54,42 @@ MainView {
         id: pageLayout
         anchors.fill: parent
         primaryPage: mainPage
-         property Page thirdPage: todoPage
-        
-        property bool isMultiColumn: true
+
+        // Define computed properties for better readability
+        readonly property bool isTabletMode: width > units.gu(80) && width < units.gu(130)
+        readonly property bool isDesktopMode: width >= units.gu(130)
+        readonly property bool isPhoneMode: width <= units.gu(80)
 
         layouts: [
             PageColumnsLayout {
-                // Tablet Mode
-                when: width > units.gu(80) && width < units.gu(130)
-                PageColumn {
-                    minimumWidth: units.gu(30)
-                    maximumWidth: units.gu(50)
-                    preferredWidth: width > units.gu(90) ? units.gu(20) : units.gu(15)
-                }
-                PageColumn {
-                    minimumWidth: units.gu(50)
-                    maximumWidth: units.gu(80)
-                    preferredWidth: width > units.gu(90) ? units.gu(60) : units.gu(45)
-                }
-            },
-            PageColumnsLayout {
-                // Desktop Mode
-                when: width >= units.gu(130)
+                // Tablet Mode (2 columns)
+                when: pageLayout.isTabletMode
                 PageColumn {
                     minimumWidth: units.gu(30)
                     maximumWidth: units.gu(50)
                     preferredWidth: units.gu(40)
                 }
                 PageColumn {
-                    minimumWidth: units.gu(65)
+                    fillWidth: true
+                    minimumWidth: units.gu(50)
+                }
+            },
+            PageColumnsLayout {
+                // Desktop Mode (3 columns)
+                when: pageLayout.isDesktopMode
+                PageColumn {
+                    minimumWidth: units.gu(30)
+                    maximumWidth: units.gu(50)
+                    preferredWidth: units.gu(40)
+                }
+                PageColumn {
+                    minimumWidth: units.gu(50)
                     maximumWidth: units.gu(80)
-                    preferredWidth: units.gu(50)
+                    preferredWidth: units.gu(60)
                 }
                 PageColumn {
                     fillWidth: true
+                    minimumWidth: units.gu(40)
                 }
             }
         ]
@@ -92,8 +100,27 @@ MainView {
             controller: notesController
             notesModel: notesModel
 
-            onEditNoteRequested: {
-                pageLayout.addPageToNextColumn(mainPage, noteEditPage)
+            onEditNoteRequested: function(noteId) {
+                noteEditPage.noteId = noteId
+                if (pageLayout.isPhoneMode) {
+                    pageLayout.addPageToCurrentColumn(mainPage, noteEditPage)
+                } else {
+                    pageLayout.addPageToNextColumn(mainPage, noteEditPage)
+                }
+            }
+
+            onTodoViewRequested: {
+                if (pageLayout.isDesktopMode) {
+                    // In desktop mode, show todo in the third column
+                    pageLayout.addPageToColumn(2, todoPage)
+                } else if (pageLayout.isTabletMode) {
+                    // In tablet mode, show todo in second column
+                    pageLayout.addPageToColumn(1, todoPage)
+                } else {
+                     pageLayout.addPageToColumn(0, todoPage)
+                    // In phone mode, do nothing (do not show ToDoView as a page)
+                    // Optionally, you could show a toast or dialog if needed
+                }
             }
         }
 
@@ -102,9 +129,94 @@ MainView {
             id: noteEditPage
             controller: notesController
 
+            property string noteId: ""
+
             onBackRequested: {
                 pageLayout.removePages(noteEditPage)
             }
+
+            onSaveRequested: function(content) {
+                controller.saveNote(noteId, content)
+            }
+        }
+
+        // Todo page - integrated TodoView
+        // Page {
+        //     id: todoPage
+        //     objectName: "todoPage"
+
+        //     header: PageHeader {
+        //         title: i18n.tr("To-Do")
+        //         leadingActionBar {
+        //             actions: [
+        //                 Action {
+        //                     iconName: "back"
+        //                     text: i18n.tr("Back")
+        //                     visible: pageLayout.isPhoneMode
+        //                     onTriggered: {
+        //                         pageLayout.removePages(todoPage)
+        //                     }
+        //                 }
+        //             ]
+        //         }
+        //         trailingActionBar {
+        //             actions: [
+        //                 Action {
+        //                     iconName: "close"
+        //                     text: i18n.tr("Close")
+        //                     visible: !pageLayout.isPhoneMode
+        //                     onTriggered: {
+        //                         pageLayout.removePages(todoPage)
+        //                     }
+        //                 }
+        //             ]
+        //         }
+        //     }
+
+            // Embed the TodoView component
+            // TodoView {
+            //     id: todoView
+            //     anchors {
+            //         fill: parent
+            //         topMargin: todoPage.header.height
+            //     }
+
+            //     // Remove the header from TodoView since we're using the page header
+            //     header: null
+            // }
+    //     }
+    // }
+
+    // Keyboard shortcuts (for desktop)
+    Shortcut {
+        sequence: StandardKey.New
+        onActivated: mainPage.createNewNote()
+    }
+
+    Shortcut {
+        sequence: "Ctrl+T"
+        onActivated: mainPage.todoViewRequested()
+    }
+
+    Shortcut {
+        sequence: StandardKey.Quit
+        onActivated: Qt.quit()
+    }
+
+    // Handle back button on mobile
+    Connections {
+        target: root
+        function onApplicationStateChanged() {
+            if (Qt.application.state === Qt.ApplicationActive) {
+                // App became active
+            }
         }
     }
-}
+
+    Component.onCompleted: {
+        console.log("NotesApp initialized successfully")
+        console.log("Screen size:", width + "x" + height)
+        console.log("Mode:", pageLayout.isDesktopMode ? "Desktop" : 
+                          pageLayout.isTabletMode ? "Tablet" : "Phone")
+    }
+}}
