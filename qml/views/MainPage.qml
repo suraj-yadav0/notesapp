@@ -70,7 +70,7 @@ Page {
             left: parent.left
             right: parent.right
             bottom: parent.bottom
-            topMargin: units.gu(2)
+           // topMargin: units.gu(2)
             rightMargin: units.gu(2)
             leftMargin: units.gu(2)
         }
