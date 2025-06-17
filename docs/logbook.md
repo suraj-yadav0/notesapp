@@ -7,7 +7,7 @@
 3. Build a Documentation , that will help develop better learning materials for Future developers.
 
 
-[- Dark Mode Feature](chapters/convergence.md)
+[- Convergence](chapters/convergence.md)
 
 ___________________________________________________________________
 
