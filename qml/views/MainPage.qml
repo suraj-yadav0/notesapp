@@ -2,6 +2,7 @@ import QtQuick 2.7
 import Lomiri.Components 1.3
 import Ubuntu.Components.Popups 1.3
 import "components"
+import "../assets"
 
 // Main page displaying the list of notes
 Page {
@@ -102,8 +103,51 @@ Page {
             }
         }
 
+    // Floating Action Button
+    Rectangle {
+        id: floatingButton
+        width: units.gu(7)
+        height: units.gu(7)
+        radius: width / 2
+        color: LomiriColors.orange // Or any color you prefer
+        anchors {
+            right: parent.right
+            bottom: parent.bottom
+            rightMargin: units.gu(3)
+            bottomMargin: units.gu(8)
+        }
+
+       Icon{
+            anchors.centerIn: parent
+            name: "add"
+            width: units.gu(3)
+            height: units.gu(3)
+            color: "white" // Icon color
+       }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                console.log("Floating button clicked!")
+                // Add your action here, for example, opening the AddNoteDialog
+                var dialog = PopupUtils.open(Qt.resolvedUrl("components/AddNoteDialog.qml"));
+                dialog.saveRequested.connect(function (title, content, isRichText) {
+                    controller.createNote(title, content, isRichText);
+                });
+            }
+        }
+
+        // Optional: Add a shadow or elevation effect
+        // UbuntuShape {
+        //     anchors.fill: parent
+        //     radius: floatingButton.radius
+        //     color: "transparent" // Make the shape itself transparent
+        //     elevation: units.dp(6) // Adjust elevation for shadow effect
+        //     z: -1 // Place shadow behind the button
+        // }
+    }
+
     onTodoViewRequested: {
         // This can be left empty or used for local handling if needed
     }
 }
-       

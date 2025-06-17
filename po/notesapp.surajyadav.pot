@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notesapp.surajyadav\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-17 11:06+0000\n"
+"POT-Creation-Date: 2025-06-17 11:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,19 +17,19 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../qml/views/MainPage.qml:44
+#: ../qml/views/MainPage.qml:45
 msgid "Add Note"
 msgstr ""
 
-#: ../qml/views/MainPage.qml:54
+#: ../qml/views/MainPage.qml:55
 msgid "Search"
 msgstr ""
 
-#: ../qml/views/MainPage.qml:62
+#: ../qml/views/MainPage.qml:63
 msgid "Dark Mode"
 msgstr ""
 
-#: ../qml/views/MainPage.qml:62
+#: ../qml/views/MainPage.qml:63
 msgid "Light Mode"
 msgstr ""
 
