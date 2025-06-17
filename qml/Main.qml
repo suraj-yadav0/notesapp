@@ -22,6 +22,8 @@ import Lomiri.Components.Themes 1.3
 import "models"
 import "controllers"
 import "views"
+import "views/components"
+
 
 MainView {
     id: root
@@ -39,15 +41,20 @@ MainView {
         id: notesModel
     }
 
-    // Add this block to instantiate ToDoView with id 'todoPage'
-    // ToDoView {
-    //     id: todoPage
-    // }
-
     // Controllers
     NotesController {
         id: notesController
         model: notesModel
+    }
+
+    // Add ToDoView and SettingsPage as pages
+    ToDoView {
+        id: todoPage
+        visible: false
+    }
+    SettingsPage {
+        id: settingsPage
+        visible: false
     }
 
     AdaptivePageLayout {
@@ -122,6 +129,36 @@ MainView {
                     // Optionally, you could show a toast or dialog if needed
                 }
             }
+
+            // Connect BottomNavigtor signals to navigation logic
+            BottomNavigtor {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+
+                onMainPageRequested: {
+                    // Show mainPage, hide others
+                    mainPage.visible = true
+                    todoPage.visible = false
+                    settingsPage.visible = false
+                    if (!pageLayout.hasPage(mainPage))
+                        pageLayout.setPrimaryPage(mainPage)
+                }
+                onTodoPageRequested: {
+                    mainPage.visible = false
+                    todoPage.visible = true
+                    settingsPage.visible = false
+                    if (!pageLayout.hasPage(todoPage))
+                        pageLayout.setPrimaryPage(todoPage)
+                }
+                onSettingsPageRequested: {
+                    mainPage.visible = false
+                    todoPage.visible = false
+                    settingsPage.visible = true
+                    if (!pageLayout.hasPage(settingsPage))
+                        pageLayout.setPrimaryPage(settingsPage)
+                }
+            }
         }
 
         // Note editor page
@@ -140,52 +177,16 @@ MainView {
             }
         }
 
-        // Todo page - integrated TodoView
-        // Page {
-        //     id: todoPage
-        //     objectName: "todoPage"
-
-        //     header: PageHeader {
-        //         title: i18n.tr("To-Do")
-        //         leadingActionBar {
-        //             actions: [
-        //                 Action {
-        //                     iconName: "back"
-        //                     text: i18n.tr("Back")
-        //                     visible: pageLayout.isPhoneMode
-        //                     onTriggered: {
-        //                         pageLayout.removePages(todoPage)
-        //                     }
-        //                 }
-        //             ]
-        //         }
-        //         trailingActionBar {
-        //             actions: [
-        //                 Action {
-        //                     iconName: "close"
-        //                     text: i18n.tr("Close")
-        //                     visible: !pageLayout.isPhoneMode
-        //                     onTriggered: {
-        //                         pageLayout.removePages(todoPage)
-        //                     }
-        //                 }
-        //             ]
-        //         }
-        //     }
-
-            // Embed the TodoView component
-            // TodoView {
-            //     id: todoView
-            //     anchors {
-            //         fill: parent
-            //         topMargin: todoPage.header.height
-            //     }
-
-            //     // Remove the header from TodoView since we're using the page header
-            //     header: null
-            // }
-    //     }
-    // }
+        // Add ToDoView and SettingsPage to the layout (hidden by default)
+        ToDoView {
+          //  id: todoPage
+            visible: false
+        }
+        SettingsPage {
+          //  id: settingsPage
+            visible: false
+        }
+    }
 
     // Keyboard shortcuts (for desktop)
     Shortcut {
@@ -219,4 +220,4 @@ MainView {
         console.log("Mode:", pageLayout.isDesktopMode ? "Desktop" : 
                           pageLayout.isTabletMode ? "Tablet" : "Phone")
     }
-}}
+}

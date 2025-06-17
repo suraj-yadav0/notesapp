@@ -7,8 +7,8 @@ import "../models"
 Page {
     id: todoPage
 
-    AdaptivePageLayout {
-        anchors.fill: parent
+    // Add this property for visibility control
+   
 
         // Initialize the data model
         ToDoModel {
@@ -135,5 +135,7 @@ Page {
                 color: theme.palette.normal.backgroundSecondaryText
             }
         }
-    }
+
+     
+
 }

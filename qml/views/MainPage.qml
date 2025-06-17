@@ -102,18 +102,8 @@ Page {
             }
         }
 
-        BottomNavigtor {
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-        }
-
-        // Remove duplicate BottomNavigtor
-    
-
     onTodoViewRequested: {
         // This can be left empty or used for local handling if needed
     }
 }
-
-
+       

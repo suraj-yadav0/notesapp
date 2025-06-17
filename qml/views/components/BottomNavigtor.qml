@@ -17,6 +17,11 @@ import Ubuntu.Components.Popups 1.3
         // Show only if the entire screen width is less than 800px (mobile/tablet)
       
  visible: isMultiColumn ? false : true
+
+    // Navigation signals
+    signal mainPageRequested()
+    signal todoPageRequested()
+    signal settingsPageRequested()
      
         Row {
             anchors.centerIn: parent
@@ -35,7 +40,7 @@ import Ubuntu.Components.Popups 1.3
                 }
                 
                 onClicked: {
-                    // Navigate to notes - already on notes page
+                    mainPageRequested();
                 }
             }
             
@@ -52,13 +57,7 @@ import Ubuntu.Components.Popups 1.3
                 }
                 
                 onClicked: {
-                    // Show ToDo page using the app's navigation logic
-                    if (typeof mainPage.todoViewRequested === "function") {
-                        mainPage.todoViewRequested();
-                    }
-                    if (typeof mainPage.onTodoViewRequested === "function") {
-                        mainPage.onTodoViewRequested();
-                    }
+                    todoPageRequested();
                 }
             }
             
@@ -75,7 +74,7 @@ import Ubuntu.Components.Popups 1.3
                 }
                 
                 onClicked: {
-                    // Could add settings page here
+                    settingsPageRequested();
                 }
             }
         }
