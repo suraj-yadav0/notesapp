@@ -16,7 +16,7 @@ Adaptive page layout has 3 main Methods :
 - [**addPageToNextColumn**](https://phone.docs.ubuntu.com/en/apps/api-qml-current/Ubuntu.Components.AdaptivePageLayout#addPageToNextColumn-method)(*sourcePage*, *page*, *properties*)
 - [**removePages**](https://phone.docs.ubuntu.com/en/apps/api-qml-current/Ubuntu.Components.AdaptivePageLayout#removePages-method)(*page*)
 
-![Convergence - visual selection.png](/docs/screenshots/Convergence - visual selection.png)
+     ![Convergence Methods](/docs/screenshots/Convergence.png)
 
 So we will be changing the `Main.qml` file of our application to this for Convergence support using Adaptive Page Layout : 
 
