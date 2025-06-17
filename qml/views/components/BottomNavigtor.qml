@@ -53,9 +53,7 @@ import Ubuntu.Components.Popups 1.3
                 
                 onClicked: {
                     // Set the secondary page to todoPage in desktop (multi-column) mode
-                    if (isMultiColumn && typeof apLayout !== "undefined" && typeof mainPage !== "undefined" && typeof todoPage !== "undefined") {
-                        apLayout.addPageToNextColumn(mainPage, todoPage)
-                    }
+                   apLayout.addPageToNextColumn(mainPage, todoPage)
                 }
             }
             

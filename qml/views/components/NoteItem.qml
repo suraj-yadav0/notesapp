@@ -19,6 +19,7 @@ ListItem {
     signal noteEditRequested(int index)
     signal noteDeleteRequested(int index)
     
+    
     // Leading actions (delete)
     leadingActions: ListItemActions {
         actions: [
@@ -46,9 +47,9 @@ ListItem {
     // Note visual representation
     Rectangle {
         anchors.fill: parent
-        radius: units.gu(1)
-       // border.color: theme.palette.normal.border
-        border.width: 1
+      //  radius: units.gu(1)
+        border.color: "transparent"
+       // border.width: 1
         anchors.margins: units.gu(1)
         color : theme.palette.normal.background
         
@@ -64,16 +65,16 @@ ListItem {
                 
                 Text {
                     text: noteItem.title
-                    font.pixelSize: units.gu(2.5)
+                    font.pixelSize: units.gu(2)
                     elide: Text.ElideRight
                     width: parent.width
-                    color: theme.palette.normal.baseText
+                    color: theme.name === "Ubuntu.Components.Themes.SuruDark" ? "#FFFFFF" : "#0D141C"
                 }
                 
                 Text {
-                    text: noteItem.createdAt
-                    font.pixelSize: units.gu(2)
-                    color: theme.palette.normal.baseText
+                    text: "Last modified: " +  noteItem.createdAt
+                    font.pixelSize: units.gu(1.75)
+                    color: theme.name === "Ubuntu.Components.Themes.SuruDark" ? "#8FADCC" : "#4A739C"
                 }
                 
                 // Preview of content - handles rich text
