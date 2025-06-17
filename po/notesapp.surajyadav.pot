@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notesapp.surajyadav\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-17 06:49+0000\n"
+"POT-Creation-Date: 2025-06-17 07:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,27 +17,19 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../qml/views/MainPage.qml:22 notesapp.desktop.in.h:1
-msgid "Notes"
-msgstr ""
-
-#: ../qml/views/MainPage.qml:23
-msgid "Keep Your Ideas in One Place."
-msgstr ""
-
-#: ../qml/views/MainPage.qml:36
+#: ../qml/views/MainPage.qml:42
 msgid "Add Note"
 msgstr ""
 
-#: ../qml/views/MainPage.qml:46
+#: ../qml/views/MainPage.qml:52
 msgid "Search"
 msgstr ""
 
-#: ../qml/views/MainPage.qml:53
+#: ../qml/views/MainPage.qml:59
 msgid "Dark Mode"
 msgstr ""
 
-#: ../qml/views/MainPage.qml:53
+#: ../qml/views/MainPage.qml:59
 msgid "Light Mode"
 msgstr ""
 
@@ -78,4 +70,8 @@ msgstr ""
 
 #: ../qml/views/components/AddNoteDialog.qml:141
 msgid "Cancel"
+msgstr ""
+
+#: notesapp.desktop.in.h:1
+msgid "Notes"
 msgstr ""

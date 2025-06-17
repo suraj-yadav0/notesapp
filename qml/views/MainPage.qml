@@ -3,9 +3,6 @@ import Lomiri.Components 1.3
 import Ubuntu.Components.Popups 1.3
 import "components"
 
-
-
-
 // Main page displaying the list of notes
 Page {
     id: mainPage
@@ -19,8 +16,17 @@ Page {
 
     header: PageHeader {
         id: header
-        title: i18n.tr('Notes')
-        subtitle: i18n.tr('Keep Your Ideas in One Place.')
+        title: "" // Hide default title
+        subtitle: ""
+        // Custom centered title
+        Text {
+            text: "N O T E S"
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            font.pixelSize: units.gu(2.25)
+             color: theme.name === "Ubuntu.Components.Themes.SuruDark" ? "#FFFFFF" : "#0D141C"
+            font.bold: true
+        }
 
         ActionBar {
             anchors {
@@ -36,7 +42,7 @@ Page {
                     text: i18n.tr("Add Note")
                     onTriggered: {
                         var dialog = PopupUtils.open(Qt.resolvedUrl("components/AddNoteDialog.qml"));
-                        dialog.saveRequested.connect(function(title, content, isRichText) {
+                        dialog.saveRequested.connect(function (title, content, isRichText) {
                             controller.createNote(title, content, isRichText);
                         });
                     }
@@ -45,23 +51,19 @@ Page {
                     iconName: "search"
                     text: i18n.tr("Search")
                     onTriggered: {
-                      console.log("Search action triggered");
+                        console.log("Search action triggered");
                     }
                 },
                 Action {
                     iconName: theme.name === "Ubuntu.Components.Themes.SuruDark" ? "weather-clear" : "weather-clear-night"
                     text: theme.name === "Ubuntu.Components.Themes.SuruDark" ? i18n.tr("Light Mode") : i18n.tr("Dark Mode")
                     onTriggered: {
-                        Theme.name = theme.name === "Ubuntu.Components.Themes.SuruDark" ?
-                            "Ubuntu.Components.Themes.Ambiance" :
-                            "Ubuntu.Components.Themes.SuruDark";
+                        Theme.name = theme.name === "Ubuntu.Components.Themes.SuruDark" ? "Ubuntu.Components.Themes.Ambiance" : "Ubuntu.Components.Themes.SuruDark";
                     }
                 }
             ]
         }
     }
-
-  
 
     ListView {
         id: notesListView
@@ -70,7 +72,7 @@ Page {
             left: parent.left
             right: parent.right
             bottom: parent.bottom
-           // topMargin: units.gu(2)
+            // topMargin: units.gu(2)
             rightMargin: units.gu(2)
             leftMargin: units.gu(2)
         }
@@ -102,7 +104,12 @@ Page {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
+    }
 
-       
+
+    BottomNavigtor {
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
     }
 }
