@@ -138,11 +138,11 @@ Page {
         }
 
         // Optional: Add a shadow or elevation effect
-        // UbuntuShape {
+        // Rectangle {
         //     anchors.fill: parent
         //     radius: floatingButton.radius
         //     color: "transparent" // Make the shape itself transparent
-        //     elevation: units.dp(6) // Adjust elevation for shadow effect
+        //    // elevation: units.dp(6) // Adjust elevation for shadow effect
         //     z: -1 // Place shadow behind the button
         // }
     }
