@@ -181,6 +181,8 @@ MainView {
         ToDoView {
           //  id: todoPage
             visible: false
+
+            
         }
         SettingsPage {
           //  id: settingsPage
