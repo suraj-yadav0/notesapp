@@ -129,36 +129,6 @@ MainView {
                     // Optionally, you could show a toast or dialog if needed
                 }
             }
-
-            // Connect BottomNavigtor signals to navigation logic
-            BottomNavigtor {
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
-
-                onMainPageRequested: {
-                    // Show mainPage, hide others
-                    mainPage.visible = true
-                    todoPage.visible = false
-                    settingsPage.visible = false
-                    if (!pageLayout.hasPage(mainPage))
-                        pageLayout.setPrimaryPage(mainPage)
-                }
-                onTodoPageRequested: {
-                    mainPage.visible = false
-                    todoPage.visible = true
-                    settingsPage.visible = false
-                    if (!pageLayout.hasPage(todoPage))
-                        pageLayout.setPrimaryPage(todoPage)
-                }
-                onSettingsPageRequested: {
-                    mainPage.visible = false
-                    todoPage.visible = false
-                    settingsPage.visible = true
-                    if (!pageLayout.hasPage(settingsPage))
-                        pageLayout.setPrimaryPage(settingsPage)
-                }
-            }
         }
 
         // Note editor page
