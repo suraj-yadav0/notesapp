@@ -54,14 +54,14 @@ ListItem {
         color : theme.palette.normal.background
         
         Row {
+            id: contentRow
             spacing: units.gu(2)
-            anchors.fill: parent
-            anchors.margins: units.gu(2)
+            anchors.centerIn: parent
+            width: parent.width - units.gu(4)
             
             Column {
                 spacing: units.gu(0.5)
-                anchors.verticalCenter: parent.verticalCenter
-                width: parent.width - parent.spacing
+                width: contentRow.width - units.gu(6) - parent.spacing // Account for icon and spacing
                 
                 Text {
                     text: noteItem.title
@@ -103,13 +103,10 @@ ListItem {
 
             // Right arrow icon
             Icon {
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.right: parent.right
                 width: units.gu(2)
                 height: units.gu(2)
                 name: "go-next"
                 color: theme.palette.normal.baseText
-                
             }
         }
         

@@ -26,7 +26,13 @@ Item {
             // Load saved items from settings
             if (settings.todoItems && settings.todoItems.length > 0) {
                 for (var i = 0; i < settings.todoItems.length; i++) {
-                    append(settings.todoItems[i])
+                    var item = settings.todoItems[i]
+                    // Ensure completed is a boolean
+                    var completed = typeof item.completed === 'boolean' ? item.completed : (item.completed === 'true' || item.completed === true)
+                    append({
+                        text: item.text || "",
+                        completed: completed
+                    })
                 }
             } else {
                 // Default items if no saved data

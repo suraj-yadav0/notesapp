@@ -15,8 +15,11 @@
  */
 
 import QtQuick 2.9
+import QtQuick.Layouts 1.3
 import Lomiri.Components 1.3
 import Lomiri.Components.Themes 1.3
+import Ubuntu.Components.Popups 1.3
+import QtQuick.Controls 2.2 as QC2
 
 // Import our own components
 import "models"
@@ -47,15 +50,9 @@ MainView {
         model: notesModel
     }
 
-    // Add ToDoView and SettingsPage as pages
-    ToDoView {
-        id: todoPage
-        visible: false
-    }
-    SettingsPage {
-        id: settingsPage
-        visible: false
-    }
+    // Create page instances (will be managed by AdaptivePageLayout)
+    property var todoPage: null
+    property var settingsPageInstance: null
 
     AdaptivePageLayout {
         id: pageLayout
@@ -114,20 +111,11 @@ MainView {
                 } else {
                     pageLayout.addPageToNextColumn(mainPage, noteEditPage)
                 }
+                noteEditPageActive = true
             }
 
             onTodoViewRequested: {
-                if (pageLayout.isDesktopMode) {
-                    // In desktop mode, show todo in the third column
-                    pageLayout.addPageToColumn(2, todoPage)
-                } else if (pageLayout.isTabletMode) {
-                    // In tablet mode, show todo in second column
-                    pageLayout.addPageToColumn(1, todoPage)
-                } else {
-                     pageLayout.addPageToColumn(0, todoPage)
-                    // In phone mode, do nothing (do not show ToDoView as a page)
-                    // Optionally, you could show a toast or dialog if needed
-                }
+                navigateToTodo()
             }
         }
 
@@ -140,23 +128,12 @@ MainView {
 
             onBackRequested: {
                 pageLayout.removePages(noteEditPage)
+                noteEditPageActive = false
             }
 
             onSaveRequested: function(content) {
                 controller.saveNote(noteId, content)
             }
-        }
-
-        // Add ToDoView and SettingsPage to the layout (hidden by default)
-        ToDoView {
-          //  id: todoPage
-            visible: false
-
-            
-        }
-        SettingsPage {
-          //  id: settingsPage
-            visible: false
         }
     }
 
@@ -191,5 +168,149 @@ MainView {
         console.log("Screen size:", width + "x" + height)
         console.log("Mode:", pageLayout.isDesktopMode ? "Desktop" : 
                           pageLayout.isTabletMode ? "Tablet" : "Phone")
+    }
+
+    // Navigation state management
+    property bool settingsPageActive: false
+    property bool todoPageActive: false
+    property bool noteEditPageActive: false
+
+    // Page instances
+    ToDoView {
+        id: todoPageInstance
+        visible: false
+    }
+    
+    SettingsPage {
+        id: settingsPageInstance
+        visible: false
+    }
+
+    // Navigation helper functions
+    function navigateToMainPage() {
+        console.log("Navigating to main page")
+        // Clear all state first
+        settingsPageActive = false
+        todoPageActive = false
+        noteEditPageActive = false
+        
+        // Remove any additional pages to show just the main page
+        try {
+            if (settingsPageInstance) {
+                pageLayout.removePages(settingsPageInstance)
+            }
+            if (todoPageInstance) {
+                pageLayout.removePages(todoPageInstance)
+            }
+            if (noteEditPage) {
+                pageLayout.removePages(noteEditPage)
+            }
+        } catch (e) {
+            console.log("Main page navigation cleanup error:", e)
+        }
+    }
+
+    function navigateToSettings() {
+        console.log("Navigating to settings")
+        if (!settingsPageActive) {
+            try {
+                // Clear other pages first if they're active
+                if (todoPageActive) {
+                    pageLayout.removePages(todoPageInstance)
+                    todoPageActive = false
+                }
+                if (noteEditPageActive) {
+                    pageLayout.removePages(noteEditPage)
+                    noteEditPageActive = false
+                }
+                
+                // Add settings page
+                if (pageLayout.isPhoneMode) {
+                    pageLayout.addPageToCurrentColumn(mainPage, settingsPageInstance)
+                } else {
+                    pageLayout.addPageToNextColumn(mainPage, settingsPageInstance)
+                }
+                settingsPageActive = true
+            } catch (e) {
+                console.log("Settings navigation error:", e)
+            }
+        } else {
+            console.log("Settings page already active")
+        }
+    }
+
+    function navigateToTodo() {
+        console.log("Navigating to todo")
+        if (!todoPageActive) {
+            try {
+                // Clear other pages first if they're active
+                if (settingsPageActive) {
+                    pageLayout.removePages(settingsPageInstance)
+                    settingsPageActive = false
+                }
+                if (noteEditPageActive) {
+                    pageLayout.removePages(noteEditPage)
+                    noteEditPageActive = false
+                }
+                
+                // Add todo page
+                if (pageLayout.isDesktopMode) {
+                    pageLayout.addPageToNextColumn(mainPage, todoPageInstance)
+                } else if (pageLayout.isTabletMode) {
+                    pageLayout.addPageToNextColumn(mainPage, todoPageInstance) 
+                } else {
+                    pageLayout.addPageToCurrentColumn(mainPage, todoPageInstance)
+                }
+                todoPageActive = true
+            } catch (e) {
+                console.log("Todo navigation error:", e)
+            }
+        } else {
+            console.log("Todo page already active")
+        }
+    }
+
+    // Radial Navigation Menu
+    RadialBottomEdge {
+        id: radialNavigation
+        mode: "Semihide"
+        semiHideOpacity: 70
+        timeoutSeconds: 3
+        hintIconName: "navigation-menu"
+        
+        actions: [
+            RadialAction {
+                iconName: "note"
+                label: "Notes"
+                onTriggered: {
+                    navigateToMainPage()
+                }
+            },
+            RadialAction {
+                iconName: "add"
+                label: "New Note"
+                onTriggered: {
+                    // Create a new note (simulate the add button click)
+                    var dialog = PopupUtils.open(Qt.resolvedUrl("views/components/AddNoteDialog.qml"));
+                    dialog.saveRequested.connect(function (title, content, isRichText) {
+                        notesController.createNote(title, content, isRichText);
+                    });
+                }
+            },
+            RadialAction {
+                iconName: "checklist"
+                label: "To-Do"
+                onTriggered: {
+                    navigateToTodo()
+                }
+            },
+            RadialAction {
+                iconName: "settings"
+                label: "Settings"
+                onTriggered: {
+                    navigateToSettings()
+                }
+            }
+        ]
     }
 }

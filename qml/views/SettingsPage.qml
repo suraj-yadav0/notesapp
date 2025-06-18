@@ -42,7 +42,6 @@ Page {
             id: flickable
             anchors {
                 fill: parent
-                bottom: bottomNavigation.top
             }
             contentHeight: mainColumn.height
 
