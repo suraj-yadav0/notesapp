@@ -37,7 +37,9 @@ MainView {
     width: units.gu(50)
     height: units.gu(90)
 
-    theme.palette: Palette {}
+    theme.palette: Palette {
+         // color: "#131520"
+    }
 
     // Models
     NotesModel {

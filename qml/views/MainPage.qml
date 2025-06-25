@@ -39,17 +39,24 @@ Page {
                     rightMargin: units.gu(1)
                 }
                 numberOfSlots: 2
-                actions: [
-                    Action {
-                        iconName: "add"
-                        text: i18n.tr("Add Note")
-                        onTriggered: {
-                            var dialog = PopupUtils.open(Qt.resolvedUrl("components/AddNoteDialog.qml"));
-                            dialog.saveRequested.connect(function (title, content, isRichText) {
-                                controller.createNote(title, content, isRichText);
-                            });
-                        }
-                    },
+                 actions: [
+                //     Action {
+                //         iconName: "add"
+                //         text: i18n.tr("Add Note")
+                //         onTriggered: {
+                //             var dialog = PopupUtils.open(Qt.resolvedUrl("components/AddNoteDialog.qml"));
+                //             dialog.saveRequested.connect(function (title, content, isRichText) {
+                //                 controller.createNote(title, content, isRichText);
+                //             });
+                //         }
+                //     },
+                //  Action {
+                //         iconName: theme.name === "Ubuntu.Components.Themes.SuruDark" ? "weather-clear-symbolic" : "weather-clear-night-symbolic"
+                //         text: theme.name === "Ubuntu.Components.Themes.SuruDark" ? i18n.tr("Light Mode") : i18n.tr("Dark Mode")
+                //         onTriggered: {
+                //             Theme.name = theme.name === "Ubuntu.Components.Themes.SuruDark" ? "Ubuntu.Components.Themes.Ambiance" : "Ubuntu.Components.Themes.SuruDark";
+                //         }
+                //     },
                     Action {
                         iconName: "search"
                         text: i18n.tr("Search")
@@ -57,14 +64,8 @@ Page {
                             console.log("Search action triggered");
                             todoViewRequested()
                         }
-                    },
-                    Action {
-                        iconName: theme.name === "Ubuntu.Components.Themes.SuruDark" ? "weather-clear" : "weather-clear-night"
-                        text: theme.name === "Ubuntu.Components.Themes.SuruDark" ? i18n.tr("Light Mode") : i18n.tr("Dark Mode")
-                        onTriggered: {
-                            Theme.name = theme.name === "Ubuntu.Components.Themes.SuruDark" ? "Ubuntu.Components.Themes.Ambiance" : "Ubuntu.Components.Themes.SuruDark";
-                        }
                     }
+                   
                 ]
             }
         }
