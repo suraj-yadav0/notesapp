@@ -23,9 +23,9 @@ import QtQuick.Controls 2.2 as QC2
 
 // Import our own components
 import "models"
-import "controllers"
 import "views"
 import "views/components"
+import "common/constants"
 
 
 MainView {
@@ -41,15 +41,9 @@ MainView {
          // color: "#131520"
     }
 
-    // Models
+    // Models (now include controller functionality)
     NotesModel {
         id: notesModel
-    }
-
-    // Controllers
-    NotesController {
-        id: notesController
-        model: notesModel
     }
 
     // Create page instances (will be managed by AdaptivePageLayout)
@@ -62,9 +56,9 @@ MainView {
         primaryPage: mainPage
 
         // Define computed properties for better readability
-        readonly property bool isTabletMode: width > units.gu(80) && width < units.gu(130)
-        readonly property bool isDesktopMode: width >= units.gu(130)
-        readonly property bool isPhoneMode: width <= units.gu(80)
+        readonly property bool isTabletMode: width > AppConstants.phoneMaxWidth && width < AppConstants.tabletMaxWidth
+        readonly property bool isDesktopMode: width >= AppConstants.tabletMaxWidth
+        readonly property bool isPhoneMode: width <= AppConstants.phoneMaxWidth
 
         layouts: [
             PageColumnsLayout {
@@ -103,7 +97,6 @@ MainView {
         // Main notes list page
         MainPage {
             id: mainPage
-            controller: notesController
             notesModel: notesModel
 
             onEditNoteRequested: function(noteId) {
@@ -124,7 +117,7 @@ MainView {
         // Note editor page
         NoteEditPage {
             id: noteEditPage
-            controller: notesController
+            notesModel: notesModel
 
             property string noteId: ""
 
@@ -134,7 +127,7 @@ MainView {
             }
 
             onSaveRequested: function(content) {
-                controller.saveNote(noteId, content)
+                notesModel.saveNote(noteId, content)
             }
         }
     }
@@ -295,7 +288,7 @@ MainView {
                     // Create a new note (simulate the add button click)
                     var dialog = PopupUtils.open(Qt.resolvedUrl("views/components/AddNoteDialog.qml"));
                     dialog.saveRequested.connect(function (title, content, isRichText) {
-                        notesController.createNote(title, content, isRichText);
+                        notesModel.createNote(title, content, isRichText);
                     });
                 }
             },

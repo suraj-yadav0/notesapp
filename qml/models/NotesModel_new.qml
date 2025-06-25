@@ -27,8 +27,8 @@ Item {
     // Current note being edited (moved from controller)
     property var currentNote: ({ title: "", content: "", createdAt: "", index: -1 })
     
-    // Signals (renamed to avoid conflicts)
-    signal noteSelectionChanged()
+    // Signals
+    signal currentNoteChanged()
 
     // Main notes list model
     ListModel {
@@ -103,7 +103,7 @@ Item {
         var note = getNote(index);
         if (note) {
             currentNote = note;
-            noteSelectionChanged();
+            currentNoteChanged();
             return true;
         }
         return false;
@@ -112,7 +112,7 @@ Item {
     // Reset the current note
     function resetCurrentNote() {
         currentNote = { title: "", content: "", createdAt: "", index: -1 };
-        noteSelectionChanged();
+        currentNoteChanged();
     }
 
     // Save note (for backward compatibility)

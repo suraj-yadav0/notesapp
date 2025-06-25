@@ -2,13 +2,13 @@ import QtQuick 2.7
 import Lomiri.Components 1.3
 import Ubuntu.Components.Popups 1.3
 import "components"
-import "../assets"
+import "../common/constants"
+import "../common/theme"
 
 // Main page displaying the list of notes
 Page {
     id: mainPage
 
-    property var controller
     property var notesModel
 
     signal editNoteRequested(int index)
@@ -23,11 +23,11 @@ Page {
             subtitle: ""
             // Custom centered title
             Text {
-                text: "N O T E S"
+                text: AppConstants.appName
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: units.gu(2.25)
-                color: theme.name === "Ubuntu.Components.Themes.SuruDark" ? "#FFFFFF" : "#0D141C"
+                color: ThemeHelper.getTextColor()
                 font.bold: true
             }
 
@@ -35,37 +35,18 @@ Page {
                 anchors {
                     top: parent.top
                     right: parent.right
-                    topMargin: units.gu(1)
-                    rightMargin: units.gu(1)
+                    topMargin: AppConstants.smallMargin
+                    rightMargin: AppConstants.smallMargin
                 }
                 numberOfSlots: 2
                  actions: [
-                //     Action {
-                //         iconName: "add"
-                //         text: i18n.tr("Add Note")
-                //         onTriggered: {
-                //             var dialog = PopupUtils.open(Qt.resolvedUrl("components/AddNoteDialog.qml"));
-                //             dialog.saveRequested.connect(function (title, content, isRichText) {
-                //                 controller.createNote(title, content, isRichText);
-                //             });
-                //         }
-                //     },
                  Action {
-                        iconName: theme.name === "Ubuntu.Components.Themes.SuruDark" ? "weather-clear-symbolic" : "weather-clear-night-symbolic"
-                        text: theme.name === "Ubuntu.Components.Themes.SuruDark" ? i18n.tr("Light Mode") : i18n.tr("Dark Mode")
+                        iconName: ThemeHelper.getThemeToggleIcon()
+                        text: ThemeHelper.getThemeToggleText()
                         onTriggered: {
-                            Theme.name = theme.name === "Ubuntu.Components.Themes.SuruDark" ? "Ubuntu.Components.Themes.Ambiance" : "Ubuntu.Components.Themes.SuruDark";
+                            ThemeHelper.toggleTheme()
                         }
                     }
-                    // Action {
-                    //     iconName: "search"
-                    //     text: i18n.tr("Search")
-                    //     onTriggered: {
-                    //         console.log("Search action triggered");
-                    //         todoViewRequested()
-                    //     }
-                    // }
-                   
                 ]
             }
         }
@@ -77,8 +58,8 @@ Page {
                 left: parent.left
                 right: parent.right
                 bottom: parent.bottom
-                rightMargin: units.gu(2)
-                leftMargin: units.gu(2)
+                rightMargin: AppConstants.defaultMargin
+                leftMargin: AppConstants.defaultMargin
             }
             model: notesModel.notes
 
@@ -91,15 +72,15 @@ Page {
                 isRichText: model.isRichText || false
 
                 onNoteSelected: {
-                    controller.setCurrentNote(index);
+                    notesModel.setCurrentNote(index);
                     editNoteRequested(index);
                 }
                 onNoteEditRequested: {
-                    controller.setCurrentNote(index);
+                    notesModel.setCurrentNote(index);
                     editNoteRequested(index);
                 }
                 onNoteDeleteRequested: {
-                    controller.deleteNote(index);
+                    notesModel.deleteNote(index);
                 }
             }
         }
@@ -107,45 +88,35 @@ Page {
     // Floating Action Button
     Rectangle {
         id: floatingButton
-        width: units.gu(7)
-        height: units.gu(7)
+        width: AppConstants.defaultButtonSize
+        height: AppConstants.defaultButtonSize
         radius: width / 2
-        color: LomiriColors.orange // Or any color you prefer
+        color: LomiriColors.orange
         anchors {
             right: parent.right
             bottom: parent.bottom
-            rightMargin: units.gu(3)
-            bottomMargin: units.gu(8)
+            rightMargin: AppConstants.defaultIconSize
+            bottomMargin: AppConstants.defaultHintSize
         }
 
        Icon{
             anchors.centerIn: parent
             name: "add"
-            width: units.gu(3)
-            height: units.gu(3)
-            color: "white" // Icon color
+            width: AppConstants.defaultIconSize
+            height: AppConstants.defaultIconSize
+            color: "white"
        }
 
         MouseArea {
             anchors.fill: parent
             onClicked: {
                 console.log("Floating button clicked!")
-                // Add your action here, for example, opening the AddNoteDialog
                 var dialog = PopupUtils.open(Qt.resolvedUrl("components/AddNoteDialog.qml"));
                 dialog.saveRequested.connect(function (title, content, isRichText) {
-                    controller.createNote(title, content, isRichText);
+                    notesModel.createNote(title, content, isRichText);
                 });
             }
         }
-
-        // Optional: Add a shadow or elevation effect
-        // Rectangle {
-        //     anchors.fill: parent
-        //     radius: floatingButton.radius
-        //     color: "transparent" // Make the shape itself transparent
-        //    // elevation: units.dp(6) // Adjust elevation for shadow effect
-        //     z: -1 // Place shadow behind the button
-        // }
     }
 
     onTodoViewRequested: {

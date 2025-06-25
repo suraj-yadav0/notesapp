@@ -16,28 +16,40 @@
 
 import QtQuick 2.9
 import Lomiri.Components 1.3
+import "../../common/constants"
+
+/**
+ * RadialBottomEdge provides a radial navigation menu that expands from the bottom edge
+ * Supports gestures, auto-hide modes, and customizable actions in a circular layout
+ */
 
 Item {
     id: root
     
-    // Properties
-    property int hintSize: units.gu(8)
+    // Configuration properties
+    property int hintSize: AppConstants.defaultHintSize
     property color hintColor: theme.palette.normal.overlay
     property string hintIconName: "view-grid-symbolic"
     property alias hintIconSource: hintIcon.source
     property color hintIconColor: theme.palette.normal.backgroundText
     property bool bottomEdgeEnabled: true
     property color bgColor: theme.palette.normal.overlay
-    property real bgOpacity: 0.7
+    property real bgOpacity: AppConstants.defaultBgOpacity
+    
+    // Behavior modes
     property string mode: "Always" // "Always", "Autohide", "Semihide"
     property int semiHideOpacity: 50
-    property int timeoutSeconds: 2
+    property int timeoutSeconds: AppConstants.navigationTimeoutSeconds
+    
+    // Layout properties
     property real expandedPosition: 0.6 * height
     property real collapsedPosition: height - hintSize / 2
+    property real actionButtonSize: AppConstants.defaultButtonSize
+    property real actionButtonDistance: AppConstants.defaultRadialDistance * hintSize
+    
+    // Action properties
     property list<RadialAction> actions
     property ListModel leadingActions
-    property real actionButtonSize: units.gu(7)
-    property real actionButtonDistance: 1.5 * hintSize
     
     // State management
     property bool expanded: false
@@ -81,7 +93,7 @@ Item {
         
         Behavior on opacity {
             NumberAnimation {
-                duration: 300
+                duration: AppConstants.defaultAnimationDuration
                 easing.type: Easing.OutQuad
             }
         }
@@ -111,8 +123,8 @@ Item {
                 id: hintIcon
                 name: hintIconName
                 color: hintIconColor
-                width: units.gu(3)
-                height: units.gu(3)
+                width: AppConstants.defaultIconSize
+                height: AppConstants.defaultIconSize
                 anchors.centerIn: parent
             }
             

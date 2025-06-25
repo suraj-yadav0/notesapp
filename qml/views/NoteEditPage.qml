@@ -1,14 +1,14 @@
 import QtQuick 2.7
 import Lomiri.Components 1.3
 import QtQuick.Layouts 1.3
-
 import "../views/components/"
+import "../common/constants"
 
 Page {
     id: noteEditPage
 
     // to be set from outside
-    property var controller
+    property var notesModel
 
     // when navigation back is requested
     signal backRequested
@@ -31,7 +31,7 @@ Page {
             Action {
                 iconName: "delete"
                 onTriggered: {
-                    controller.deleteCurrentNote();
+                    notesModel.deleteCurrentNote();
                     backRequested();
                 }
             },
@@ -41,7 +41,7 @@ Page {
                 onTriggered: {
                     var content = isRichTextSwitch.checked ? richTextLoader.item.text : plainTextArea.text;
 
-                    if (controller.updateCurrentNote(titleEditField.text, content, isRichTextSwitch.checked)) {
+                    if (notesModel.updateCurrentNote(titleEditField.text, content, isRichTextSwitch.checked)) {
                         saveRequested(content)
                         backRequested();
                     }
@@ -66,7 +66,7 @@ Page {
             id: titleEditField
             width: parent.width
             placeholderText: i18n.tr("Title")
-            text: controller.currentNote.title
+            text: notesModel.currentNote.title
         }
 
         // Toggle for rich text 
@@ -81,7 +81,7 @@ Page {
 
             Switch {
                 id: isRichTextSwitch
-                checked: controller.currentNote.isRichText || false
+                checked: notesModel.currentNote.isRichText || false
                 anchors.verticalCenter: parent.verticalCenter
             }
         }
@@ -96,7 +96,7 @@ Page {
                 id: plainTextArea
                 anchors.fill: parent
                 placeholderText: i18n.tr("Note content...")
-                text: controller.currentNote.content
+                text: notesModel.currentNote.content
                 autoSize: false
                 visible: !isRichTextSwitch.checked
             }
@@ -129,8 +129,8 @@ Page {
                 }
 
                 onLoaded: {
-                    if (controller.currentNote.content) {
-                        item.text = controller.currentNote.content;
+                    if (notesModel.currentNote.content) {
+                        item.text = notesModel.currentNote.content;
                         item.forceActiveFocus();
                     }
                 }
@@ -139,16 +139,16 @@ Page {
 
         // Update fields when current note changes
         Connections {
-            target: controller
-            onCurrentNoteChanged: {
-                titleEditField.text = controller.currentNote.title;
-                isRichTextSwitch.checked = controller.currentNote.isRichText || false;
+            target: notesModel
+            onNoteSelectionChanged: {
+                titleEditField.text = notesModel.currentNote.title;
+                isRichTextSwitch.checked = notesModel.currentNote.isRichText || false;
 
                 if (isRichTextSwitch.checked && richTextLoader.status === Loader.Ready && richTextLoader.item) {
-                    richTextLoader.item.text = controller.currentNote.content;
+                    richTextLoader.item.text = notesModel.currentNote.content;
                     richTextLoader.item.forceActiveFocus();
                 } else {
-                    plainTextArea.text = controller.currentNote.content;
+                    plainTextArea.text = notesModel.currentNote.content;
                 }
             }
         }
