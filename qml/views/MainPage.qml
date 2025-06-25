@@ -1,11 +1,10 @@
 import QtQuick 2.7
 import Lomiri.Components 1.3
-import Ubuntu.Components.Popups 1.3
 import "components"
 import "../common/constants"
 import "../common/theme"
 
-// Main page displaying the list of notes
+    // Main page displaying the list of notes
 Page {
     id: mainPage
 
@@ -13,6 +12,7 @@ Page {
 
     signal editNoteRequested(int index)
     signal todoViewRequested()
+    signal addNoteRequested()
     property var onTodoViewRequested
 
     anchors.fill: parent
@@ -110,11 +110,8 @@ Page {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                console.log("Floating button clicked!")
-                var dialog = PopupUtils.open(Qt.resolvedUrl("components/AddNoteDialog.qml"));
-                dialog.saveRequested.connect(function (title, content, isRichText) {
-                    notesModel.createNote(title, content, isRichText);
-                });
+                console.log("Add note floating button clicked!")
+                addNoteRequested()
             }
         }
     }

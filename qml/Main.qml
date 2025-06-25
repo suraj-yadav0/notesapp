@@ -109,6 +109,10 @@ MainView {
                 noteEditPageActive = true
             }
 
+            onAddNoteRequested: {
+                navigateToAddNote()
+            }
+
             onTodoViewRequested: {
                 navigateToTodo()
             }
@@ -169,6 +173,7 @@ MainView {
     property bool settingsPageActive: false
     property bool todoPageActive: false
     property bool noteEditPageActive: false
+    property bool addNotePageActive: false
 
     // Page instances
     ToDoView {
@@ -181,6 +186,22 @@ MainView {
         visible: false
     }
 
+    AddNotePage {
+        id: addNotePageInstance
+        visible: false
+        notesModel: notesModel
+
+        onSaveRequested: function(title, content, isRichText) {
+            console.log("Main: Creating note from AddNotePage")
+            notesModel.createNote(title, content, isRichText)
+            navigateToMainPage()
+        }
+
+        onBackRequested: {
+            navigateToMainPage()
+        }
+    }
+
     // Navigation helper functions
     function navigateToMainPage() {
         console.log("Navigating to main page")
@@ -188,6 +209,7 @@ MainView {
         settingsPageActive = false
         todoPageActive = false
         noteEditPageActive = false
+        addNotePageActive = false
         
         // Remove any additional pages to show just the main page
         try {
@@ -200,8 +222,49 @@ MainView {
             if (noteEditPage) {
                 pageLayout.removePages(noteEditPage)
             }
+            if (addNotePageInstance) {
+                pageLayout.removePages(addNotePageInstance)
+            }
         } catch (e) {
             console.log("Main page navigation cleanup error:", e)
+        }
+    }
+
+    function navigateToAddNote() {
+        console.log("Navigating to add note page")
+        if (!addNotePageActive) {
+            try {
+                // Clear other pages first
+                if (settingsPageActive) {
+                    pageLayout.removePages(settingsPageInstance)
+                    settingsPageActive = false
+                }
+                if (todoPageActive) {
+                    pageLayout.removePages(todoPageInstance)
+                    todoPageActive = false
+                }
+                if (noteEditPageActive) {
+                    pageLayout.removePages(noteEditPage)
+                    noteEditPageActive = false
+                }
+                
+                // Reset add note page
+                addNotePageInstance.isEditing = false
+                addNotePageInstance.initialTitle = ""
+                addNotePageInstance.initialContent = ""
+                addNotePageInstance.initialIsRichText = false
+                addNotePageInstance.clearFields()
+                
+                // Add the page
+                if (pageLayout.isPhoneMode) {
+                    pageLayout.addPageToCurrentColumn(mainPage, addNotePageInstance)
+                } else {
+                    pageLayout.addPageToNextColumn(mainPage, addNotePageInstance)
+                }
+                addNotePageActive = true
+            } catch (e) {
+                console.log("Add note navigation error:", e)
+            }
         }
     }
 
@@ -285,11 +348,7 @@ MainView {
                 iconName: "add"
                 label: "New Note"
                 onTriggered: {
-                    // Create a new note (simulate the add button click)
-                    var dialog = PopupUtils.open(Qt.resolvedUrl("views/components/AddNoteDialog.qml"));
-                    dialog.saveRequested.connect(function (title, content, isRichText) {
-                        notesModel.createNote(title, content, isRichText);
-                    });
+                    navigateToAddNote()
                 }
             },
             RadialAction {
