@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notesapp.surajyadav\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-25 10:47+0000\n"
+"POT-Creation-Date: 2025-06-25 11:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,6 +77,28 @@ msgstr ""
 msgid ""
 "No tasks yet.\n"
 "Tap + to add one!"
+msgstr ""
+
+#: ../qml/views/components/RichTextEditor.qml:297
+msgid "Start typing your text here..."
+msgstr ""
+
+#: ../qml/views/components/RichTextEditor.qml:348
+msgid "Choose Color"
+msgstr ""
+
+#: ../qml/views/components/RichTextEditor.qml:361
+#: ../qml/views/components/RichTextEditor_Old.qml:389
+msgid "Choose Text Color"
+msgstr ""
+
+#: ../qml/views/components/RichTextEditor.qml:414
+#: ../qml/views/components/RichTextEditor_Old.qml:422
+msgid "Cancel"
+msgstr ""
+
+#: ../qml/views/components/RichTextEditor_Old.qml:318
+msgid "Start typing your rich text here..."
 msgstr ""
 
 #: notesapp.desktop.in.h:1
