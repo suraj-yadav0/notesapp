@@ -125,13 +125,24 @@ Page {
                 sourceComponent: Component {
                     RichTextEditor {
                         editMode: true
+                        initialText: notesModel.currentNote.content
+                        
+                        onContentChanged: {
+                            // Auto-save content changes
+                            console.log("Rich text content changed in edit mode")
+                        }
+                        
+                        Component.onCompleted: {
+                            focusEditor()
+                        }
                     }
                 }
 
                 onLoaded: {
                     if (notesModel.currentNote.content) {
-                        item.text = notesModel.currentNote.content;
-                        item.forceActiveFocus();
+                        item.initialText = notesModel.currentNote.content
+                        item.text = notesModel.currentNote.content
+                        item.focusEditor()
                     }
                 }
             }

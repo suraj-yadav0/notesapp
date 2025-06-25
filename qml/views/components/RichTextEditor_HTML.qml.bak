@@ -19,19 +19,15 @@ Item {
     function selectAll() { textEdit.selectAll() }
     function clear() { textEdit.clear() }
     
-    // Track formatting state
-    property bool isBold: false
-    property bool isItalic: false
-    property bool isUnderline: false
-    property bool isHeading: false
-    
     // Initialize content when component is ready
     Component.onCompleted: {
         if (initialText) {
             textEdit.text = initialText
         }
         Qt.callLater(function() {
-            textEdit.focus = true
+            if (textEdit) {
+                textEdit.focus = true
+            }
         })
     }
     
@@ -70,10 +66,10 @@ Item {
                         height: units.gu(4)
                         text: "B"
                         font.bold: true
-                        color: isBold ? theme.palette.selected.foreground : theme.palette.normal.foreground
+                        color: theme.palette.normal.foreground
                         onClicked: {
                             console.log("Bold button clicked")
-                            toggleBold()
+                            insertFormatting('<b>', '</b>')
                         }
                     }
                     Button {
@@ -81,10 +77,10 @@ Item {
                         height: units.gu(4)
                         text: "I"
                         font.italic: true
-                        color: isItalic ? theme.palette.selected.foreground : theme.palette.normal.foreground
+                        color: theme.palette.normal.foreground
                         onClicked: {
                             console.log("Italic button clicked")
-                            toggleItalic()
+                            insertFormatting('<i>', '</i>')
                         }
                     }
                     Button {
@@ -92,10 +88,10 @@ Item {
                         height: units.gu(4)
                         text: "U"
                         font.underline: true
-                        color: isUnderline ? theme.palette.selected.foreground : theme.palette.normal.foreground
+                        color: theme.palette.normal.foreground
                         onClicked: {
                             console.log("Underline button clicked")
-                            toggleUnderline()
+                            insertFormatting('<u>', '</u>')
                         }
                     }
                     Button {
@@ -103,10 +99,10 @@ Item {
                         height: units.gu(4)
                         text: "H1"
                         font.bold: true
-                        color: isHeading ? theme.palette.selected.foreground : theme.palette.normal.foreground
+                        color: theme.palette.normal.foreground
                         onClicked: {
                             console.log("Heading button clicked")
-                            toggleHeading()
+                            insertFormatting('<h3>', '</h3>')
                         }
                     }
                     Button {
@@ -116,7 +112,7 @@ Item {
                         color: theme.palette.normal.foreground
                         onClicked: {
                             console.log("List button clicked")
-                            insertBulletPoint()
+                            insertList()
                         }
                     }
                     Button {
@@ -145,16 +141,19 @@ Item {
                 height: Math.max(textScrollView.height, contentHeight)
                 wrapMode: TextEdit.Wrap
                 selectByMouse: true
+                font.pixelSize: richTextEditor.fontSize
                 readOnly: !editMode
                 color: theme.palette.normal.baseText
                 
-                // Apply formatting state to font
-                font.pixelSize: isHeading ? richTextEditor.fontSize * 1.5 : richTextEditor.fontSize
-                font.bold: isBold || isHeading
-                font.italic: isItalic
-                font.underline: isUnderline
+                // Enable rich text formatting
+                textFormat: TextEdit.RichText
+                
+                // Use HTML for proper rendering
+                property string htmlContent: ""
                 
                 onTextChanged: {
+                    // Store HTML content
+                    htmlContent = text
                     richTextEditor.contentChanged(text)
                 }
                 
@@ -162,70 +161,93 @@ Item {
                 Keys.onPressed: {
                     if (event.modifiers & Qt.ControlModifier) {
                         if (event.key === Qt.Key_B) {
-                            toggleBold()
+                            insertFormatting('<b>', '</b>')
                             event.accepted = true
                         } else if (event.key === Qt.Key_I) {
-                            toggleItalic()
+                            insertFormatting('<i>', '</i>')
                             event.accepted = true
                         } else if (event.key === Qt.Key_U) {
-                            toggleUnderline()
+                            insertFormatting('<u>', '</u>')
                             event.accepted = true
                         }
                     }
+                }
+                
+                // Force HTML rendering when content changes
+                Component.onCompleted: {
+                    textFormat = TextEdit.RichText
                 }
             }
         }
     }
 
     // --- Formatting functions ---
-    function toggleBold() {
-        isBold = !isBold
-        console.log("Bold toggled:", isBold)
-        textEdit.focus = true
-    }
-    
-    function toggleItalic() {
-        isItalic = !isItalic
-        console.log("Italic toggled:", isItalic)
-        textEdit.focus = true
-    }
-    
-    function toggleUnderline() {
-        isUnderline = !isUnderline
-        console.log("Underline toggled:", isUnderline)
-        textEdit.focus = true
-    }
-    
-    function toggleHeading() {
-        isHeading = !isHeading
-        console.log("Heading toggled:", isHeading)
-        textEdit.focus = true
-    }
-    
-    function insertBulletPoint() {
-        console.log("Inserting bullet point")
+    function insertFormatting(openTag, closeTag) {
+        console.log("Applying formatting:", openTag, closeTag)
         
-        var cursorPos = textEdit.cursorPosition
-        var currentText = textEdit.text
+        if (!textEdit) {
+            console.log("TextEdit not ready")
+            return
+        }
         
-        // Find start of current line
-        var lineStart = currentText.lastIndexOf('\n', cursorPos - 1) + 1
-        var beforeLine = currentText.substring(0, lineStart)
-        var afterCursor = currentText.substring(cursorPos)
+        // Try a different approach - change font properties instead of inserting HTML
+        if (openTag === '<b>') {
+            textEdit.font.bold = !textEdit.font.bold
+            console.log("Bold toggled:", textEdit.font.bold)
+        } else if (openTag === '<i>') {
+            textEdit.font.italic = !textEdit.font.italic
+            console.log("Italic toggled:", textEdit.font.italic)
+        } else if (openTag === '<u>') {
+            textEdit.font.underline = !textEdit.font.underline
+            console.log("Underline toggled:", textEdit.font.underline)
+        } else if (openTag === '<h3>') {
+            textEdit.font.bold = true
+            textEdit.font.pixelSize = richTextEditor.fontSize * 1.5
+            console.log("Heading applied")
+        }
         
-        // Insert bullet point
-        var bulletText = "• "
-        textEdit.text = beforeLine + bulletText + afterCursor
-        textEdit.cursorPosition = lineStart + bulletText.length
+        textEdit.focus = true
+    }
+    
+    function insertList() {
+        console.log("Inserting list")
+        
+        var pos = textEdit.cursorPosition
+        var fullText = textEdit.text
+        
+        var listHtml = '<ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul>'
+        
+        var beforeText = fullText.substring(0, pos)
+        var afterText = fullText.substring(pos)
+        
+        textEdit.text = beforeText + listHtml + afterText
+        textEdit.cursorPosition = pos + listHtml.length
         textEdit.focus = true
     }
     
     function clearFormatting() {
         console.log("Clearing formatting")
-        isBold = false
-        isItalic = false
-        isUnderline = false
-        isHeading = false
+        
+        var start = textEdit.selectionStart
+        var end = textEdit.selectionEnd
+        
+        if (start !== end) {
+            // Clear formatting from selection only
+            var fullText = textEdit.text
+            var selectedText = fullText.substring(start, end)
+            var plainText = selectedText.replace(/<[^>]*>/g, '')
+            
+            var beforeText = fullText.substring(0, start)
+            var afterText = fullText.substring(end)
+            
+            textEdit.text = beforeText + plainText + afterText
+            textEdit.cursorPosition = start + plainText.length
+        } else {
+            // Clear all formatting
+            var plainText = textEdit.text.replace(/<[^>]*>/g, '')
+            textEdit.text = plainText
+        }
+        
         textEdit.focus = true
     }
     

@@ -160,12 +160,26 @@ Page {
                             RichTextEditor {
                                 id: richTextEditor
                                 editMode: true
+                                initialText: initialContent
+                                fontSize: units.gu(1.6)
+                                
+                                onContentChanged: {
+                                    // Auto-save content changes
+                                    console.log("Rich text content changed")
+                                }
+                                
+                                Component.onCompleted: {
+                                    focusEditor()
+                                }
                             }
                         }
 
                         onLoaded: {
-                            if (richTextSwitch.checked && initialContent) {
-                                item.text = initialContent
+                            if (richTextSwitch.checked) {
+                                item.initialText = initialContent
+                                if (initialContent) {
+                                    item.text = initialContent
+                                }
                             }
                         }
                     }
@@ -219,7 +233,10 @@ Page {
         noteTitleField.text = ""
         plainTextArea.text = ""
         richTextSwitch.checked = false
-        if (richTextLoader.item) {
+        
+        // Clear rich text editor if loaded
+        if (richTextLoader.status === Loader.Ready && richTextLoader.item) {
+            richTextLoader.item.clear()
             richTextLoader.item.text = ""
         }
     }
