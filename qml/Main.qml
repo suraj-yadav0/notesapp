@@ -300,7 +300,7 @@ MainView {
                 }
             },
             RadialAction {
-                iconName: "checklist"
+                iconName: "view-list-symbolic"
                 label: "To-Do"
                 onTriggered: {
                     navigateToTodo()

@@ -50,21 +50,21 @@ Page {
                 //             });
                 //         }
                 //     },
-                //  Action {
-                //         iconName: theme.name === "Ubuntu.Components.Themes.SuruDark" ? "weather-clear-symbolic" : "weather-clear-night-symbolic"
-                //         text: theme.name === "Ubuntu.Components.Themes.SuruDark" ? i18n.tr("Light Mode") : i18n.tr("Dark Mode")
-                //         onTriggered: {
-                //             Theme.name = theme.name === "Ubuntu.Components.Themes.SuruDark" ? "Ubuntu.Components.Themes.Ambiance" : "Ubuntu.Components.Themes.SuruDark";
-                //         }
-                //     },
-                    Action {
-                        iconName: "search"
-                        text: i18n.tr("Search")
+                 Action {
+                        iconName: theme.name === "Ubuntu.Components.Themes.SuruDark" ? "weather-clear-symbolic" : "weather-clear-night-symbolic"
+                        text: theme.name === "Ubuntu.Components.Themes.SuruDark" ? i18n.tr("Light Mode") : i18n.tr("Dark Mode")
                         onTriggered: {
-                            console.log("Search action triggered");
-                            todoViewRequested()
+                            Theme.name = theme.name === "Ubuntu.Components.Themes.SuruDark" ? "Ubuntu.Components.Themes.Ambiance" : "Ubuntu.Components.Themes.SuruDark";
                         }
                     }
+                    // Action {
+                    //     iconName: "search"
+                    //     text: i18n.tr("Search")
+                    //     onTriggered: {
+                    //         console.log("Search action triggered");
+                    //         todoViewRequested()
+                    //     }
+                    // }
                    
                 ]
             }
