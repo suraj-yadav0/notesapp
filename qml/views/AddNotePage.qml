@@ -60,6 +60,13 @@ Page {
                     onTriggered: {
                         saveNote()
                     }
+                },
+                Action {
+                    iconName: "edit-clear"
+                    text: i18n.tr("Clear")
+                    onTriggered: {
+                        clearFields()
+                    }
                 }
             ]
         }
@@ -83,13 +90,14 @@ Page {
             width: parent.width
             spacing: AppConstants.defaultMargin
 
-            // Title input
+            // Enhanced title input
             TextField {
                 id: noteTitleField
                 Layout.fillWidth: true
-                placeholderText: i18n.tr("Enter note title...")
+                placeholderText: i18n.tr("💡 Enter note title...")
                 text: initialTitle
-                font.pixelSize: units.gu(2)
+                font.pixelSize: units.gu(2.2)
+                font.weight: Font.Medium
                 
                 // Focus on the title field when page loads
                 Component.onCompleted: {
@@ -99,86 +107,168 @@ Page {
                 }
             }
 
-            // Rich text toggle
-            Row {
+            // Enhanced rich text toggle with card design
+            Rectangle {
                 Layout.fillWidth: true
-                spacing: AppConstants.defaultMargin
+                Layout.preferredHeight: units.gu(6)
+                color: theme.palette.normal.foreground
+                border.color: theme.palette.normal.base
+                border.width: units.dp(1)
+                radius: units.gu(1)
                 
-                Label {
-                    text: i18n.tr("Rich Text Format:")
-                    anchors.verticalCenter: parent.verticalCenter
-                    font.pixelSize: units.gu(1.8)
-                }
-                
-                Switch {
-                    id: richTextSwitch
-                    checked: initialIsRichText
-                    anchors.verticalCenter: parent.verticalCenter
+                Row {
+                    anchors.fill: parent
+                    anchors.margins: units.gu(1.5)
+                    spacing: units.gu(2)
+                    
+                    Icon {
+                        name: "edit"
+                        width: units.gu(2.5)
+                        height: units.gu(2.5)
+                        anchors.verticalCenter: parent.verticalCenter
+                        color: theme.palette.normal.backgroundText
+                    }
+                    
+                    Label {
+                        text: i18n.tr("Rich Text Formatting")
+                        anchors.verticalCenter: parent.verticalCenter
+                        font.pixelSize: units.gu(1.8)
+                        font.weight: Font.Medium
+                        color: theme.palette.normal.backgroundText
+                    }
+                    
+                    Item {
+                        Layout.fillWidth: true
+                        width: parent.width - units.gu(15) // Flexible spacer
+                        height: units.gu(1)
+                    }
+                    
+                    Switch {
+                        id: richTextSwitch
+                        checked: initialIsRichText
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
                 }
             }
 
-            // Content editor area
-            Item {
+            // Enhanced content editor area with modern card design
+            Rectangle {
                 Layout.fillWidth: true
-                Layout.minimumHeight: units.gu(30)
-                Layout.preferredHeight: Math.max(units.gu(30), contentFlickable.height - units.gu(15))
+                Layout.minimumHeight: units.gu(35)
+                Layout.preferredHeight: Math.max(units.gu(35), contentFlickable.height - units.gu(20))
+                color: theme.palette.normal.background
+                border.color: theme.palette.normal.base
+                border.width: units.dp(1)
+                radius: units.gu(1)
 
-                // Plain text editor
-                ScrollView {
-                    id: plainTextScrollView
-                    anchors.fill: parent
-                    visible: !richTextSwitch.checked
+                // Header bar for editor mode indication
+                Rectangle {
+                    id: editorHeader
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    height: units.gu(4)
+                    color: theme.palette.normal.foreground
+                    radius: units.gu(1)
+                    
+                    // Only round top corners
+                    Rectangle {
+                        anchors.bottom: parent.bottom
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        height: units.gu(1)
+                        color: parent.color
+                    }
 
-                    TextArea {
-                        id: plainTextArea
-                        placeholderText: i18n.tr("Start writing your note here...")
-                        text: initialContent
-                        wrapMode: TextArea.Wrap
-                        selectByMouse: true
-                        font.pixelSize: units.gu(1.6)
+                    Row {
+                        anchors.left: parent.left
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.margins: units.gu(1)
+                        spacing: units.gu(1)
+
+                        Icon {
+                            name: richTextSwitch.checked ? "edit" : "edit-copy"
+                            width: units.gu(2)
+                            height: units.gu(2)
+                            color: theme.palette.normal.backgroundText
+                        }
+
+                        Label {
+                            text: richTextSwitch.checked ? 
+                                  i18n.tr("Rich Text Editor") : 
+                                  i18n.tr("Plain Text Editor")
+                            font.pixelSize: units.gu(1.4)
+                            color: theme.palette.normal.backgroundText
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
                     }
                 }
 
-                // Rich text editor container
-                Rectangle {
-                    id: richTextContainer
-                    anchors.fill: parent
-                    visible: richTextSwitch.checked
-                    border.width: 1
-                    border.color: theme.palette.normal.baseText
-                    color: theme.palette.normal.background
-                    radius: units.gu(0.5)
+                // Content area
+                Item {
+                    anchors.top: editorHeader.bottom
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.bottom: parent.bottom
+                    anchors.margins: units.gu(1)
 
-                    Loader {
-                        id: richTextLoader
+                    // Enhanced plain text editor
+                    ScrollView {
+                        id: plainTextScrollView
                         anchors.fill: parent
-                        anchors.margins: units.gu(1)
-                        active: richTextSwitch.checked
-                        visible: richTextSwitch.checked
+                        visible: !richTextSwitch.checked
 
-                        sourceComponent: Component {
-                            RichTextEditor {
-                                id: richTextEditor
-                                editMode: true
-                                initialText: initialContent
-                                fontSize: units.gu(1.6)
-                                
-                                onContentChanged: {
-                                    // Auto-save content changes
-                                    console.log("Rich text content changed")
-                                }
-                                
-                                Component.onCompleted: {
-                                    focusEditor()
+                        TextArea {
+                            id: plainTextArea
+                            placeholderText: i18n.tr("✍️ Start writing your note here...")
+                            text: initialContent
+                            wrapMode: TextArea.Wrap
+                            selectByMouse: true
+                            font.pixelSize: units.gu(1.8)
+                            font.family: "Ubuntu"
+                            
+                            // Enhanced styling
+                            color: theme.palette.normal.backgroundText
+                        }
+                    }
+
+                    // Enhanced rich text editor container
+                    Rectangle {
+                        id: richTextContainer
+                        anchors.fill: parent
+                        visible: richTextSwitch.checked
+                        color: "transparent"
+
+                        Loader {
+                            id: richTextLoader
+                            anchors.fill: parent
+                            active: richTextSwitch.checked
+                            visible: richTextSwitch.checked
+
+                            sourceComponent: Component {
+                                RichTextEditor {
+                                    id: richTextEditor
+                                    editMode: true
+                                    initialText: initialContent
+                                    fontSize: units.gu(1.8)
+                                    
+                                    onContentChanged: {
+                                        // Auto-save content changes
+                                        console.log("Rich text content changed")
+                                    }
+                                    
+                                    Component.onCompleted: {
+                                        focusEditor()
+                                    }
                                 }
                             }
-                        }
 
-                        onLoaded: {
-                            if (richTextSwitch.checked) {
-                                item.initialText = initialContent
-                                if (initialContent) {
-                                    item.text = initialContent
+                            onLoaded: {
+                                if (richTextSwitch.checked) {
+                                    item.initialText = initialContent
+                                    if (initialContent) {
+                                        item.text = initialContent
+                                    }
                                 }
                             }
                         }
@@ -204,28 +294,91 @@ Page {
                 }
             }
 
-            // Optional: Add some spacing at the bottom for better scrolling
-            Item {
+            // Status and action bar
+            Rectangle {
                 Layout.fillWidth: true
-                Layout.preferredHeight: AppConstants.defaultMargin * 2
+                Layout.preferredHeight: units.gu(5)
+                color: theme.palette.normal.foreground
+                border.color: theme.palette.normal.base
+                border.width: units.dp(1)
+                radius: units.gu(1)
+
+                Row {
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.margins: units.gu(1)
+                    spacing: units.gu(2)
+
+                    Icon {
+                        name: "info"
+                        width: units.gu(2)
+                        height: units.gu(2)
+                        color: theme.palette.normal.backgroundText
+                    }
+
+                    Label {
+                        text: {
+                            var charCount = 0
+                            if (richTextSwitch.checked && richTextLoader.status === Loader.Ready && richTextLoader.item) {
+                                charCount = (richTextLoader.item.text || "").length
+                            } else {
+                                charCount = plainTextArea.text.length
+                            }
+                            return i18n.tr("Characters: %1").arg(charCount)
+                        }
+                        font.pixelSize: units.gu(1.3)
+                        color: theme.palette.normal.backgroundText
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+                }
+
+                Row {
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.margins: units.gu(1)
+                    spacing: units.gu(1)
+
+                    Button {
+                        text: i18n.tr("Preview")
+                        width: units.gu(10)
+                        height: units.gu(3.5)
+                        enabled: richTextSwitch.checked && richTextLoader.status === Loader.Ready
+                        onClicked: {
+                            // Could show a preview dialog
+                            console.log("Preview requested")
+                        }
+                    }
+                }
             }
         }
     }
 
-    // Functions
+    // Enhanced functions with better user feedback
     function saveNote() {
         if (noteTitleField.text.trim() === "") {
+            // Could show a notification here
+            console.log("AddNotePage: Cannot save - title is required")
+            noteTitleField.forceActiveFocus()
             return
         }
 
         var content = ""
+        var wordCount = 0
+        
         if (richTextSwitch.checked && richTextLoader.status === Loader.Ready && richTextLoader.item) {
             content = richTextLoader.item.text || ""
         } else {
             content = plainTextArea.text || ""
         }
+        
+        // Calculate word count for logging
+        wordCount = content.trim().split(/\s+/).length
+        if (content.trim() === "") wordCount = 0
 
-        console.log("AddNotePage: Saving note - Title:", noteTitleField.text, "Content length:", content.length, "Rich text:", richTextSwitch.checked)
+        console.log("AddNotePage: Saving note - Title:", noteTitleField.text, 
+                   "Content length:", content.length, "Words:", wordCount, 
+                   "Rich text:", richTextSwitch.checked)
+        
         saveRequested(noteTitleField.text.trim(), content, richTextSwitch.checked)
     }
 
@@ -238,6 +391,22 @@ Page {
         if (richTextLoader.status === Loader.Ready && richTextLoader.item) {
             richTextLoader.item.clear()
             richTextLoader.item.text = ""
+        }
+        
+        // Focus on title field after clearing
+        Qt.callLater(function() {
+            noteTitleField.forceActiveFocus()
+        })
+        
+        console.log("AddNotePage: Fields cleared")
+    }
+
+    // New function to get current content for status display
+    function getCurrentContent() {
+        if (richTextSwitch.checked && richTextLoader.status === Loader.Ready && richTextLoader.item) {
+            return richTextLoader.item.text || ""
+        } else {
+            return plainTextArea.text || ""
         }
     }
 
