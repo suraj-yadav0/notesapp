@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notesapp.surajyadav\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-30 06:38+0000\n"
+"POT-Creation-Date: 2025-06-30 07:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -80,7 +80,6 @@ msgid ""
 msgstr ""
 
 #: ../qml/views/components/RichTextEditor.qml:297
-#: ../qml/views/components/RichTextEditor_Enhanced.qml:209
 msgid "Start typing your text here..."
 msgstr ""
 
@@ -89,20 +88,11 @@ msgid "Choose Color"
 msgstr ""
 
 #: ../qml/views/components/RichTextEditor.qml:361
-#: ../qml/views/components/RichTextEditor_New.qml:353
-#: ../qml/views/components/RichTextEditor_Old.qml:389
 msgid "Choose Text Color"
 msgstr ""
 
 #: ../qml/views/components/RichTextEditor.qml:414
-#: ../qml/views/components/RichTextEditor_New.qml:386
-#: ../qml/views/components/RichTextEditor_Old.qml:422
 msgid "Cancel"
-msgstr ""
-
-#: ../qml/views/components/RichTextEditor_New.qml:282
-#: ../qml/views/components/RichTextEditor_Old.qml:318
-msgid "Start typing your rich text here..."
 msgstr ""
 
 #: notesapp.desktop.in.h:1
