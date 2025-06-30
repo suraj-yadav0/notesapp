@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notesapp.surajyadav\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-30 11:25+0000\n"
+"POT-Creation-Date: 2025-06-30 12:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,11 +53,11 @@ msgstr ""
 msgid "Rich Text Formatting"
 msgstr ""
 
-#: ../qml/views/AddNotePage.qml:202 ../qml/views/NoteEditPage.qml:198
+#: ../qml/views/AddNotePage.qml:202 ../qml/views/NoteEditPage.qml:197
 msgid "Rich Text Editor"
 msgstr ""
 
-#: ../qml/views/AddNotePage.qml:203 ../qml/views/NoteEditPage.qml:199
+#: ../qml/views/AddNotePage.qml:203 ../qml/views/NoteEditPage.qml:197
 msgid "Plain Text Editor"
 msgstr ""
 
@@ -65,7 +65,7 @@ msgstr ""
 msgid "✍️ Start writing your note here..."
 msgstr ""
 
-#: ../qml/views/AddNotePage.qml:340 ../qml/views/NoteEditPage.qml:338
+#: ../qml/views/AddNotePage.qml:340 ../qml/views/NoteEditPage.qml:352
 msgid "Characters: %1"
 msgstr ""
 
@@ -77,16 +77,16 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: ../qml/views/NoteEditPage.qml:223
-msgid "✍️ Start editing your note here..."
+#: ../qml/views/NoteEditPage.qml:224
+msgid "✍️ Start editing your note here....."
 msgstr ""
 
-#: ../qml/views/NoteEditPage.qml:354
-msgid "Rich Text"
-msgstr ""
-
-#: ../qml/views/NoteEditPage.qml:355
+#: ../qml/views/NoteEditPage.qml:367
 msgid "Plain Text"
+msgstr ""
+
+#: ../qml/views/NoteEditPage.qml:367
+msgid "Rich Text"
 msgstr ""
 
 #: ../qml/views/ToDoView.qml:20
