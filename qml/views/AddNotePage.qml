@@ -97,7 +97,6 @@ Page {
                 placeholderText: i18n.tr("💡 Enter note title...")
                 text: initialTitle
                 font.pixelSize: units.gu(2.2)
-                font.weight: Font.Medium
                 
                 // Focus on the title field when page loads
                 Component.onCompleted: {
@@ -116,37 +115,42 @@ Page {
                 border.width: units.dp(1)
                 radius: units.gu(1)
                 
-                Row {
-                    anchors.fill: parent
-                    anchors.margins: units.gu(1.5)
-                    spacing: units.gu(2)
+                // Use anchors instead of Row for better control
+                Icon {
+                    id: toggleIcon
+                    name: "edit"
+                    width: units.gu(2.5)
+                    height: units.gu(2.5)
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: units.gu(1.5)
+                    color: theme.palette.normal.backgroundText
+                }
+                
+                Label {
+                    id: toggleLabel
+                    text: i18n.tr("Rich Text Formatting")
+                    anchors.left: toggleIcon.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: units.gu(2)
+                    font.pixelSize: units.gu(1.8)
+                    color: theme.palette.normal.backgroundText
+                }
+                
+                Switch {
+                    id: richTextSwitch
+                    checked: initialIsRichText
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.rightMargin: units.gu(1.5)
                     
-                    Icon {
-                        name: "edit"
-                        width: units.gu(2.5)
-                        height: units.gu(2.5)
-                        anchors.verticalCenter: parent.verticalCenter
-                        color: theme.palette.normal.backgroundText
+                    // Add debugging
+                    onCheckedChanged: {
+                        console.log("Switch checked changed directly:", checked)
                     }
                     
-                    Label {
-                        text: i18n.tr("Rich Text Formatting")
-                        anchors.verticalCenter: parent.verticalCenter
-                        font.pixelSize: units.gu(1.8)
-                        font.weight: Font.Medium
-                        color: theme.palette.normal.backgroundText
-                    }
-                    
-                    Item {
-                        Layout.fillWidth: true
-                        width: parent.width - units.gu(15) // Flexible spacer
-                        height: units.gu(1)
-                    }
-                    
-                    Switch {
-                        id: richTextSwitch
-                        checked: initialIsRichText
-                        anchors.verticalCenter: parent.verticalCenter
+                    Component.onCompleted: {
+                        console.log("Switch completed with checked:", checked)
                     }
                 }
             }
@@ -225,10 +229,6 @@ Page {
                             wrapMode: TextArea.Wrap
                             selectByMouse: true
                             font.pixelSize: units.gu(1.8)
-                            font.family: "Ubuntu"
-                            
-                            // Enhanced styling
-                            color: theme.palette.normal.backgroundText
                         }
                     }
 
@@ -258,12 +258,14 @@ Page {
                                     }
                                     
                                     Component.onCompleted: {
+                                        console.log("RichTextEditor component completed")
                                         focusEditor()
                                     }
                                 }
                             }
 
                             onLoaded: {
+                                console.log("RichTextLoader loaded, switch checked:", richTextSwitch.checked)
                                 if (richTextSwitch.checked) {
                                     item.initialText = initialContent
                                     if (initialContent) {
@@ -271,23 +273,34 @@ Page {
                                     }
                                 }
                             }
+                            
+                            onActiveChanged: {
+                                console.log("RichTextLoader active changed to:", active)
+                            }
                         }
                     }
                 }
 
-                // Handle mode switching
+                // Handle mode switching with proper target
                 Connections {
                     target: richTextSwitch
-                    onCheckedChanged: {
+                    function onCheckedChanged() {
+                        console.log("Rich text switch changed to:", richTextSwitch.checked)
+                        
                         if (richTextSwitch.checked) {
                             // Switching to rich text - transfer plain text content
+                            console.log("Switching to rich text mode")
                             if (richTextLoader.status === Loader.Ready && plainTextArea.text) {
+                                console.log("Transferring content to rich text:", plainTextArea.text.length, "characters")
                                 richTextLoader.item.text = plainTextArea.text
                             }
                         } else {
                             // Switching to plain text - transfer rich text content
+                            console.log("Switching to plain text mode")
                             if (richTextLoader.status === Loader.Ready && richTextLoader.item) {
-                                plainTextArea.text = richTextLoader.item.text || ""
+                                var richContent = richTextLoader.item.text || ""
+                                console.log("Transferring content to plain text:", richContent.length, "characters")
+                                plainTextArea.text = richContent
                             }
                         }
                     }
