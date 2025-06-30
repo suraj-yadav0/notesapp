@@ -233,11 +233,10 @@ Page {
                     }
 
                     // Enhanced rich text editor container
-                    Rectangle {
+                    Item {
                         id: richTextContainer
                         anchors.fill: parent
                         visible: richTextSwitch.checked
-                        color: "transparent"
 
                         Loader {
                             id: richTextLoader
@@ -251,6 +250,7 @@ Page {
                                     editMode: true
                                     initialText: initialContent
                                     fontSize: units.gu(1.8)
+                                    backgroundColor: "transparent"
                                     
                                     onContentChanged: {
                                         // Auto-save content changes

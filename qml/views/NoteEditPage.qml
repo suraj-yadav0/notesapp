@@ -229,11 +229,10 @@ Page {
                     }
 
                     // Enhanced rich text editor container
-                    Rectangle {
+                    Item {
                         id: richTextContainer
                         anchors.fill: parent
                         visible: isRichTextSwitch.checked
-                        color: "transparent"
 
                         Loader {
                             id: richTextLoader
@@ -247,6 +246,7 @@ Page {
                                     editMode: true
                                     initialText: notesModel.currentNote ? notesModel.currentNote.content : ""
                                     fontSize: units.gu(1.8)
+                                    backgroundColor: "transparent"
                                     
                                     onContentChanged: {
                                         // Auto-save content changes
@@ -310,8 +310,8 @@ Page {
                 Layout.fillWidth: true
                 Layout.preferredHeight: units.gu(5)
                 color: theme.palette.normal.foreground
-                border.color: theme.palette.normal.base
-                border.width: units.dp(1)
+               border.color: theme.palette.normal.base
+               border.width: units.dp(1)
                 radius: units.gu(1)
 
                 Row {

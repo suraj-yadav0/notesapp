@@ -57,9 +57,9 @@ Item {
     Rectangle {
         anchors.fill: parent
         color: backgroundColor
-        border.color: theme.palette.normal.base
-        border.width: units.dp(1)
-        radius: units.gu(0.5)
+        border.color: "transparent"
+        border.width: 0
+        radius: 0
 
         ColumnLayout {
             anchors.fill: parent
@@ -72,8 +72,8 @@ Item {
                 Layout.fillWidth: true
                 Layout.preferredHeight: units.gu(6)
                 color: theme.palette.normal.foreground
-                border.color: theme.palette.normal.base
-                border.width: units.dp(1)
+                border.color: "transparent"
+                border.width: 0
                 radius: units.gu(0.5)
 
                 Flickable {
@@ -272,9 +272,9 @@ Item {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 color: theme.palette.normal.background
-                border.color: theme.palette.normal.base
-                border.width: units.dp(1)
-                radius: units.gu(0.5)
+                border.color: "transparent"
+                border.width: 0
+                radius: 0
 
                 ScrollView {
                     anchors.fill: parent
