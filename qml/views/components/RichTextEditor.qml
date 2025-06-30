@@ -283,7 +283,7 @@ Item {
                     TextArea {
                         id: textArea
                         wrapMode: TextEdit.Wrap
-                        textFormat: TextEdit.PlainText
+                        textFormat: TextEdit.RichText
                         selectByMouse: true
                         readOnly: !editMode
                         color: currentTextColor
@@ -421,55 +421,154 @@ Item {
 
     // Formatting Functions
     function toggleBold() {
-        currentBold = !currentBold
-        textArea.font.bold = currentBold
-        console.log("Bold toggled:", currentBold)
-        updateFormattingState()
+        applyFormatting("bold", !currentBold)
     }
     
     function toggleItalic() {
-        currentItalic = !currentItalic
-        textArea.font.italic = currentItalic
-        console.log("Italic toggled:", currentItalic)
-        updateFormattingState()
+        applyFormatting("italic", !currentItalic)
     }
     
     function toggleUnderline() {
-        currentUnderline = !currentUnderline
-        textArea.font.underline = currentUnderline
-        console.log("Underline toggled:", currentUnderline)
-        updateFormattingState()
+        applyFormatting("underline", !currentUnderline)
     }
 
     function setBold(value) {
-        currentBold = value
-        textArea.font.bold = currentBold
-        updateFormattingState()
+        applyFormatting("bold", value)
     }
 
     function setItalic(value) {
-        currentItalic = value
-        textArea.font.italic = currentItalic
-        updateFormattingState()
+        applyFormatting("italic", value)
     }
 
     function setUnderline(value) {
-        currentUnderline = value
-        textArea.font.underline = currentUnderline
-        updateFormattingState()
+        applyFormatting("underline", value)
     }
     
     function setFontSize(size) {
-        currentFontSize = size
-        textArea.font.pixelSize = currentFontSize
-        console.log("Font size set:", size)
-        updateFormattingState()
+        applyFormatting("fontSize", size)
     }
 
     function setTextColor(color) {
-        currentTextColor = color
-        textArea.color = currentTextColor
-        console.log("Text color set:", color)
+        applyFormatting("color", color)
+    }
+
+    // Advanced formatting function that handles selection using TextEdit properties
+    function applyFormatting(formatType, value) {
+        // Since Lomiri TextArea might not expose all TextEdit properties directly,
+        // we'll use a different approach focusing on HTML-based rich text
+        
+        var currentText = textArea.text || ""
+        var cursorPos = textArea.cursorPosition || 0
+        
+        // For RichText format, we work with HTML
+        if (textArea.selectedText && textArea.selectedText.length > 0) {
+            // Apply formatting to selected text
+            applySelectionFormatting(formatType, value)
+        } else {
+            // No selection - apply to current cursor position or entire text
+            applyGlobalFormatting(formatType, value)
+        }
+        
+        updateFormattingState()
+    }
+    
+    function applySelectionFormatting(formatType, value) {
+        // This is a simplified approach for selection formatting
+        // In practice, you might need to use TextEdit directly or implement
+        // a more sophisticated HTML manipulation system
+        
+        var currentText = textArea.text || ""
+        var selectedText = textArea.selectedText || ""
+        
+        if (selectedText.length === 0) {
+            return
+        }
+        
+        // Apply HTML formatting to selected text
+        var formattedText = applyHtmlFormatting(selectedText, formatType, value)
+        
+        // Replace selected text with formatted version
+        // This is a basic implementation - in practice you'd need more sophisticated handling
+        var newText = currentText.replace(selectedText, formattedText)
+        textArea.text = newText
+    }
+    
+    function updateCurrentFormatting(formatType, value) {
+        switch (formatType) {
+            case "bold":
+                currentBold = value
+                break
+            case "italic":
+                currentItalic = value
+                break
+            case "underline":
+                currentUnderline = value
+                break
+        }
+        updateFormattingState()
+    }
+    
+    function applyHtmlFormatting(text, formatType, value) {
+        // Remove existing formatting of the same type first
+        text = removeHtmlFormatting(text, formatType)
+        
+        switch (formatType) {
+            case "bold":
+                return value ? "<b>" + text + "</b>" : text
+            case "italic":
+                return value ? "<i>" + text + "</i>" : text
+            case "underline":
+                return value ? "<u>" + text + "</u>" : text
+            case "fontSize":
+                return '<span style="font-size: ' + value + 'px;">' + text + '</span>'
+            case "color":
+                return '<span style="color: ' + value + ';">' + text + '</span>'
+            default:
+                return text
+        }
+    }
+    
+    function removeHtmlFormatting(text, formatType) {
+        switch (formatType) {
+            case "bold":
+                return text.replace(/<\/?b>/g, "")
+            case "italic":
+                return text.replace(/<\/?i>/g, "")
+            case "underline":
+                return text.replace(/<\/?u>/g, "")
+            case "fontSize":
+                return text.replace(/<span style="font-size: [^"]*;">(.*?)<\/span>/g, "$1")
+            case "color":
+                return text.replace(/<span style="color: [^"]*;">(.*?)<\/span>/g, "$1")
+            default:
+                return text
+        }
+    }
+    
+    function applyGlobalFormatting(formatType, value) {
+        // Fallback: apply formatting globally (original behavior)
+        switch (formatType) {
+            case "bold":
+                currentBold = value
+                textArea.font.bold = currentBold
+                break
+            case "italic":
+                currentItalic = value
+                textArea.font.italic = currentItalic
+                break
+            case "underline":
+                currentUnderline = value
+                textArea.font.underline = currentUnderline
+                break
+            case "fontSize":
+                currentFontSize = value
+                textArea.font.pixelSize = currentFontSize
+                break
+            case "color":
+                currentTextColor = value
+                textArea.color = currentTextColor
+                break
+        }
         updateFormattingState()
     }
     
