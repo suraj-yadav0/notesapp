@@ -226,7 +226,7 @@ Page {
                             id: plainTextArea
                             placeholderText: i18n.tr("✍️ Start writing your note here...")
                             text: initialContent
-                            wrapMode: TextArea.Wrap
+                            wrapMode: Text.WordWrap
                             selectByMouse: true
                             font.pixelSize: units.gu(1.8)
                         }
