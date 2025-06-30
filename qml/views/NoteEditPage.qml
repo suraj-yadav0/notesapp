@@ -236,7 +236,7 @@ Page {
                                 color: "transparent"
                                 radius: units.gu(0.5)
                                 border.width: parent.activeFocus ? units.gu(0.2) : units.gu(0.1)
-                                border.color: parent.activeFocus ? "#e95420" : (theme.name === "Ubuntu.Components.Themes.SuruDark" ? "#d3d1d1" : "#999")
+                                border.color: parent.activeFocus ? "#69181f81" : (theme.name === "Ubuntu.Components.Themes.SuruDark" ? "#d3d1d1" : "#999")
                               // z: -1
                             }
                         }
