@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notesapp.surajyadav\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 04:31+0000\n"
+"POT-Creation-Date: 2025-07-01 04:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,7 +65,7 @@ msgstr ""
 msgid "✍️ Start writing your note here..."
 msgstr ""
 
-#: ../qml/views/AddNotePage.qml:340 ../qml/views/NoteEditPage.qml:354
+#: ../qml/views/AddNotePage.qml:340 ../qml/views/NoteEditPage.qml:353
 msgid "Characters: %1"
 msgstr ""
 
@@ -81,11 +81,11 @@ msgstr ""
 msgid "✍️ Start editing your note here....."
 msgstr ""
 
-#: ../qml/views/NoteEditPage.qml:369
+#: ../qml/views/NoteEditPage.qml:368
 msgid "Plain Text"
 msgstr ""
 
-#: ../qml/views/NoteEditPage.qml:369
+#: ../qml/views/NoteEditPage.qml:368
 msgid "Rich Text"
 msgstr ""
 

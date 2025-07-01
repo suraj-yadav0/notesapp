@@ -155,7 +155,7 @@ Page {
             Rectangle {
                 Layout.fillWidth: true
                 Layout.minimumHeight: units.gu(35)
-                Layout.preferredHeight: Math.max(units.gu(35), contentFlickable.height - units.gu(20))
+                Layout.preferredHeight: Math.max(units.gu(35), contentFlickable.height - units.gu(30))
                 color: theme.palette.normal.background
                 border.color: theme.palette.normal.base
                 border.width: units.dp(1)
@@ -223,11 +223,11 @@ Page {
                             enabled: true
                             placeholderText: i18n.tr("✍️ Start editing your note here.....")
                             text: notesModel.currentNote ? notesModel.currentNote.content : ""
-                            width: units.gu(44) // Adjust width to fill parent with margins
-                            height: Math.max(units.gu(53), contentHeight + units.gu(2))
+                            width: units.gu(45) // Adjust width to fill parent with margins
+                            height: Math.max(units.gu(40), contentHeight + units.gu(2))
                            // autoSize: true
                             wrapMode: TextArea.Wrap
-                            selectByMouse: true
+                           // selectByMouse: true
                             font.pixelSize: units.gu(1.8)
 
                             // Custom styling for border highlighting

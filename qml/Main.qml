@@ -34,7 +34,7 @@ MainView {
     applicationName: 'notesapp.surajyadav'
     automaticOrientation: true
 
-    width: units.gu(50)
+    width: units.gu(52)
     height: units.gu(90)
 
     theme.palette: Palette {
