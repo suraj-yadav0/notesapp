@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notesapp.surajyadav\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 08:13+0000\n"
+"POT-Creation-Date: 2025-07-01 08:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,24 +61,20 @@ msgstr ""
 msgid "Plain Text Editor"
 msgstr ""
 
-#: ../qml/views/AddNotePage.qml:227
-msgid "✍️ Start writing your note here..."
+#: ../qml/views/AddNotePage.qml:228 ../qml/views/NoteEditPage.qml:224
+msgid "✍️ Start editing your note here....."
 msgstr ""
 
-#: ../qml/views/AddNotePage.qml:340 ../qml/views/NoteEditPage.qml:353
+#: ../qml/views/AddNotePage.qml:355 ../qml/views/NoteEditPage.qml:353
 msgid "Characters: %1"
 msgstr ""
 
-#: ../qml/views/AddNotePage.qml:355
+#: ../qml/views/AddNotePage.qml:370
 msgid "Preview"
 msgstr ""
 
 #: ../qml/views/NoteEditPage.qml:53
 msgid "Delete"
-msgstr ""
-
-#: ../qml/views/NoteEditPage.qml:224
-msgid "✍️ Start editing your note here....."
 msgstr ""
 
 #: ../qml/views/NoteEditPage.qml:368

@@ -222,13 +222,28 @@ Page {
                         anchors.fill: parent
                         visible: !richTextSwitch.checked
 
-                        TextArea {
+                       TextArea {
                             id: plainTextArea
-                            placeholderText: i18n.tr("✍️ Start writing your note here...")
-                            text: initialContent
-                            wrapMode: Text.WordWrap
+                            enabled: true
+                            placeholderText: i18n.tr("✍️ Start editing your note here.....")
+                            text: notesModel.currentNote ? notesModel.currentNote.content : ""
+                            width: units.gu(45) // Adjust width to fill parent with margins
+                            height: Math.max(units.gu(40), contentHeight + units.gu(2))
+                           // autoSize: true
+                            wrapMode: TextArea.Wrap
                             selectByMouse: true
                             font.pixelSize: units.gu(1.8)
+
+                            // Custom styling for border highlighting
+                            Rectangle {
+                                id: borderRect
+                                anchors.fill: parent
+                                color: "transparent"
+                                radius: units.gu(0.5)
+                                border.width: parent.activeFocus ? units.gu(0.2) : units.gu(0.1)
+                                border.color: parent.activeFocus ? "#69181f81" : (theme.name === "Ubuntu.Components.Themes.SuruDark" ? "#d3d1d1" : "#999")
+                              // z: -1
+                            }
                         }
                     }
 
