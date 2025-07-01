@@ -29,7 +29,7 @@ Item {
     // Configuration properties
     property int hintSize: AppConstants.defaultHintSize
     property color hintColor: theme.name === "Ubuntu.Components.Themes.SuruDark" ? theme.palette.normal.overlay : "lightgrey"
-    property string hintIconName: "up"
+    property string hintIconName: "navigation-menu"
     property alias hintIconSource: hintIcon.source
     property color hintIconColor: theme.palette.normal.backgroundText
     property bool bottomEdgeEnabled: true
