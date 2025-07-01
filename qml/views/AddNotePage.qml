@@ -159,7 +159,7 @@ Page {
             Rectangle {
                 Layout.fillWidth: true
                 Layout.minimumHeight: units.gu(35)
-                Layout.preferredHeight: Math.max(units.gu(35), contentFlickable.height - units.gu(20))
+                Layout.preferredHeight: Math.max(units.gu(35), contentFlickable.height - units.gu(30))
                 color: theme.palette.normal.background
                 border.color: theme.palette.normal.base
                 border.width: units.dp(1)
