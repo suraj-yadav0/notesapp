@@ -20,7 +20,7 @@ import Lomiri.Components 1.3
 Action {
     property string iconName: "add"
     property color iconColor: theme.palette.normal.backgroundText
-    property color backgroundColor: theme.palette.normal.background
+    property color backgroundColor:  theme.name === "Ubuntu.Components.Themes.SuruDark" ? theme.palette.normal.overlay : "lightgrey"
     property bool hide: false
     property string label: ""
     text: label
