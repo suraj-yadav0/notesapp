@@ -334,7 +334,7 @@ MainView {
         mode: "Semihide"
         semiHideOpacity: 70
         timeoutSeconds: 3
-        hintIconName: "navigation-menu"
+        hintIconName: "view-grid-symbolic"
         
         actions: [
             RadialAction {
