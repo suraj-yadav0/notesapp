@@ -224,7 +224,8 @@ Page {
                             placeholderText: i18n.tr("✍️ Start editing your note here.....")
                             text: notesModel.currentNote ? notesModel.currentNote.content : ""
                             width: units.gu(44) // Adjust width to fill parent with margins
-                            height: Math.max(units.gu(20), contentHeight + units.gu(2))
+                            height: Math.max(units.gu(53), contentHeight + units.gu(2))
+                           // autoSize: true
                             wrapMode: TextArea.Wrap
                             selectByMouse: true
                             font.pixelSize: units.gu(1.8)
