@@ -227,7 +227,7 @@ Page {
                             height: Math.max(units.gu(40), contentHeight + units.gu(2))
                            // autoSize: true
                             wrapMode: TextArea.Wrap
-                           // selectByMouse: true
+                            selectByMouse: true
                             font.pixelSize: units.gu(1.8)
 
                             // Custom styling for border highlighting

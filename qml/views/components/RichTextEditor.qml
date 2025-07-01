@@ -287,6 +287,9 @@ Item {
                         selectByMouse: true
                         readOnly: !editMode
                         color: currentTextColor
+
+                         width: units.gu(42) // Adjust width to fill parent with margins
+                            height: units.gu(30) // Adjust height to fill parent with margins
                         
                         font.pixelSize: currentFontSize
                         font.family: "Ubuntu"
@@ -335,6 +338,16 @@ Item {
                                 }
                             }
                         }
+
+                         Rectangle {
+                                id: borderRect
+                                anchors.fill: parent
+                                color: "transparent"
+                                radius: units.gu(0.5)
+                                border.width: parent.activeFocus ? units.gu(0.2) : units.gu(0.1)
+                                border.color: parent.activeFocus ? "#69181f81" : (theme.name === "Ubuntu.Components.Themes.SuruDark" ? "#d3d1d1" : "#999")
+                              // z: -1
+                            }
                     }
                 }
             }
