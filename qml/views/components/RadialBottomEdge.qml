@@ -28,8 +28,8 @@ Item {
     
     // Configuration properties
     property int hintSize: AppConstants.defaultHintSize
-    property color hintColor: theme.palette.normal.overlay
-    property string hintIconName: "view-grid-symbolic"
+    property color hintColor: theme.name === "Ubuntu.Components.Themes.SuruDark" ? theme.palette.normal.overlay : "lightgrey"
+    property string hintIconName: "toolkit_arrow-up"
     property alias hintIconSource: hintIcon.source
     property color hintIconColor: theme.palette.normal.backgroundText
     property bool bottomEdgeEnabled: true
@@ -213,6 +213,7 @@ Item {
                 
                 MouseArea {
                     anchors.fill: parent
+                    enabled: expanded
                     onClicked: {
                         modelData.triggered(modelData)
                         collapse()
@@ -277,6 +278,7 @@ Item {
                 
                 MouseArea {
                     anchors.fill: parent
+                    enabled: expanded
                     onClicked: {
                         if (model.action) {
                             model.action()
