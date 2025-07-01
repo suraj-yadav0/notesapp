@@ -44,6 +44,10 @@ MainView {
     // Models (now include controller functionality)
     NotesModel {
         id: notesModel
+        
+        Component.onCompleted: {
+            console.log("NotesModel initialized with SQLite database")
+        }
     }
 
     // Create page instances (will be managed by AdaptivePageLayout)
