@@ -1,19 +1,49 @@
-# Notes
 
-A simple notes taking app.
+# NotesApp
+
+A simple, modern notes-taking app for Linux desktops. Organize your thoughts, tasks, and ideas with an intuitive interface and rich features.
+
+## Features
+- Create, edit, and delete notes
+- Rich text editor with formatting
+- To-Do list management
+- Dark mode support
+- Easy navigation between notes and chapters
+- Data persistence using local database
+- Responsive UI built with QML
+
+## Installation
+### Prerequisites
+- Linux OS
+- Qt/QML runtime
+- CMake
+
+### Build & Run
+Clone the repository and build using CMake:
+
+```bash
+git clone https://github.com/suraj-yadav0/notesapp.git
+cd notesapp
+mkdir build && cd build
+cmake ..
+make
+./notesapp
+```
+
+Alternatively, use the provided Click package for easy installation on supported platforms.
+
+## Usage
+Launch the app and start creating notes. Navigate between pages using the sidebar. Access settings for theme and preferences.
+
+## Technologies Used
+- Qt/QML
+- C++
+- CMake
+
+## Contributing
+Contributions are welcome! Please fork the repository, create a feature branch, and submit a pull request. For major changes, open an issue first to discuss your ideas.
 
 ## License
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
 
-Copyright (C) 2025  Suraj Yadav
-
-This program is free software: you can redistribute it and/or modify it under
-the terms of the GNU General Public License version 3, as published by the
-Free Software Foundation.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY
-WARRANTY; without even the implied warranties of MERCHANTABILITY, SATISFACTORY
-QUALITY, or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-for more details.
-
-You should have received a copy of the GNU General Public License along with
-this program. If not, see <http://www.gnu.org/licenses/>.
+Copyright (C) 2025 Suraj Yadav
