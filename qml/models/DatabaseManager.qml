@@ -33,12 +33,7 @@ QtObject {
     // Initialize database
     function initializeDatabase() {
         try {
-            database = LocalStorage.openDatabaseSync(
-                databaseName,
-                databaseVersion,
-                databaseDescription,
-                databaseSize
-            );
+            database = LocalStorage.openDatabaseSync(databaseName, databaseVersion, databaseDescription, databaseSize);
 
             // Create tables if they don't exist
             createTables();
@@ -52,26 +47,12 @@ QtObject {
 
     // Create necessary tables
     function createTables() {
-        database.transaction(function(tx) {
+        database.transaction(function (tx) {
             // Create notes table
-            tx.executeSql(
-                'CREATE TABLE IF NOT EXISTS notes (' +
-                'id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
-                'title TEXT NOT NULL, ' +
-                'content TEXT, ' +
-                'isRichText BOOLEAN DEFAULT 0, ' +
-                'createdAt TEXT NOT NULL, ' +
-                'updatedAt TEXT NOT NULL' +
-                ')'
-            );
+            tx.executeSql('CREATE TABLE IF NOT EXISTS notes (' + 'id INTEGER PRIMARY KEY AUTOINCREMENT, ' + 'title TEXT NOT NULL, ' + 'content TEXT, ' + 'isRichText BOOLEAN DEFAULT 0, ' + 'createdAt TEXT NOT NULL, ' + 'updatedAt TEXT NOT NULL' + ')');
 
             // Create settings table for app preferences
-            tx.executeSql(
-                'CREATE TABLE IF NOT EXISTS settings (' +
-                'key TEXT PRIMARY KEY, ' +
-                'value TEXT' +
-                ')'
-            );
+            tx.executeSql('CREATE TABLE IF NOT EXISTS settings (' + 'key TEXT PRIMARY KEY, ' + 'value TEXT' + ')');
 
             console.log("Database tables created successfully");
         });
@@ -81,14 +62,16 @@ QtObject {
 
     // Insert a new note
     function insertNote(title, content, isRichText) {
+        if (!database) {
+            console.error("Database not available");
+            return -1;
+        }
+
         var noteId = -1;
         var currentDateTime = new Date().toISOString();
 
-        database.transaction(function(tx) {
-            var result = tx.executeSql(
-                'INSERT INTO notes (title, content, isRichText, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?)',
-                [title, content, isRichText || false, currentDateTime, currentDateTime]
-            );
+        database.transaction(function (tx) {
+            var result = tx.executeSql('INSERT INTO notes (title, content, isRichText, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?)', [title, content, isRichText || false, currentDateTime, currentDateTime]);
             noteId = result.insertId;
         });
 
@@ -98,11 +81,16 @@ QtObject {
 
     // Get all notes
     function getAllNotes() {
+        if (!database) {
+            console.error("Database not available");
+            return [];
+        }
+
         var notes = [];
 
-        database.readTransaction(function(tx) {
+        database.readTransaction(function (tx) {
             var result = tx.executeSql('SELECT * FROM notes ORDER BY updatedAt DESC');
-            
+
             for (var i = 0; i < result.rows.length; i++) {
                 var row = result.rows.item(i);
                 notes.push({
@@ -121,11 +109,16 @@ QtObject {
 
     // Get a specific note by ID
     function getNoteById(noteId) {
+        if (!database) {
+            console.error("Database not available");
+            return null;
+        }
+
         var note = null;
 
-        database.readTransaction(function(tx) {
+        database.readTransaction(function (tx) {
             var result = tx.executeSql('SELECT * FROM notes WHERE id = ?', [noteId]);
-            
+
             if (result.rows.length > 0) {
                 var row = result.rows.item(0);
                 note = {
@@ -144,14 +137,16 @@ QtObject {
 
     // Update an existing note
     function updateNote(noteId, title, content, isRichText) {
+        if (!database) {
+            console.error("Database not available");
+            return false;
+        }
+
         var success = false;
         var currentDateTime = new Date().toISOString();
 
-        database.transaction(function(tx) {
-            var result = tx.executeSql(
-                'UPDATE notes SET title = ?, content = ?, isRichText = ?, updatedAt = ? WHERE id = ?',
-                [title, content, isRichText || false, currentDateTime, noteId]
-            );
+        database.transaction(function (tx) {
+            var result = tx.executeSql('UPDATE notes SET title = ?, content = ?, isRichText = ?, updatedAt = ? WHERE id = ?', [title, content, isRichText || false, currentDateTime, noteId]);
             success = result.rowsAffected > 0;
         });
 
@@ -161,9 +156,14 @@ QtObject {
 
     // Delete a note
     function deleteNote(noteId) {
+        if (!database) {
+            console.error("Database not available");
+            return false;
+        }
+
         var success = false;
 
-        database.transaction(function(tx) {
+        database.transaction(function (tx) {
             var result = tx.executeSql('DELETE FROM notes WHERE id = ?', [noteId]);
             success = result.rowsAffected > 0;
         });
@@ -174,14 +174,16 @@ QtObject {
 
     // Search notes by title or content
     function searchNotes(searchTerm) {
+        if (!database) {
+            console.error("Database not available");
+            return [];
+        }
+
         var notes = [];
 
-        database.readTransaction(function(tx) {
-            var result = tx.executeSql(
-                'SELECT * FROM notes WHERE title LIKE ? OR content LIKE ? ORDER BY updatedAt DESC',
-                ['%' + searchTerm + '%', '%' + searchTerm + '%']
-            );
-            
+        database.readTransaction(function (tx) {
+            var result = tx.executeSql('SELECT * FROM notes WHERE title LIKE ? OR content LIKE ? ORDER BY updatedAt DESC', ['%' + searchTerm + '%', '%' + searchTerm + '%']);
+
             for (var i = 0; i < result.rows.length; i++) {
                 var row = result.rows.item(i);
                 notes.push({
@@ -202,21 +204,28 @@ QtObject {
 
     // Save a setting
     function saveSetting(key, value) {
-        database.transaction(function(tx) {
-            tx.executeSql(
-                'INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)',
-                [key, value]
-            );
+        if (!database) {
+            console.error("Database not available");
+            return;
+        }
+
+        database.transaction(function (tx) {
+            tx.executeSql('INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)', [key, value]);
         });
     }
 
     // Get a setting
     function getSetting(key, defaultValue) {
+        if (!database) {
+            console.error("Database not available");
+            return defaultValue || null;
+        }
+
         var value = defaultValue || null;
 
-        database.readTransaction(function(tx) {
+        database.readTransaction(function (tx) {
             var result = tx.executeSql('SELECT value FROM settings WHERE key = ?', [key]);
-            
+
             if (result.rows.length > 0) {
                 value = result.rows.item(0).value;
             }
@@ -229,9 +238,18 @@ QtObject {
 
     // Get database statistics
     function getDatabaseStats() {
-        var stats = { notesCount: 0 };
+        if (!database) {
+            console.error("Database not available");
+            return {
+                notesCount: 0
+            };
+        }
 
-        database.readTransaction(function(tx) {
+        var stats = {
+            notesCount: 0
+        };
+
+        database.readTransaction(function (tx) {
             var result = tx.executeSql('SELECT COUNT(*) as count FROM notes');
             if (result.rows.length > 0) {
                 stats.notesCount = result.rows.item(0).count;
@@ -243,9 +261,14 @@ QtObject {
 
     // Clear all notes (use with caution)
     function clearAllNotes() {
+        if (!database) {
+            console.error("Database not available");
+            return false;
+        }
+
         var success = false;
 
-        database.transaction(function(tx) {
+        database.transaction(function (tx) {
             var result = tx.executeSql('DELETE FROM notes');
             success = true;
         });

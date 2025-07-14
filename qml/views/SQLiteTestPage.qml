@@ -16,28 +16,32 @@ Rectangle {
 
     NotesModel {
         id: testNotesModel
-        
+
         Component.onCompleted: {
-            console.log("=== SQLite Integration Test ===");
+            console.log("=== SQLite Integration Test (New Implementation) ===");
             console.log("Database available:", useDatabase);
             console.log("Notes count:", notes.count);
-            
+
             // Test creating a note
-            var testId = createNote("Test SQLite Note", "This note was created to test SQLite integration!\n\nFeatures:\n- Database storage\n- Automatic timestamps\n- Rich text support", false);
+            var testId = createNote("SQLite Test Note", "This note was created to test the new SQLite implementation!\n\nFeatures:\n- Clean separation of concerns\n- DatabaseManager integration\n- Fallback to Settings storage\n- Automatic timestamps\n- Rich text support", false);
             console.log("Created test note with ID:", testId);
-            
+
             // Test updating
-            if (testId) {
+            if (testId && notes.count > 0) {
                 setCurrentNote(0);
-                updateCurrentNote("Updated SQLite Note", currentNote.content + "\n\n[Updated at " + new Date().toLocaleString() + "]");
+                updateCurrentNote("Updated SQLite Test Note", currentNote.content + "\n\n[Updated at " + new Date().toLocaleString() + "]");
                 console.log("Updated note successfully");
             }
-            
-            // Show stats
-            var stats = getDatabaseStats ? getDatabaseStats() : { notesCount: notes.count };
+
+            // Show database stats
+            var stats = getDatabaseStats();
             console.log("Database stats:", JSON.stringify(stats));
+
+            // Test search functionality
+            var searchResults = searchNotes("SQLite");
+            console.log("Search results for 'SQLite':", searchResults.length, "notes found");
         }
-        
+
         onDataChanged: {
             console.log("Data changed - Notes count:", notes.count);
             notesListView.model = notes;
@@ -80,11 +84,7 @@ Rectangle {
             QC2.Button {
                 text: "Add Test Note"
                 onClicked: {
-                    var noteId = testNotesModel.createNote(
-                        "Test Note " + (testNotesModel.notes.count + 1),
-                        "Content created at " + new Date().toLocaleString(),
-                        false
-                    );
+                    var noteId = testNotesModel.createNote("Test Note " + (testNotesModel.notes.count + 1), "Content created at " + new Date().toLocaleString(), false);
                     console.log("Created note with ID:", noteId);
                 }
             }
@@ -121,7 +121,7 @@ Rectangle {
             width: parent.width
             height: 300
             model: testNotesModel.notes
-            
+
             delegate: Rectangle {
                 width: notesListView.width
                 height: 80
@@ -129,14 +129,14 @@ Rectangle {
                 border.color: "#e0e0e0"
                 border.width: 1
                 radius: 4
-                
+
                 Column {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.top: parent.top
                     anchors.margins: 10
                     spacing: 5
-                    
+
                     QC2.Label {
                         text: model.title
                         font.bold: true
@@ -144,7 +144,7 @@ Rectangle {
                         elide: Text.ElideRight
                         width: parent.width
                     }
-                    
+
                     QC2.Label {
                         text: model.content
                         font.pixelSize: 12
@@ -154,7 +154,7 @@ Rectangle {
                         maximumLineCount: 2
                         wrapMode: Text.WordWrap
                     }
-                    
+
                     Row {
                         spacing: 10
                         QC2.Label {
@@ -174,7 +174,7 @@ Rectangle {
                         }
                     }
                 }
-                
+
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -197,10 +197,7 @@ Rectangle {
                 text: "Update Current"
                 enabled: testNotesModel.currentNote.id > 0
                 onClicked: {
-                    testNotesModel.updateCurrentNote(
-                        testNotesModel.currentNote.title,
-                        testNotesModel.currentNote.content + "\n[Updated: " + new Date().toLocaleString() + "]"
-                    );
+                    testNotesModel.updateCurrentNote(testNotesModel.currentNote.title, testNotesModel.currentNote.content + "\n[Updated: " + new Date().toLocaleString() + "]");
                 }
             }
 

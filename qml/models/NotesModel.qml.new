@@ -36,23 +36,16 @@ QtObject {
     property ListModel notes: ListModel {
         id: notesListModel
     }
-
+    
     // Current note being edited
-    property var currentNote: ({
-            id: -1,
-            title: "",
-            content: "",
-            createdAt: "",
-            updatedAt: "",
-            index: -1
-        })
-
+    property var currentNote: ({ id: -1, title: "", content: "", createdAt: "", updatedAt: "", index: -1 })
+    
     // Database availability flag
     property bool useDatabase: databaseManager.database !== null
-
+    
     // Signals
-    signal noteSelectionChanged
-    signal dataChanged
+    signal noteSelectionChanged()
+    signal dataChanged()
 
     // Initialize the model
     Component.onCompleted: {
@@ -63,9 +56,8 @@ QtObject {
 
     // Create a new note
     function createNote(title, content, isRichText) {
-        if (title.trim() === "")
-            return false;
-
+        if (title.trim() === "") return false;
+        
         if (useDatabase) {
             var noteId = databaseManager.insertNote(title.trim(), content, isRichText || false);
             if (noteId > 0) {
@@ -85,13 +77,13 @@ QtObject {
         if (currentNote.id > 0 && title.trim() !== "") {
             var richText = isRichText !== null ? isRichText : currentNote.isRichText;
             var success = false;
-
+            
             if (useDatabase) {
                 success = databaseManager.updateNote(currentNote.id, title.trim(), content, richText);
             } else if (currentNote.index >= 0) {
                 success = updateNoteInSettings(currentNote.index, title.trim(), content, richText);
             }
-
+            
             if (success) {
                 loadNotesFromStorage(); // Refresh the list
                 return true;
@@ -103,13 +95,13 @@ QtObject {
     // Delete the current note
     function deleteCurrentNote() {
         var success = false;
-
+        
         if (useDatabase && currentNote.id > 0) {
             success = databaseManager.deleteNote(currentNote.id);
         } else if (!useDatabase && currentNote.index >= 0) {
             success = deleteNoteFromSettings(currentNote.index);
         }
-
+        
         if (success) {
             resetCurrentNote();
             loadNotesFromStorage(); // Refresh the list
@@ -129,7 +121,8 @@ QtObject {
             if (savedNotesArray && savedNotesArray.length > 0) {
                 for (var i = 0; i < savedNotesArray.length; i++) {
                     var note = savedNotesArray[i];
-                    if (note.title.toLowerCase().includes(searchTerm.toLowerCase()) || note.content.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    if (note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        note.content.toLowerCase().includes(searchTerm.toLowerCase())) {
                         results.push(note);
                     }
                 }
@@ -152,10 +145,10 @@ QtObject {
     // Load notes from database into the ListModel
     function loadNotesFromDatabase() {
         var dbNotes = databaseManager.getAllNotes();
-
+        
         // Clear existing notes
         notes.clear();
-
+        
         // Add notes from database
         for (var i = 0; i < dbNotes.length; i++) {
             var dbNote = dbNotes[i];
@@ -168,12 +161,12 @@ QtObject {
                 isRichText: dbNote.isRichText
             });
         }
-
+        
         // If no notes exist, add some sample data
         if (notes.count === 0) {
             createSampleNotes();
         }
-
+        
         dataChanged();
     }
 
@@ -181,11 +174,11 @@ QtObject {
     function loadNotesFromSettings() {
         var savedNotesArray = fallbackSettings.savedNotes;
         notes.clear();
-
+        
         if (savedNotesArray && savedNotesArray.length > 0) {
             for (var i = 0; i < savedNotesArray.length; i++) {
                 var note = savedNotesArray[i];
-
+                
                 if (typeof note.isRichText === 'undefined') {
                     note.isRichText = false;
                 }
@@ -196,7 +189,7 @@ QtObject {
         } else {
             createSampleNotes();
         }
-
+        
         dataChanged();
     }
 
@@ -290,22 +283,14 @@ QtObject {
 
     // Reset the current note
     function resetCurrentNote() {
-        currentNote = {
-            id: -1,
-            title: "",
-            content: "",
-            createdAt: "",
-            updatedAt: "",
-            index: -1
-        };
+        currentNote = { id: -1, title: "", content: "", createdAt: "", updatedAt: "", index: -1 };
         noteSelectionChanged();
     }
 
     // Format date for display
     function formatDate(dateString) {
-        if (!dateString)
-            return "";
-
+        if (!dateString) return "";
+        
         try {
             var date = new Date(dateString);
             return Qt.formatDateTime(date, "yyyy-MM-dd");
@@ -319,9 +304,7 @@ QtObject {
         if (useDatabase) {
             return databaseManager.getDatabaseStats();
         } else {
-            return {
-                notesCount: notes.count
-            };
+            return { notesCount: notes.count };
         }
     }
 
