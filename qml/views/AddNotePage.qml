@@ -33,11 +33,15 @@ Page {
 
     // Signals
     signal saveRequested(string title, string content, bool isRichText)
-    signal backRequested()
+    signal backRequested
 
     header: PageHeader {
         id: addNoteHeader
-        title: isEditing ? i18n.tr("Edit Note") : i18n.tr("Add New Note")
+        title: isEditing ? i18n.tr("✏️ Edit Note") : i18n.tr("➕ Add New Note")
+
+        Component.onCompleted: {
+            console.log("🟢 AddNotePage header loaded - this is the ADD page, isEditing:", isEditing);
+        }
 
         leadingActionBar {
             actions: [
@@ -45,7 +49,7 @@ Page {
                     iconName: "back"
                     text: i18n.tr("Back")
                     onTriggered: {
-                        backRequested()
+                        backRequested();
                     }
                 }
             ]
@@ -58,14 +62,14 @@ Page {
                     text: i18n.tr("Save")
                     enabled: noteTitleField.text.trim() !== ""
                     onTriggered: {
-                        saveNote()
+                        saveNote();
                     }
                 },
                 Action {
                     iconName: "edit-clear"
                     text: i18n.tr("Clear")
                     onTriggered: {
-                        clearFields()
+                        clearFields();
                     }
                 }
             ]
@@ -97,12 +101,12 @@ Page {
                 placeholderText: i18n.tr("💡 Enter note title...")
                 text: initialTitle
                 font.pixelSize: units.gu(2.2)
-                
+
                 // Focus on the title field when page loads
                 Component.onCompleted: {
-                    Qt.callLater(function() {
-                        forceActiveFocus()
-                    })
+                    Qt.callLater(function () {
+                        forceActiveFocus();
+                    });
                 }
             }
 
@@ -114,7 +118,7 @@ Page {
                 border.color: theme.palette.normal.base
                 border.width: units.dp(1)
                 radius: units.gu(1)
-                
+
                 // Use anchors instead of Row for better control
                 Icon {
                     id: toggleIcon
@@ -126,7 +130,7 @@ Page {
                     anchors.leftMargin: units.gu(1.5)
                     color: theme.palette.normal.backgroundText
                 }
-                
+
                 Label {
                     id: toggleLabel
                     text: i18n.tr("Rich Text Formatting")
@@ -136,21 +140,21 @@ Page {
                     font.pixelSize: units.gu(1.8)
                     color: theme.palette.normal.backgroundText
                 }
-                
+
                 Switch {
                     id: richTextSwitch
                     checked: initialIsRichText
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.rightMargin: units.gu(1.5)
-                    
+
                     // Add debugging
                     onCheckedChanged: {
-                        console.log("Switch checked changed directly:", checked)
+                        console.log("Switch checked changed directly:", checked);
                     }
-                    
+
                     Component.onCompleted: {
-                        console.log("Switch completed with checked:", checked)
+                        console.log("Switch completed with checked:", checked);
                     }
                 }
             }
@@ -174,7 +178,7 @@ Page {
                     height: units.gu(4)
                     color: theme.palette.normal.foreground
                     radius: units.gu(1)
-                    
+
                     // Only round top corners
                     Rectangle {
                         anchors.bottom: parent.bottom
@@ -198,9 +202,7 @@ Page {
                         }
 
                         Label {
-                            text: richTextSwitch.checked ? 
-                                  i18n.tr("Rich Text Editor") : 
-                                  i18n.tr("Plain Text Editor")
+                            text: richTextSwitch.checked ? i18n.tr("Rich Text Editor") : i18n.tr("Plain Text Editor")
                             font.pixelSize: units.gu(1.4)
                             color: theme.palette.normal.backgroundText
                             anchors.verticalCenter: parent.verticalCenter
@@ -222,14 +224,14 @@ Page {
                         anchors.fill: parent
                         visible: !richTextSwitch.checked
 
-                       TextArea {
+                        TextArea {
                             id: plainTextArea
                             enabled: true
                             placeholderText: i18n.tr("✍️ Start editing your note here.....")
                             text: notesModel.currentNote ? notesModel.currentNote.content : ""
                             width: units.gu(45) // Adjust width to fill parent with margins
                             height: Math.max(units.gu(40), contentHeight + units.gu(2))
-                           // autoSize: true
+                            // autoSize: true
                             wrapMode: TextArea.Wrap
                             selectByMouse: true
                             font.pixelSize: units.gu(1.8)
@@ -242,7 +244,7 @@ Page {
                                 radius: units.gu(0.5)
                                 border.width: parent.activeFocus ? units.gu(0.2) : units.gu(0.1)
                                 border.color: parent.activeFocus ? "#69181f81" : (theme.name === "Ubuntu.Components.Themes.SuruDark" ? "#d3d1d1" : "#999")
-                              // z: -1
+                                // z: -1
                             }
                         }
                     }
@@ -266,31 +268,31 @@ Page {
                                     initialText: initialContent
                                     fontSize: units.gu(1.8)
                                     backgroundColor: "transparent"
-                                    
+
                                     onContentChanged: {
                                         // Auto-save content changes
-                                        console.log("Rich text content changed")
+                                        console.log("Rich text content changed");
                                     }
-                                    
+
                                     Component.onCompleted: {
-                                        console.log("RichTextEditor component completed")
-                                        focusEditor()
+                                        console.log("RichTextEditor component completed");
+                                        focusEditor();
                                     }
                                 }
                             }
 
                             onLoaded: {
-                                console.log("RichTextLoader loaded, switch checked:", richTextSwitch.checked)
+                                console.log("RichTextLoader loaded, switch checked:", richTextSwitch.checked);
                                 if (richTextSwitch.checked) {
-                                    item.initialText = initialContent
+                                    item.initialText = initialContent;
                                     if (initialContent) {
-                                        item.text = initialContent
+                                        item.text = initialContent;
                                     }
                                 }
                             }
-                            
+
                             onActiveChanged: {
-                                console.log("RichTextLoader active changed to:", active)
+                                console.log("RichTextLoader active changed to:", active);
                             }
                         }
                     }
@@ -300,22 +302,22 @@ Page {
                 Connections {
                     target: richTextSwitch
                     function onCheckedChanged() {
-                        console.log("Rich text switch changed to:", richTextSwitch.checked)
-                        
+                        console.log("Rich text switch changed to:", richTextSwitch.checked);
+
                         if (richTextSwitch.checked) {
                             // Switching to rich text - transfer plain text content
-                            console.log("Switching to rich text mode")
+                            console.log("Switching to rich text mode");
                             if (richTextLoader.status === Loader.Ready && plainTextArea.text) {
-                                console.log("Transferring content to rich text:", plainTextArea.text.length, "characters")
-                                richTextLoader.item.text = plainTextArea.text
+                                console.log("Transferring content to rich text:", plainTextArea.text.length, "characters");
+                                richTextLoader.item.text = plainTextArea.text;
                             }
                         } else {
                             // Switching to plain text - transfer rich text content
-                            console.log("Switching to plain text mode")
+                            console.log("Switching to plain text mode");
                             if (richTextLoader.status === Loader.Ready && richTextLoader.item) {
-                                var richContent = richTextLoader.item.text || ""
-                                console.log("Transferring content to plain text:", richContent.length, "characters")
-                                plainTextArea.text = richContent
+                                var richContent = richTextLoader.item.text || "";
+                                console.log("Transferring content to plain text:", richContent.length, "characters");
+                                plainTextArea.text = richContent;
                             }
                         }
                     }
@@ -346,13 +348,13 @@ Page {
 
                     Label {
                         text: {
-                            var charCount = 0
+                            var charCount = 0;
                             if (richTextSwitch.checked && richTextLoader.status === Loader.Ready && richTextLoader.item) {
-                                charCount = (richTextLoader.item.text || "").length
+                                charCount = (richTextLoader.item.text || "").length;
                             } else {
-                                charCount = plainTextArea.text.length
+                                charCount = plainTextArea.text.length;
                             }
-                            return i18n.tr("Characters: %1").arg(charCount)
+                            return i18n.tr("Characters: %1").arg(charCount);
                         }
                         font.pixelSize: units.gu(1.3)
                         color: theme.palette.normal.backgroundText
@@ -373,7 +375,7 @@ Page {
                         enabled: richTextSwitch.checked && richTextLoader.status === Loader.Ready
                         onClicked: {
                             // Could show a preview dialog
-                            console.log("Preview requested")
+                            console.log("Preview requested");
                         }
                     }
                 }
@@ -385,56 +387,55 @@ Page {
     function saveNote() {
         if (noteTitleField.text.trim() === "") {
             // Could show a notification here
-            console.log("AddNotePage: Cannot save - title is required")
-            noteTitleField.forceActiveFocus()
-            return
+            console.log("AddNotePage: Cannot save - title is required");
+            noteTitleField.forceActiveFocus();
+            return;
         }
 
-        var content = ""
-        var wordCount = 0
-        
+        var content = "";
+        var wordCount = 0;
+
         if (richTextSwitch.checked && richTextLoader.status === Loader.Ready && richTextLoader.item) {
-            content = richTextLoader.item.text || ""
+            content = richTextLoader.item.text || "";
         } else {
-            content = plainTextArea.text || ""
+            content = plainTextArea.text || "";
         }
-        
-        // Calculate word count for logging
-        wordCount = content.trim().split(/\s+/).length
-        if (content.trim() === "") wordCount = 0
 
-        console.log("AddNotePage: Saving note - Title:", noteTitleField.text, 
-                   "Content length:", content.length, "Words:", wordCount, 
-                   "Rich text:", richTextSwitch.checked)
-        
-        saveRequested(noteTitleField.text.trim(), content, richTextSwitch.checked)
+        // Calculate word count for logging
+        wordCount = content.trim().split(/\s+/).length;
+        if (content.trim() === "")
+            wordCount = 0;
+
+        console.log("AddNotePage: Saving note - Title:", noteTitleField.text, "Content length:", content.length, "Words:", wordCount, "Rich text:", richTextSwitch.checked);
+
+        saveRequested(noteTitleField.text.trim(), content, richTextSwitch.checked);
     }
 
     function clearFields() {
-        noteTitleField.text = ""
-        plainTextArea.text = ""
-        richTextSwitch.checked = false
-        
+        noteTitleField.text = "";
+        plainTextArea.text = "";
+        richTextSwitch.checked = false;
+
         // Clear rich text editor if loaded
         if (richTextLoader.status === Loader.Ready && richTextLoader.item) {
-            richTextLoader.item.clear()
-            richTextLoader.item.text = ""
+            richTextLoader.item.clear();
+            richTextLoader.item.text = "";
         }
-        
+
         // Focus on title field after clearing
-        Qt.callLater(function() {
-            noteTitleField.forceActiveFocus()
-        })
-        
-        console.log("AddNotePage: Fields cleared")
+        Qt.callLater(function () {
+            noteTitleField.forceActiveFocus();
+        });
+
+        console.log("AddNotePage: Fields cleared");
     }
 
     // New function to get current content for status display
     function getCurrentContent() {
         if (richTextSwitch.checked && richTextLoader.status === Loader.Ready && richTextLoader.item) {
-            return richTextLoader.item.text || ""
+            return richTextLoader.item.text || "";
         } else {
-            return plainTextArea.text || ""
+            return plainTextArea.text || "";
         }
     }
 
@@ -452,9 +453,9 @@ Page {
     // Initialize fields when page properties change
     onInitialTitleChanged: noteTitleField.text = initialTitle
     onInitialContentChanged: {
-        plainTextArea.text = initialContent
+        plainTextArea.text = initialContent;
         if (richTextLoader.status === Loader.Ready && richTextLoader.item) {
-            richTextLoader.item.text = initialContent
+            richTextLoader.item.text = initialContent;
         }
     }
     onInitialIsRichTextChanged: richTextSwitch.checked = initialIsRichText

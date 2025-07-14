@@ -104,13 +104,32 @@ MainView {
 
             onEditNoteRequested: function (noteIndex) {
                 console.log("Edit note requested for index:", noteIndex);
+
+                // Clear any other active pages first
+                if (addNotePageActive) {
+                    console.log("Removing AddNotePage before opening NoteEditPage");
+                    pageLayout.removePages(addNotePageInstance);
+                    addNotePageActive = false;
+                }
+                if (settingsPageActive) {
+                    pageLayout.removePages(settingsPageInstance);
+                    settingsPageActive = false;
+                }
+                if (todoPageActive) {
+                    pageLayout.removePages(todoPageInstance);
+                    todoPageActive = false;
+                }
+
                 notesModel.setCurrentNote(noteIndex);
+                console.log("Opening NoteEditPage for note:", noteIndex);
+
                 if (pageLayout.isPhoneMode) {
                     pageLayout.addPageToCurrentColumn(mainPage, noteEditPage);
                 } else {
                     pageLayout.addPageToNextColumn(mainPage, noteEditPage);
                 }
                 noteEditPageActive = true;
+                console.log("NoteEditPage opened successfully");
             }
 
             onAddNoteRequested: {

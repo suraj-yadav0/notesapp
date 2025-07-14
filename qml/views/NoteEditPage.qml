@@ -32,7 +32,11 @@ Page {
 
     header: PageHeader {
         id: editHeader
-        title: i18n.tr('Edit Note')
+        title: i18n.tr('📝 Edit Note')
+
+        Component.onCompleted: {
+            console.log("🔵 NoteEditPage header loaded - this is the EDIT page");
+        }
 
         leadingActionBar {
             actions: [
@@ -213,7 +217,7 @@ Page {
                     // Enhanced plain text editor
                     ScrollView {
                         id: plainTextScrollView
-                      //  anchors.fill: parent
+                        //  anchors.fill: parent
                         clip: true
                         anchors.fill: parent
                         visible: !isRichTextSwitch.checked
@@ -225,7 +229,7 @@ Page {
                             text: notesModel.currentNote ? notesModel.currentNote.content : ""
                             width: units.gu(45) // Adjust width to fill parent with margins
                             height: Math.max(units.gu(40), contentHeight + units.gu(2))
-                           // autoSize: true
+                            // autoSize: true
                             wrapMode: TextArea.Wrap
                             selectByMouse: true
                             font.pixelSize: units.gu(1.8)
@@ -238,7 +242,7 @@ Page {
                                 radius: units.gu(0.5)
                                 border.width: parent.activeFocus ? units.gu(0.2) : units.gu(0.1)
                                 border.color: parent.activeFocus ? "#69181f81" : (theme.name === "Ubuntu.Components.Themes.SuruDark" ? "#d3d1d1" : "#999")
-                              // z: -1
+                                // z: -1
                             }
                         }
                     }
@@ -382,6 +386,37 @@ Page {
         }
     }
 
+    // Function to refresh content fields from current note
+    function refreshContentFields() {
+        console.log("Edit page: Refreshing content fields");
+        console.log("Edit page: Current note exists:", !!notesModel.currentNote);
+
+        if (notesModel.currentNote) {
+            var currentNote = notesModel.currentNote;
+            console.log("Edit page: Current note details:", JSON.stringify(currentNote));
+
+            titleEditField.text = currentNote.title || "";
+            isRichTextSwitch.checked = currentNote.isRichText || false;
+
+            var currentContent = currentNote.content || "";
+            console.log("Edit page: Setting content with", currentContent.length, "characters:", currentContent.substring(0, 50) + "...");
+
+            // Update plain text area
+            plainTextArea.text = currentContent;
+            console.log("Edit page: Plain text area updated, now has:", plainTextArea.text.length, "characters");
+
+            // Update rich text editor if it's active
+            if (isRichTextSwitch.checked && richTextLoader.status === Loader.Ready && richTextLoader.item) {
+                richTextLoader.item.text = currentContent;
+                console.log("Edit page: Updated rich text editor content");
+            }
+
+            console.log("Edit page: Content refresh completed successfully");
+        } else {
+            console.log("Edit page: No current note available for refresh");
+        }
+    }
+
     // Enhanced save function
     function saveNote() {
         if (!notesModel.currentNote) {
@@ -397,6 +432,12 @@ Page {
 
         if (notesModel.updateCurrentNote(titleEditField.text, content, isRichTextSwitch.checked)) {
             console.log("Edit page: Note updated successfully");
+
+            // Refresh the content fields to show the updated data
+            Qt.callLater(function () {
+                refreshContentFields();
+            });
+
             saveRequested(content);
             backRequested();
         } else {
@@ -416,22 +457,41 @@ Page {
     // Update fields when current note changes
     Connections {
         target: notesModel
+        enabled: true  // Explicitly enable the connection
+
         function onNoteSelectionChanged() {
-            console.log("Edit page: Note selection changed");
-            if (notesModel.currentNote) {
-                titleEditField.text = notesModel.currentNote.title || "";
-                isRichTextSwitch.checked = notesModel.currentNote.isRichText || false;
+            console.log("🔵 Edit page: Note selection changed - signal received!");
+            console.log("🔵 Edit page: Current note after signal:", JSON.stringify(notesModel.currentNote));
+            Qt.callLater(function () {
+                refreshContentFields();
+            });
+        }
 
-                var currentContent = notesModel.currentNote.content || "";
-                console.log("Edit page: Loading content:", currentContent.length, "characters");
-
-                if (isRichTextSwitch.checked && richTextLoader.status === Loader.Ready && richTextLoader.item) {
-                    richTextLoader.item.text = currentContent;
-                    richTextLoader.item.forceActiveFocus();
-                } else {
-                    plainTextArea.text = currentContent;
-                }
+        function onDataChanged() {
+            console.log("🔵 Edit page: Data changed - refreshing content");
+            if (notesModel.currentNote && notesModel.currentNote.id > 0) {
+                Qt.callLater(function () {
+                    refreshContentFields();
+                });
             }
-        
-    
-        }}}
+        }
+    }
+
+    // Load content when the edit page is first created
+    Component.onCompleted: {
+        console.log("🔵 Edit page: Component completed - initializing content");
+        Qt.callLater(function () {
+            refreshContentFields();
+        });
+    }
+
+    // Refresh content when page becomes visible
+    onVisibleChanged: {
+        if (visible) {
+            console.log("🔵 Edit page: Page became visible - refreshing content");
+            Qt.callLater(function () {
+                refreshContentFields();
+            });
+        }
+    }
+}

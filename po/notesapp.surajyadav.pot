@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notesapp.surajyadav\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-14 09:32+0000\n"
+"POT-Creation-Date: 2025-07-14 10:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,62 +26,66 @@ msgid "Light Mode"
 msgstr ""
 
 #: ../qml/views/AddNotePage.qml:40
-msgid "Add New Note"
+msgid "✏️ Edit Note"
 msgstr ""
 
-#: ../qml/views/AddNotePage.qml:40 ../qml/views/NoteEditPage.qml:35
-msgid "Edit Note"
+#: ../qml/views/AddNotePage.qml:40
+msgid "➕ Add New Note"
 msgstr ""
 
-#: ../qml/views/AddNotePage.qml:46 ../qml/views/NoteEditPage.qml:41
+#: ../qml/views/AddNotePage.qml:50 ../qml/views/NoteEditPage.qml:45
 msgid "Back"
 msgstr ""
 
-#: ../qml/views/AddNotePage.qml:58 ../qml/views/NoteEditPage.qml:61
+#: ../qml/views/AddNotePage.qml:62 ../qml/views/NoteEditPage.qml:65
 msgid "Save"
 msgstr ""
 
-#: ../qml/views/AddNotePage.qml:66
+#: ../qml/views/AddNotePage.qml:70
 msgid "Clear"
 msgstr ""
 
-#: ../qml/views/AddNotePage.qml:97 ../qml/views/NoteEditPage.qml:93
+#: ../qml/views/AddNotePage.qml:101 ../qml/views/NoteEditPage.qml:97
 msgid "💡 Enter note title..."
 msgstr ""
 
-#: ../qml/views/AddNotePage.qml:132 ../qml/views/NoteEditPage.qml:128
+#: ../qml/views/AddNotePage.qml:136 ../qml/views/NoteEditPage.qml:132
 msgid "Rich Text Formatting"
 msgstr ""
 
-#: ../qml/views/AddNotePage.qml:202 ../qml/views/NoteEditPage.qml:197
+#: ../qml/views/AddNotePage.qml:206 ../qml/views/NoteEditPage.qml:201
 msgid "Rich Text Editor"
 msgstr ""
 
-#: ../qml/views/AddNotePage.qml:203 ../qml/views/NoteEditPage.qml:197
+#: ../qml/views/AddNotePage.qml:207 ../qml/views/NoteEditPage.qml:201
 msgid "Plain Text Editor"
 msgstr ""
 
-#: ../qml/views/AddNotePage.qml:228 ../qml/views/NoteEditPage.qml:224
+#: ../qml/views/AddNotePage.qml:232 ../qml/views/NoteEditPage.qml:228
 msgid "✍️ Start editing your note here....."
 msgstr ""
 
-#: ../qml/views/AddNotePage.qml:355 ../qml/views/NoteEditPage.qml:353
+#: ../qml/views/AddNotePage.qml:359 ../qml/views/NoteEditPage.qml:357
 msgid "Characters: %1"
 msgstr ""
 
-#: ../qml/views/AddNotePage.qml:370
+#: ../qml/views/AddNotePage.qml:374
 msgid "Preview"
 msgstr ""
 
-#: ../qml/views/NoteEditPage.qml:53
+#: ../qml/views/NoteEditPage.qml:35
+msgid "📝 Edit Note"
+msgstr ""
+
+#: ../qml/views/NoteEditPage.qml:57
 msgid "Delete"
 msgstr ""
 
-#: ../qml/views/NoteEditPage.qml:368
+#: ../qml/views/NoteEditPage.qml:372
 msgid "Plain Text"
 msgstr ""
 
-#: ../qml/views/NoteEditPage.qml:368
+#: ../qml/views/NoteEditPage.qml:372
 msgid "Rich Text"
 msgstr ""
 
