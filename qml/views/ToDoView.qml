@@ -8,6 +8,8 @@ import "../models"
 Page {
     id: todoPage
 
+    signal backRequested
+
     // Initialize the data model
     ToDoModel {
         id: todoData
@@ -16,6 +18,19 @@ Page {
     header: PageHeader {
         id: header
         title: i18n.tr("To-Do")
+
+        leadingActionBar {
+            actions: [
+                Action {
+                    iconName: "back"
+                    text: i18n.tr("Back")
+                    onTriggered: {
+                        console.log("🔙 Back button triggered in ToDoView");
+                        todoPage.backRequested();
+                    }
+                }
+            ]
+        }
 
         trailingActionBar {
             actions: [
