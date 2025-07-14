@@ -38,6 +38,7 @@ Page {
         visible: false
         anchors.fill: parent
         color: Qt.rgba(0, 0, 0, 0.7) // Semi-transparent overlay
+        z: 1000 // Ensure dialog is on top
 
         function open() {
             console.log("🟢 Opening ToDo dialog");
@@ -65,10 +66,18 @@ Page {
             width: Math.min(parent.width - units.gu(4), units.gu(40))
             height: dialogContent.height + units.gu(4)
             anchors.centerIn: parent
-            color: theme.palette.normal.background
+            color: "#F7F7F7" // Light background color
             radius: units.gu(1)
-            border.color: theme.palette.normal.base
+            border.color: "#E0E0E0" // Light border color
             border.width: 1
+
+            // Prevent clicks from propagating to background
+            MouseArea {
+                anchors.fill: parent
+                onClicked:
+                // Do nothing - just prevent background clicks
+                {}
+            }
 
             Column {
                 id: dialogContent
@@ -81,7 +90,7 @@ Page {
                 Label {
                     text: i18n.tr("Add new task")
                     font.bold: true
-                    color: theme.palette.normal.backgroundText
+                    color: "#333333" // Dark grey text
                 }
 
                 TextField {
@@ -117,7 +126,7 @@ Page {
 
                     Button {
                         text: i18n.tr("Cancel")
-                        color: theme.palette.normal.base
+                        color: "#CCCCCC" // Light grey
 
                         onClicked: {
                             console.log("🔴 Cancel button clicked");
@@ -127,7 +136,7 @@ Page {
 
                     Button {
                         text: i18n.tr("Add")
-                        color: theme.palette.normal.positive
+                        color: "#4CAF50" // Green color
                         enabled: newTaskField.text.trim() !== ""
 
                         onClicked: {
@@ -193,7 +202,7 @@ Page {
                 Label {
                     Layout.fillWidth: true
                     text: model.text
-                    color: model.completed ? theme.palette.normal.backgroundSecondaryText : theme.palette.normal.backgroundText
+                    color: model.completed ? "#999999" : "#333333"
                     wrapMode: Text.WordWrap
                 }
             }
@@ -207,7 +216,7 @@ Page {
             visible: todoData.count === 0
             text: i18n.tr("No tasks yet.\nTap + to add your first task!")
             horizontalAlignment: Text.AlignHCenter
-            color: theme.palette.normal.backgroundSecondaryText
+            color: "#999999" // Cool grey color
         }
     }
 }

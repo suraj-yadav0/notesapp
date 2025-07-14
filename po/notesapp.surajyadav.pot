@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notesapp.surajyadav\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-14 11:22+0000\n"
+"POT-Creation-Date: 2025-07-14 11:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -93,23 +93,23 @@ msgstr ""
 msgid "To-Do"
 msgstr ""
 
-#: ../qml/views/ToDoView.qml:25 ../qml/views/ToDoView.qml:129
+#: ../qml/views/ToDoView.qml:25 ../qml/views/ToDoView.qml:138
 msgid "Add"
 msgstr ""
 
-#: ../qml/views/ToDoView.qml:82
+#: ../qml/views/ToDoView.qml:91
 msgid "Add new task"
 msgstr ""
 
-#: ../qml/views/ToDoView.qml:91
+#: ../qml/views/ToDoView.qml:100
 msgid "Enter your task..."
 msgstr ""
 
-#: ../qml/views/ToDoView.qml:119 ../qml/views/components/RichTextEditor.qml:427
+#: ../qml/views/ToDoView.qml:128 ../qml/views/components/RichTextEditor.qml:427
 msgid "Cancel"
 msgstr ""
 
-#: ../qml/views/ToDoView.qml:208
+#: ../qml/views/ToDoView.qml:217
 msgid ""
 "No tasks yet.\n"
 "Tap + to add your first task!"
