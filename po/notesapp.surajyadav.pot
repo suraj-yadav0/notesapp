@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notesapp.surajyadav\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-14 11:44+0000\n"
+"POT-Creation-Date: 2025-07-14 12:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../qml/common/theme/ThemeHelper.qml:35
+#: ../qml/common/theme/ThemeHelper.qml:35 ../qml/views/SettingsPage.qml:75
 msgid "Dark Mode"
 msgstr ""
 
@@ -34,6 +34,7 @@ msgid "➕ Add New Note"
 msgstr ""
 
 #: ../qml/views/AddNotePage.qml:50 ../qml/views/NoteEditPage.qml:45
+#: ../qml/views/SettingsPage.qml:21
 msgid "Back"
 msgstr ""
 
@@ -87,6 +88,34 @@ msgstr ""
 
 #: ../qml/views/NoteEditPage.qml:372
 msgid "Rich Text"
+msgstr ""
+
+#: ../qml/views/SettingsPage.qml:12
+msgid "Settings"
+msgstr ""
+
+#: ../qml/views/SettingsPage.qml:47
+msgid "Appearance"
+msgstr ""
+
+#: ../qml/views/SettingsPage.qml:82
+msgid "Off"
+msgstr ""
+
+#: ../qml/views/SettingsPage.qml:82
+msgid "On"
+msgstr ""
+
+#: ../qml/views/SettingsPage.qml:124
+msgid "Font Size"
+msgstr ""
+
+#: ../qml/views/SettingsPage.qml:131
+msgid "System default"
+msgstr ""
+
+#: ../qml/views/SettingsPage.qml:140
+msgid "Medium"
 msgstr ""
 
 #: ../qml/views/ToDoView.qml:18

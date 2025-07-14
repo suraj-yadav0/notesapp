@@ -202,10 +202,13 @@ MainView {
         id: todoPageInstance
         visible: false
     }
-
     SettingsPage {
         id: settingsPageInstance
         visible: false
+
+        onBackRequested: {
+            navigateToMainPage();
+        }
     }
 
     AddNotePage {
