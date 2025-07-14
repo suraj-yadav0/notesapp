@@ -80,23 +80,57 @@ QtObject {
         return false;
     }
 
-    // Update the current note
+    // Update the current note with proper isolation
     function updateCurrentNote(title, content, isRichText) {
+        console.log("updateCurrentNote called with:", title, "content length:", content ? content.length : 0, "richText:", isRichText);
+        console.log("currentNote:", JSON.stringify(currentNote));
+
         if (currentNote.id > 0 && title.trim() !== "") {
             var richText = isRichText !== null ? isRichText : currentNote.isRichText;
             var success = false;
 
             if (useDatabase) {
+                console.log("Updating in database, noteId:", currentNote.id);
                 success = databaseManager.updateNote(currentNote.id, title.trim(), content, richText);
+                console.log("Database update result:", success);
+
+                if (success) {
+                    // Update the specific item in the model instead of reloading everything
+                    var updatedData = {
+                        id: currentNote.id,
+                        title: title.trim(),
+                        content: content,
+                        isRichText: richText,
+                        createdAt: currentNote.createdAt,
+                        updatedAt: formatDate(new Date().toISOString())
+                    };
+
+                    updateNoteInModel(currentNote.index, updatedData);
+
+                    // Update current note reference - create a new object
+                    currentNote = {
+                        id: currentNote.id,
+                        title: title.trim(),
+                        content: content,
+                        isRichText: richText,
+                        createdAt: currentNote.createdAt,
+                        updatedAt: formatDate(new Date().toISOString()),
+                        index: currentNote.index
+                    };
+
+                    console.log("Updated currentNote:", JSON.stringify(currentNote));
+                }
             } else if (currentNote.index >= 0) {
                 success = updateNoteInSettings(currentNote.index, title.trim(), content, richText);
             }
 
             if (success) {
-                loadNotesFromStorage(); // Refresh the list
+                dataChanged();
+                noteSelectionChanged(); // Notify that current note changed
                 return true;
             }
         }
+        console.log("updateCurrentNote failed - returning false");
         return false;
     }
 
@@ -386,9 +420,15 @@ QtObject {
     }
 
     function saveNote(noteId, content) {
-        if (currentNote.index >= 0) {
-            updateCurrentNote(currentNote.title, content);
+        console.log("saveNote called with noteId:", noteId, "content length:", content ? content.length : 0);
+        if (currentNote.index >= 0 && currentNote.id > 0) {
+            // Use the current note's title and update with new content
+            var result = updateCurrentNote(currentNote.title, content, currentNote.isRichText);
+            console.log("saveNote result:", result);
+            return result;
         }
+        console.log("saveNote failed - no current note selected");
+        return false;
     }
 
     function saveNotes() {
@@ -398,4 +438,25 @@ QtObject {
     function loadNotes() {
         loadNotesFromStorage();
     }
+
+    // Helper function to update a specific note in the model
+    function updateNoteInModel(index, noteData) {
+        if (index >= 0 && index < notes.count) {
+            // Create a completely new object to avoid reference sharing
+            var updatedNote = {
+                id: noteData.id,
+                title: noteData.title,
+                content: noteData.content,
+                isRichText: noteData.isRichText,
+                createdAt: noteData.createdAt,
+                updatedAt: noteData.updatedAt
+            };
+
+            // Replace the entire item to ensure proper isolation
+            notes.set(index, updatedNote);
+            console.log("Updated note at index", index, "with title:", updatedNote.title);
+        }
+    }
+
+    // === DATA LOADING FUNCTIONS ===
 }

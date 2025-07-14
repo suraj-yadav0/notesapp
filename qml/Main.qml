@@ -27,7 +27,6 @@ import "views"
 import "views/components"
 import "common/constants"
 
-
 MainView {
     id: root
     objectName: 'mainView'
@@ -37,16 +36,16 @@ MainView {
     width: units.gu(52)
     height: units.gu(90)
 
-    theme.palette: Palette {
-         // color: "#131520"
-    }
+    theme.palette:
+    // color: "#131520"
+    Palette {}
 
     // Models (now include controller functionality)
     NotesModel {
         id: notesModel
-        
+
         Component.onCompleted: {
-            console.log("NotesModel initialized with SQLite database")
+            console.log("NotesModel initialized with SQLite database");
         }
     }
 
@@ -103,22 +102,23 @@ MainView {
             id: mainPage
             notesModel: notesModel
 
-            onEditNoteRequested: function(noteId) {
-                noteEditPage.noteId = noteId
+            onEditNoteRequested: function (noteIndex) {
+                console.log("Edit note requested for index:", noteIndex);
+                notesModel.setCurrentNote(noteIndex);
                 if (pageLayout.isPhoneMode) {
-                    pageLayout.addPageToCurrentColumn(mainPage, noteEditPage)
+                    pageLayout.addPageToCurrentColumn(mainPage, noteEditPage);
                 } else {
-                    pageLayout.addPageToNextColumn(mainPage, noteEditPage)
+                    pageLayout.addPageToNextColumn(mainPage, noteEditPage);
                 }
-                noteEditPageActive = true
+                noteEditPageActive = true;
             }
 
             onAddNoteRequested: {
-                navigateToAddNote()
+                navigateToAddNote();
             }
 
             onTodoViewRequested: {
-                navigateToTodo()
+                navigateToTodo();
             }
         }
 
@@ -127,15 +127,15 @@ MainView {
             id: noteEditPage
             notesModel: notesModel
 
-            property string noteId: ""
-
             onBackRequested: {
-                pageLayout.removePages(noteEditPage)
-                noteEditPageActive = false
+                pageLayout.removePages(noteEditPage);
+                noteEditPageActive = false;
             }
 
-            onSaveRequested: function(content) {
-                notesModel.saveNote(noteId, content)
+            onSaveRequested: function (content) {
+                console.log("Save requested with content length:", content ? content.length : 0);
+                // The save is handled by NoteEditPage.saveNote() which calls notesModel.updateCurrentNote()
+                // No need to call saveNote here as it's already done in NoteEditPage
             }
         }
     }
@@ -160,17 +160,16 @@ MainView {
     Connections {
         target: root
         function onApplicationStateChanged() {
-            if (Qt.application.state === Qt.ApplicationActive) {
-                // App became active
-            }
+            if (Qt.application.state === Qt.ApplicationActive)
+            // App became active
+            {}
         }
     }
 
     Component.onCompleted: {
-        console.log("NotesApp initialized successfully")
-        console.log("Screen size:", width + "x" + height)
-        console.log("Mode:", pageLayout.isDesktopMode ? "Desktop" : 
-                          pageLayout.isTabletMode ? "Tablet" : "Phone")
+        console.log("NotesApp initialized successfully");
+        console.log("Screen size:", width + "x" + height);
+        console.log("Mode:", pageLayout.isDesktopMode ? "Desktop" : pageLayout.isTabletMode ? "Tablet" : "Phone");
     }
 
     // Navigation state management
@@ -184,7 +183,7 @@ MainView {
         id: todoPageInstance
         visible: false
     }
-    
+
     SettingsPage {
         id: settingsPageInstance
         visible: false
@@ -195,140 +194,140 @@ MainView {
         visible: false
         notesModel: notesModel
 
-        onSaveRequested: function(title, content, isRichText) {
-            console.log("Main: Creating note from AddNotePage")
-            notesModel.createNote(title, content, isRichText)
-            navigateToMainPage()
+        onSaveRequested: function (title, content, isRichText) {
+            console.log("Main: Creating note from AddNotePage");
+            notesModel.createNote(title, content, isRichText);
+            navigateToMainPage();
         }
 
         onBackRequested: {
-            navigateToMainPage()
+            navigateToMainPage();
         }
     }
 
     // Navigation helper functions
     function navigateToMainPage() {
-        console.log("Navigating to main page")
+        console.log("Navigating to main page");
         // Clear all state first
-        settingsPageActive = false
-        todoPageActive = false
-        noteEditPageActive = false
-        addNotePageActive = false
-        
+        settingsPageActive = false;
+        todoPageActive = false;
+        noteEditPageActive = false;
+        addNotePageActive = false;
+
         // Remove any additional pages to show just the main page
         try {
             if (settingsPageInstance) {
-                pageLayout.removePages(settingsPageInstance)
+                pageLayout.removePages(settingsPageInstance);
             }
             if (todoPageInstance) {
-                pageLayout.removePages(todoPageInstance)
+                pageLayout.removePages(todoPageInstance);
             }
             if (noteEditPage) {
-                pageLayout.removePages(noteEditPage)
+                pageLayout.removePages(noteEditPage);
             }
             if (addNotePageInstance) {
-                pageLayout.removePages(addNotePageInstance)
+                pageLayout.removePages(addNotePageInstance);
             }
         } catch (e) {
-            console.log("Main page navigation cleanup error:", e)
+            console.log("Main page navigation cleanup error:", e);
         }
     }
 
     function navigateToAddNote() {
-        console.log("Navigating to add note page")
+        console.log("Navigating to add note page");
         if (!addNotePageActive) {
             try {
                 // Clear other pages first
                 if (settingsPageActive) {
-                    pageLayout.removePages(settingsPageInstance)
-                    settingsPageActive = false
+                    pageLayout.removePages(settingsPageInstance);
+                    settingsPageActive = false;
                 }
                 if (todoPageActive) {
-                    pageLayout.removePages(todoPageInstance)
-                    todoPageActive = false
+                    pageLayout.removePages(todoPageInstance);
+                    todoPageActive = false;
                 }
                 if (noteEditPageActive) {
-                    pageLayout.removePages(noteEditPage)
-                    noteEditPageActive = false
+                    pageLayout.removePages(noteEditPage);
+                    noteEditPageActive = false;
                 }
-                
+
                 // Reset add note page
-                addNotePageInstance.isEditing = false
-                addNotePageInstance.initialTitle = ""
-                addNotePageInstance.initialContent = ""
-                addNotePageInstance.initialIsRichText = false
-                addNotePageInstance.clearFields()
-                
+                addNotePageInstance.isEditing = false;
+                addNotePageInstance.initialTitle = "";
+                addNotePageInstance.initialContent = "";
+                addNotePageInstance.initialIsRichText = false;
+                addNotePageInstance.clearFields();
+
                 // Add the page
                 if (pageLayout.isPhoneMode) {
-                    pageLayout.addPageToCurrentColumn(mainPage, addNotePageInstance)
+                    pageLayout.addPageToCurrentColumn(mainPage, addNotePageInstance);
                 } else {
-                    pageLayout.addPageToNextColumn(mainPage, addNotePageInstance)
+                    pageLayout.addPageToNextColumn(mainPage, addNotePageInstance);
                 }
-                addNotePageActive = true
+                addNotePageActive = true;
             } catch (e) {
-                console.log("Add note navigation error:", e)
+                console.log("Add note navigation error:", e);
             }
         }
     }
 
     function navigateToSettings() {
-        console.log("Navigating to settings")
+        console.log("Navigating to settings");
         if (!settingsPageActive) {
             try {
                 // Clear other pages first if they're active
                 if (todoPageActive) {
-                    pageLayout.removePages(todoPageInstance)
-                    todoPageActive = false
+                    pageLayout.removePages(todoPageInstance);
+                    todoPageActive = false;
                 }
                 if (noteEditPageActive) {
-                    pageLayout.removePages(noteEditPage)
-                    noteEditPageActive = false
+                    pageLayout.removePages(noteEditPage);
+                    noteEditPageActive = false;
                 }
-                
+
                 // Add settings page
                 if (pageLayout.isPhoneMode) {
-                    pageLayout.addPageToCurrentColumn(mainPage, settingsPageInstance)
+                    pageLayout.addPageToCurrentColumn(mainPage, settingsPageInstance);
                 } else {
-                    pageLayout.addPageToNextColumn(mainPage, settingsPageInstance)
+                    pageLayout.addPageToNextColumn(mainPage, settingsPageInstance);
                 }
-                settingsPageActive = true
+                settingsPageActive = true;
             } catch (e) {
-                console.log("Settings navigation error:", e)
+                console.log("Settings navigation error:", e);
             }
         } else {
-            console.log("Settings page already active")
+            console.log("Settings page already active");
         }
     }
 
     function navigateToTodo() {
-        console.log("Navigating to todo")
+        console.log("Navigating to todo");
         if (!todoPageActive) {
             try {
                 // Clear other pages first if they're active
                 if (settingsPageActive) {
-                    pageLayout.removePages(settingsPageInstance)
-                    settingsPageActive = false
+                    pageLayout.removePages(settingsPageInstance);
+                    settingsPageActive = false;
                 }
                 if (noteEditPageActive) {
-                    pageLayout.removePages(noteEditPage)
-                    noteEditPageActive = false
+                    pageLayout.removePages(noteEditPage);
+                    noteEditPageActive = false;
                 }
-                
+
                 // Add todo page
                 if (pageLayout.isDesktopMode) {
-                    pageLayout.addPageToNextColumn(mainPage, todoPageInstance)
+                    pageLayout.addPageToNextColumn(mainPage, todoPageInstance);
                 } else if (pageLayout.isTabletMode) {
-                    pageLayout.addPageToNextColumn(mainPage, todoPageInstance) 
+                    pageLayout.addPageToNextColumn(mainPage, todoPageInstance);
                 } else {
-                    pageLayout.addPageToCurrentColumn(mainPage, todoPageInstance)
+                    pageLayout.addPageToCurrentColumn(mainPage, todoPageInstance);
                 }
-                todoPageActive = true
+                todoPageActive = true;
             } catch (e) {
-                console.log("Todo navigation error:", e)
+                console.log("Todo navigation error:", e);
             }
         } else {
-            console.log("Todo page already active")
+            console.log("Todo page already active");
         }
     }
 
@@ -339,34 +338,34 @@ MainView {
         semiHideOpacity: 70
         timeoutSeconds: 3
         hintIconName: "view-grid-symbolic"
-        
+
         actions: [
             RadialAction {
                 iconName: "note"
                 label: "Notes"
                 onTriggered: {
-                    navigateToMainPage()
+                    navigateToMainPage();
                 }
             },
             RadialAction {
                 iconName: "add"
                 label: "New Note"
                 onTriggered: {
-                    navigateToAddNote()
+                    navigateToAddNote();
                 }
             },
             RadialAction {
                 iconName: "view-list-symbolic"
                 label: "To-Do"
                 onTriggered: {
-                    navigateToTodo()
+                    navigateToTodo();
                 }
             },
             RadialAction {
                 iconName: "settings"
                 label: "Settings"
                 onTriggered: {
-                    navigateToSettings()
+                    navigateToSettings();
                 }
             }
         ]
