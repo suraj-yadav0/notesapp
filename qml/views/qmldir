@@ -1,0 +1,7 @@
+module views
+
+AddNotePage 1.0 AddNotePage.qml
+MainPage 1.0 MainPage.qml
+NoteEditPage 1.0 NoteEditPage.qml
+SettingsPage 1.0 SettingsPage.qml
+ToDoView 1.0 ToDoView.qml

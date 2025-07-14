@@ -71,11 +71,14 @@ Item {
         }
 
         function addItem(text) {
+            console.log("🟢 ToDoModel.addItem called with text:", text);
             append({
                 text: text,
                 completed: false
             });
+            console.log("🟢 ToDoModel: Item appended, new count:", count);
             saveToSettings();
+            console.log("🟢 ToDoModel: Settings saved");
         }
 
         function toggleItem(index) {
@@ -114,6 +117,7 @@ Item {
 
     // Expose methods for use in views
     function addItem(text) {
+        console.log("🔵 ToDoModel wrapper.addItem called with text:", text);
         todoModel.addItem(text);
     }
     function toggleItem(index) {

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notesapp.surajyadav\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-14 10:17+0000\n"
+"POT-Creation-Date: 2025-07-14 11:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,23 +53,23 @@ msgstr ""
 msgid "Rich Text Formatting"
 msgstr ""
 
-#: ../qml/views/AddNotePage.qml:206 ../qml/views/NoteEditPage.qml:201
-msgid "Rich Text Editor"
-msgstr ""
-
-#: ../qml/views/AddNotePage.qml:207 ../qml/views/NoteEditPage.qml:201
+#: ../qml/views/AddNotePage.qml:205 ../qml/views/NoteEditPage.qml:201
 msgid "Plain Text Editor"
 msgstr ""
 
-#: ../qml/views/AddNotePage.qml:232 ../qml/views/NoteEditPage.qml:228
+#: ../qml/views/AddNotePage.qml:205 ../qml/views/NoteEditPage.qml:201
+msgid "Rich Text Editor"
+msgstr ""
+
+#: ../qml/views/AddNotePage.qml:230 ../qml/views/NoteEditPage.qml:228
 msgid "✍️ Start editing your note here....."
 msgstr ""
 
-#: ../qml/views/AddNotePage.qml:359 ../qml/views/NoteEditPage.qml:357
+#: ../qml/views/AddNotePage.qml:357 ../qml/views/NoteEditPage.qml:357
 msgid "Characters: %1"
 msgstr ""
 
-#: ../qml/views/AddNotePage.qml:374
+#: ../qml/views/AddNotePage.qml:372
 msgid "Preview"
 msgstr ""
 
@@ -89,18 +89,30 @@ msgstr ""
 msgid "Rich Text"
 msgstr ""
 
-#: ../qml/views/ToDoView.qml:20
+#: ../qml/views/ToDoView.qml:18
 msgid "To-Do"
 msgstr ""
 
-#: ../qml/views/ToDoView.qml:27
+#: ../qml/views/ToDoView.qml:25 ../qml/views/ToDoView.qml:129
 msgid "Add"
 msgstr ""
 
-#: ../qml/views/ToDoView.qml:133
+#: ../qml/views/ToDoView.qml:82
+msgid "Add new task"
+msgstr ""
+
+#: ../qml/views/ToDoView.qml:91
+msgid "Enter your task..."
+msgstr ""
+
+#: ../qml/views/ToDoView.qml:119 ../qml/views/components/RichTextEditor.qml:427
+msgid "Cancel"
+msgstr ""
+
+#: ../qml/views/ToDoView.qml:208
 msgid ""
 "No tasks yet.\n"
-"Tap + to add one!"
+"Tap + to add your first task!"
 msgstr ""
 
 #: ../qml/views/components/RichTextEditor.qml:300
@@ -113,10 +125,6 @@ msgstr ""
 
 #: ../qml/views/components/RichTextEditor.qml:374
 msgid "Choose Text Color"
-msgstr ""
-
-#: ../qml/views/components/RichTextEditor.qml:427
-msgid "Cancel"
 msgstr ""
 
 #: notesapp.desktop.in.h:1
