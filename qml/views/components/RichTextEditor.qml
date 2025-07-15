@@ -133,19 +133,19 @@ Item {
                         }
 
                         // Font Size Selector
-                        Button {
-                            id: fontSizeButton
-                            width: units.gu(8)
-                            height: units.gu(4)
-                            text: currentFontSize + "pt"
-                            color: theme.palette.normal.backgroundText
+                        // Button {
+                        //     id: fontSizeButton
+                        //     width: units.gu(8)
+                        //     height: units.gu(4)
+                        //     text: currentFontSize + "pt"
+                        //     color: theme.palette.normal.backgroundText
                             
-                            onClicked: {
-                                fontSizeSelector.expanded = !fontSizeSelector.expanded
-                            }
-                        }
+                        //     onClicked: {
+                        //         fontSizeSelector.expanded = !fontSizeSelector.expanded
+                        //     }
+                        // }
 
-                        // Font Size Options  - Fix this op
+                        // Font Size Options  - Fix this option Selector , Its not working
                         OptionSelector {
                             id: fontSizeSelector
                             width: units.gu(8)
@@ -227,7 +227,7 @@ Item {
                         //     color: theme.palette.normal.base
                         // }
 
-                        // Text Actions
+                        // Text Actions - Fix this One , This is also not working
                         Button {
                             width: units.gu(7)
                             height: units.gu(4)
