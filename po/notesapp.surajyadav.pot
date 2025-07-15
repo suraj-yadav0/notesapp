@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notesapp.surajyadav\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-15 10:33+0000\n"
+"POT-Creation-Date: 2025-07-15 11:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -91,7 +91,7 @@ msgid "Rich Text"
 msgstr ""
 
 #: ../qml/views/SettingsPage.qml:12
-msgid "Settings"
+msgid "S E T T I N G S"
 msgstr ""
 
 #: ../qml/views/SettingsPage.qml:47
@@ -119,7 +119,7 @@ msgid "Medium"
 msgstr ""
 
 #: ../qml/views/ToDoView.qml:20
-msgid "To-Do"
+msgid "T O D O"
 msgstr ""
 
 #: ../qml/views/ToDoView.qml:40 ../qml/views/ToDoView.qml:153

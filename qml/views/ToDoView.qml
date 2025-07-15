@@ -17,7 +17,7 @@ Page {
 
     header: PageHeader {
         id: header
-        title: i18n.tr("To-Do")
+        title: i18n.tr("T O D O")
 
         leadingActionBar {
             actions: [

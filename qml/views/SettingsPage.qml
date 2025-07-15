@@ -9,7 +9,7 @@ Page {
     signal backRequested
 
     header: PageHeader {
-        title: i18n.tr("Settings")
+        title: i18n.tr("S E T T I N G S")
         StyleHints {
             foregroundColor: theme.palette.normal.backgroundText
             backgroundColor: theme.palette.normal.background
