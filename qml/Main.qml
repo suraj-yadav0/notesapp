@@ -65,11 +65,15 @@ MainView {
         onEditNoteRequested: function (noteIndex) {
             console.log("Edit note requested for index:", noteIndex);
             notesModel.setCurrentNote(noteIndex);
-            pageStack.push(noteEditPageComponent);
+            pageStack.push(noteEditPageComponent, {
+                notesModel: notesModel
+            });
         }
 
         onAddNoteRequested: {
-            pageStack.push(addNotePageComponent);
+            pageStack.push(addNotePageComponent, {
+                notesModel: notesModel
+            });
         }
 
         onTodoViewRequested: {

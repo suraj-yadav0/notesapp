@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notesapp.surajyadav\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-14 12:51+0000\n"
+"POT-Creation-Date: 2025-07-15 05:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,11 +26,11 @@ msgid "Light Mode"
 msgstr ""
 
 #: ../qml/views/AddNotePage.qml:40
-msgid "✏️ Edit Note"
+msgid " Add New Note"
 msgstr ""
 
 #: ../qml/views/AddNotePage.qml:40
-msgid "➕ Add New Note"
+msgid "✏️ Edit Note"
 msgstr ""
 
 #: ../qml/views/AddNotePage.qml:50 ../qml/views/NoteEditPage.qml:45

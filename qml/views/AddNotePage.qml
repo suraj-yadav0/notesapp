@@ -37,7 +37,7 @@ Page {
 
     header: PageHeader {
         id: addNoteHeader
-        title: isEditing ? i18n.tr("✏️ Edit Note") : i18n.tr("➕ Add New Note")
+        title: isEditing ? i18n.tr("✏️ Edit Note") : i18n.tr(" Add New Note")
 
         Component.onCompleted: {
             console.log("🟢 AddNotePage header loaded - this is the ADD page, isEditing:", isEditing);
@@ -407,6 +407,12 @@ Page {
             wordCount = 0;
 
         console.log("AddNotePage: Saving note - Title:", noteTitleField.text, "Content length:", content.length, "Words:", wordCount, "Rich text:", richTextSwitch.checked);
+
+        if (!notesModel || typeof notesModel.createNote !== "function") {
+            console.error("AddNotePage: notesModel is undefined or does not have createNote method!");
+            // Optionally show a user notification here
+            return;
+        }
 
         saveRequested(noteTitleField.text.trim(), content, richTextSwitch.checked);
     }
