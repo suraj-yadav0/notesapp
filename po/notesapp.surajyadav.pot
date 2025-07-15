@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: notesapp.surajyadav\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-15 11:09+0000\n"
+"POT-Creation-Date: 2025-07-15 11:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../qml/common/theme/ThemeHelper.qml:35 ../qml/views/SettingsPage.qml:75
+#: ../qml/common/theme/ThemeHelper.qml:35 ../qml/views/SettingsPage.qml:84
 msgid "Dark Mode"
 msgstr ""
 
@@ -34,7 +34,7 @@ msgid "✏️ Edit Note"
 msgstr ""
 
 #: ../qml/views/AddNotePage.qml:50 ../qml/views/NoteEditPage.qml:45
-#: ../qml/views/SettingsPage.qml:21 ../qml/views/ToDoView.qml:26
+#: ../qml/views/SettingsPage.qml:30 ../qml/views/ToDoView.qml:35
 msgid "Back"
 msgstr ""
 
@@ -90,55 +90,55 @@ msgstr ""
 msgid "Rich Text"
 msgstr ""
 
-#: ../qml/views/SettingsPage.qml:12
+#: ../qml/views/SettingsPage.qml:20
 msgid "S E T T I N G S"
 msgstr ""
 
-#: ../qml/views/SettingsPage.qml:47
+#: ../qml/views/SettingsPage.qml:56
 msgid "Appearance"
 msgstr ""
 
-#: ../qml/views/SettingsPage.qml:82
+#: ../qml/views/SettingsPage.qml:91
 msgid "Off"
 msgstr ""
 
-#: ../qml/views/SettingsPage.qml:82
+#: ../qml/views/SettingsPage.qml:91
 msgid "On"
 msgstr ""
 
-#: ../qml/views/SettingsPage.qml:124
+#: ../qml/views/SettingsPage.qml:133
 msgid "Font Size"
 msgstr ""
 
-#: ../qml/views/SettingsPage.qml:131
+#: ../qml/views/SettingsPage.qml:140
 msgid "System default"
 msgstr ""
 
-#: ../qml/views/SettingsPage.qml:140
+#: ../qml/views/SettingsPage.qml:149
 msgid "Medium"
 msgstr ""
 
-#: ../qml/views/ToDoView.qml:20
+#: ../qml/views/ToDoView.qml:23
 msgid "T O D O"
 msgstr ""
 
-#: ../qml/views/ToDoView.qml:40 ../qml/views/ToDoView.qml:153
+#: ../qml/views/ToDoView.qml:49 ../qml/views/ToDoView.qml:162
 msgid "Add"
 msgstr ""
 
-#: ../qml/views/ToDoView.qml:106
+#: ../qml/views/ToDoView.qml:115
 msgid "Add new task"
 msgstr ""
 
-#: ../qml/views/ToDoView.qml:115
+#: ../qml/views/ToDoView.qml:124
 msgid "Enter your task..."
 msgstr ""
 
-#: ../qml/views/ToDoView.qml:143 ../qml/views/components/RichTextEditor.qml:427
+#: ../qml/views/ToDoView.qml:152 ../qml/views/components/RichTextEditor.qml:427
 msgid "Cancel"
 msgstr ""
 
-#: ../qml/views/ToDoView.qml:232
+#: ../qml/views/ToDoView.qml:241
 msgid ""
 "No tasks yet.\n"
 "Tap + to add your first task!"

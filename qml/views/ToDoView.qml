@@ -17,7 +17,16 @@ Page {
 
     header: PageHeader {
         id: header
-        title: i18n.tr("T O D O")
+        title: "" // Hide default title
+
+         Text {
+            text: i18n.tr("T O D O")
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            font.pixelSize: units.gu(2.25)
+            color: ThemeHelper.getTextColor()
+           // font.bold: true
+        }
 
         leadingActionBar {
             actions: [
