@@ -169,7 +169,7 @@ MainView {
     function navigateToMainPage() {
         console.log("Navigating to main page");
         pageStack.clear();
-        pageStack.push(mainPageComponent);
+        pageStack.push(mainPageInstance);
     }
 
     function navigateToAddNote() {
