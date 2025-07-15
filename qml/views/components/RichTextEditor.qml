@@ -199,7 +199,7 @@ Item {
                             color: theme.palette.normal.backgroundText
                             
                             onClicked: {
-                                setFontSize(16)
+                                setFontSize(units.gu(2))
                                 setBold(false)
                                 setItalic(false)
                                 setUnderline(false)
