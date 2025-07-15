@@ -111,7 +111,8 @@ Page {
             anchors.fill: parent
             onClicked: {
                 console.log("Add note floating button clicked!");
-                addNoteRequested();
+                navigateToAddNote();
+             //   addNoteRequested();
             }
         }
     }
