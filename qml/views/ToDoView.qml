@@ -65,14 +65,14 @@ Page {
         z: 1000 // Ensure dialog is on top
 
         function open() {
-            console.log("🟢 Opening ToDo dialog");
+          //  console.log("🟢 Opening ToDo dialog");
             visible = true;
             newTaskField.text = "";
             newTaskField.forceActiveFocus();
         }
 
         function close() {
-            console.log("🔴 Closing ToDo dialog");
+          //  console.log("🔴 Closing ToDo dialog");
             visible = false;
         }
 
@@ -80,7 +80,7 @@ Page {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                console.log("🔵 Background clicked - closing dialog");
+               // console.log("🔵 Background clicked - closing dialog");
                 addDialog.close();
             }
         }
@@ -124,7 +124,7 @@ Page {
                     placeholderText: i18n.tr("Enter your task...")
 
                     onTextChanged: {
-                        console.log("🔵 TextField text changed to:", text, "length:", text.length);
+                      //  console.log("🔵 TextField text changed to:", text, "length:", text.length);
                     }
 
                     onAccepted: {
