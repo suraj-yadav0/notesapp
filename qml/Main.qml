@@ -174,7 +174,9 @@ MainView {
 
     function navigateToAddNote() {
         console.log("Navigating to add note page");
-        pageStack.push(addNotePageComponent);
+        pageStack.push(addNotePageComponent, {
+            notesModel: notesModel
+        });
     }
 
     function navigateToSettings() {
