@@ -145,7 +145,7 @@ Item {
                             }
                         }
 
-                        // Font Size Options
+                        // Font Size Options  - Fix this op
                         OptionSelector {
                             id: fontSizeSelector
                             width: units.gu(8)
@@ -172,7 +172,7 @@ Item {
                             color: theme.palette.normal.backgroundText
                             
                             onClicked: {
-                                setFontSize(24)
+                                setFontSize(units.gu(3))
                                 setBold(true)
                                 textArea.forceActiveFocus()
                             }
@@ -186,7 +186,7 @@ Item {
                             color: theme.palette.normal.backgroundText
                             
                             onClicked: {
-                                setFontSize(20)
+                                setFontSize(units.gu(2.5))
                                 setBold(true)
                                 textArea.forceActiveFocus()
                             }
@@ -208,24 +208,24 @@ Item {
                         }
 
                         // Color Button
-                        Button {
-                            width: units.gu(7)
-                            height: units.gu(4)
-                            text: "Color"
-                            color: theme.palette.normal.backgroundText
+                        // Button {
+                        //     width: units.gu(7)
+                        //     height: units.gu(4)
+                        //     text: "Color"
+                        //     color: theme.palette.normal.backgroundText
                             
-                            onClicked: {
-                                colorSheet.visible = true
-                            }
-                        }
+                        //     onClicked: {
+                        //         colorSheet.visible = true
+                        //     }
+                        // }
 
                         // Separator
-                        Rectangle {
-                            width: units.dp(1)
-                            height: parent.height * 0.6
-                            anchors.verticalCenter: parent.verticalCenter
-                            color: theme.palette.normal.base
-                        }
+                        // Rectangle {
+                        //     width: units.dp(1)
+                        //     height: parent.height * 0.6
+                        //     anchors.verticalCenter: parent.verticalCenter
+                        //     color: theme.palette.normal.base
+                        // }
 
                         // Text Actions
                         Button {
@@ -240,29 +240,29 @@ Item {
                             }
                         }
 
-                        Button {
-                            width: units.gu(6)
-                            height: units.gu(4)
-                            text: "Copy"
-                            color: theme.palette.normal.backgroundText
+                        // Button {
+                        //     width: units.gu(6)
+                        //     height: units.gu(4)
+                        //     text: "Copy"
+                        //     color: theme.palette.normal.backgroundText
                             
-                            onClicked: {
-                                textArea.copy()
-                                textArea.forceActiveFocus()
-                            }
-                        }
+                        //     onClicked: {
+                        //         textArea.copy()
+                        //         textArea.forceActiveFocus()
+                        //     }
+                        // }
 
-                        Button {
-                            width: units.gu(6)
-                            height: units.gu(4)
-                            text: "Paste"
-                            color: theme.palette.normal.backgroundText
+                        // Button {
+                        //     width: units.gu(6)
+                        //     height: units.gu(4)
+                        //     text: "Paste"
+                        //     color: theme.palette.normal.backgroundText
                             
-                            onClicked: {
-                                textArea.paste()
-                                textArea.forceActiveFocus()
-                            }
-                        }
+                        //     onClicked: {
+                        //         textArea.paste()
+                        //         textArea.forceActiveFocus()
+                        //     }
+                        // }
                     }
                 }
             }
